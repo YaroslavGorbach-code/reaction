@@ -1,10 +1,11 @@
-package yaroslavgorbach.reaction.ui.theme
+package yaroslavgorbach.reaction.common.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 private val DarkColorPalette = darkColors(
     primary = Purple200,
@@ -28,12 +29,19 @@ private val LightColorPalette = lightColors(
 )
 
 @Composable
-fun ReactionTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable() () -> Unit) {
-    val colors = if (darkTheme) {
+fun ReactionTheme(isDarkTheme: Boolean = isSystemInDarkTheme(), content: @Composable() () -> Unit) {
+    val colors = if (isDarkTheme) {
         DarkColorPalette
     } else {
         LightColorPalette
     }
+
+    val systemUiController = rememberSystemUiController()
+
+    systemUiController.setSystemBarsColor(
+        color = if (isDarkTheme) DarkColorPalette.background else LightColorPalette.background,
+        darkIcons = isDarkTheme.not()
+    )
 
     MaterialTheme(
         colors = colors,

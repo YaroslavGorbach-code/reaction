@@ -1,4 +1,4 @@
-package yaroslavgorbach.reaction.ui.theme
+package yaroslavgorbach.reaction.common.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

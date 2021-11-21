@@ -2,4 +2,5 @@
     <string name="app_name">Reaction</string>
 
     <string name="level_complexity">Уровень сложности</string>
+    <string name="training">Ежедневная тренировка</string>
 </resources>

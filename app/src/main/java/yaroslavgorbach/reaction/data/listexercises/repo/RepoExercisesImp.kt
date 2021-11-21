@@ -12,12 +12,47 @@ class RepoExercisesImp : RepoExercises {
             Exercise(ExerciseName.TEST),
             Exercise(ExerciseName.TEST),
             Exercise(ExerciseName.TEST),
+            Exercise(ExerciseName.TEST),
+            Exercise(ExerciseName.TEST),
+            Exercise(ExerciseName.TEST),
+            Exercise(ExerciseName.TEST),
+            Exercise(ExerciseName.TEST),
+            Exercise(ExerciseName.TEST),
+            Exercise(ExerciseName.TEST),
+            Exercise(ExerciseName.TEST),
+            Exercise(ExerciseName.TEST),
+            Exercise(ExerciseName.TEST),
+            Exercise(ExerciseName.TEST),
+            Exercise(ExerciseName.TEST),
+            Exercise(ExerciseName.TEST),
+            Exercise(ExerciseName.TEST),
+            Exercise(ExerciseName.TEST),
+            Exercise(ExerciseName.TEST),
+            Exercise(ExerciseName.TEST),
+            Exercise(ExerciseName.TEST),
+            Exercise(ExerciseName.TEST),
+            Exercise(ExerciseName.TEST),
+            Exercise(ExerciseName.TEST),
+            Exercise(ExerciseName.TEST),
+            Exercise(ExerciseName.TEST),
+            Exercise(ExerciseName.TEST),
+            Exercise(ExerciseName.TEST),
+            Exercise(ExerciseName.TEST),
+            Exercise(ExerciseName.TEST),
+            Exercise(ExerciseName.TEST),
+            Exercise(ExerciseName.TEST),
+            Exercise(ExerciseName.TEST),
+            Exercise(ExerciseName.TEST),
+            Exercise(ExerciseName.TEST),
+            Exercise(ExerciseName.TEST),
+            Exercise(ExerciseName.TEST),
+            Exercise(ExerciseName.TEST),
+            Exercise(ExerciseName.TEST),
             Exercise(ExerciseName.TEST)
         )
 
     override fun observe(): Flow<List<Exercise>> {
         return flowOf(testExercises)
     }
-
 
 }

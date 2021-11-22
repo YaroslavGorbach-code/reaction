@@ -3,4 +3,6 @@
 
     <string name="level_complexity">Уровень сложности</string>
     <string name="training">Ежедневная тренировка</string>
+    <string name="test">Test exercise</string>
+    <string name="start">Начать</string>
 </resources>

@@ -36,7 +36,7 @@ class ExercisesViewModel : ViewModel() {
         viewModelScope.launch {
             pendingActions.collect { action ->
                 when (action) {
-                    is ExercisesActions.OpenDetails -> error("navigation actions is not supported in view models")
+                    else -> error("$action is not handled")
                 }
             }
         }

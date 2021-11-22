@@ -6,7 +6,7 @@ import yaroslavgorbach.reaction.data.listexercises.local.model.ExerciseName
 data class ExerciseUi(private val exercise: Exercise) {
 
     companion object {
-        val Test = ExerciseUi(Exercise(ExerciseName.TEST))
+        val Test = ExerciseUi(Exercise.Test)
     }
 
     val name: ExerciseName

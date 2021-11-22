@@ -17,10 +17,10 @@ data class Training(val exercises: List<TrainingExercise>) {
         get() = exercises.all { it.isFinished }
 
     val progressFloat: Float
-        get() = 0.5f
+        get() = (((exercises.sumOf { it.progressInt } / exercises.size)) / 100f)
 
     val progressString: String
-        get() = (progressFloat * 100).toString() + "%"
+        get() = "${(progressFloat * 100).toInt()} %"
     // TODO: 11/21/2021 replace mock
 
     val date: String

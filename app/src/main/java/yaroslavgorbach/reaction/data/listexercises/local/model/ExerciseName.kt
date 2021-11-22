@@ -1,5 +1,7 @@
 package yaroslavgorbach.reaction.data.listexercises.local.model
 
-enum class ExerciseName {
-    TEST
+import yaroslavgorbach.reaction.R
+
+enum class ExerciseName(val res: Int) {
+    TEST(R.string.test)
 }

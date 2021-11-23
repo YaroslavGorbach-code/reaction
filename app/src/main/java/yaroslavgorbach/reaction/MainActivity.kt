@@ -1,7 +1,6 @@
 package yaroslavgorbach.reaction
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.ExperimentalMaterialApi
@@ -15,7 +14,8 @@ import yaroslavgorbach.reaction.common.ui.theme.ReactionTheme
 import yaroslavgorbach.reaction.feature.description.ui.Description
 import yaroslavgorbach.reaction.feature.listexercises.ui.Exercises
 import yaroslavgorbach.reaction.feature.listexercises.ui.ExercisesPreview
-import yaroslavgorbach.reaction.navigation.NavigationDestination
+import yaroslavgorbach.reaction.navigation.AppNavigation
+import yaroslavgorbach.reaction.navigation.Screen
 
 @ExperimentalMaterialApi
 class MainActivity : ComponentActivity() {
@@ -26,24 +26,7 @@ class MainActivity : ComponentActivity() {
 
             ReactionTheme {
                 Surface {
-                    NavHost(
-                        navController,
-                        startDestination = NavigationDestination.ExercisesScreen.destination
-                    ) {
-                        composable(NavigationDestination.ExercisesScreen.destination) {
-                            Exercises(
-                                openDescription = {
-                                    navController.navigate(NavigationDestination.DescriptionScreen.destination)
-                                },
-                                openTraining = {},
-                                openSettings = {}
-                            )
-                        }
-
-                        composable(NavigationDestination.DescriptionScreen.destination) {
-                            Description(openExercise = {})
-                        }
-                    }
+                    AppNavigation(navController = navController)
                 }
             }
         }

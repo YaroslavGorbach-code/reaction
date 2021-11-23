@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Speed
@@ -18,23 +19,20 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import yaroslavgorbach.reaction.R
 import yaroslavgorbach.reaction.common.ui.theme.ReactionTheme
+import yaroslavgorbach.reaction.data.listexercises.local.model.Exercise
 import yaroslavgorbach.reaction.data.listexercises.local.model.ExerciseName
-import yaroslavgorbach.reaction.feature.listexercises.model.ExerciseUi
 
 @Composable
-fun ExerciseItem(exercise: ExerciseUi, onExerciseClick: (ExerciseName) -> Unit) {
+fun ExerciseItem(exercise: Exercise, onExerciseClick: (ExerciseName) -> Unit) {
     Column(modifier = Modifier
         .clickable { onExerciseClick(exercise.name) }
         .fillMaxWidth()
-        .wrapContentSize()
+        .wrapContentHeight()
         .padding(8.dp))
     {
         Text(
             text = exercise.name.name,
-            fontWeight = FontWeight.Bold,
-            fontSize = 24.sp,
             style = MaterialTheme.typography.caption,
-            color = MaterialTheme.colors.onSurface
         )
 
         Row(modifier = Modifier.height(18.dp)) {
@@ -47,23 +45,24 @@ fun ExerciseItem(exercise: ExerciseUi, onExerciseClick: (ExerciseName) -> Unit) 
                 text = stringResource(R.string.level_complexity) + " " + exercise.levelComplexity,
                 style = MaterialTheme.typography.subtitle2,
                 modifier = Modifier.padding(start = 4.dp),
-                color = MaterialTheme.colors.onSurface
             )
         }
 
         Text(
-            text = exercise.shortDescription,
+            text = stringResource(id = exercise.instructionRes),
             modifier = Modifier.padding(top = 4.dp),
-            style = MaterialTheme.typography.subtitle1,
-            color = Color.Gray
+            fontSize = 12.sp,
+            style = MaterialTheme.typography.body1,
         )
     }
 }
 
 @Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
 @Composable
-fun ExerciseItemPreview(exercise: ExerciseUi = ExerciseUi.Test) {
-    ReactionTheme {
-        ExerciseItem(exercise = exercise, {})
+fun ExerciseItemPreview(exercise: Exercise = Exercise.Test) {
+    Surface {
+        ReactionTheme {
+            ExerciseItem(exercise = exercise, {})
+        }
     }
 }

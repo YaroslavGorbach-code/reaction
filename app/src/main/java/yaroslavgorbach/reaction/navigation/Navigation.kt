@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import yaroslavgorbach.reaction.data.listexercises.local.model.ExerciseName
 import yaroslavgorbach.reaction.feature.description.ui.Description
+import yaroslavgorbach.reaction.feature.exercise.extranumber.ui.ExtraNumbers
 import yaroslavgorbach.reaction.feature.listexercises.ui.Exercises
 
 sealed class Screen(val route: String) {
@@ -65,10 +66,12 @@ private fun NavGraphBuilder.addDescription(
             navArgument("exerciseName") {
                 type = NavType.EnumType(ExerciseName::class.java)
             })
-    ) {
-        Description(openExercise = {
-            //navController.navigate(LeafScreen.ShowExercise.createRoute(root = root, exerciseName = it))
-        })
+    ) { backStackEntry ->
+        Description(
+            exerciseName = backStackEntry.arguments?.getSerializable("exerciseName") as ExerciseName,
+            openExercise = { exerciseName ->
+                navController.navigate(mapExerciseNameToLeafScreen(exerciseName = exerciseName).createRoute(root = root))
+            })
     }
 }
 
@@ -77,7 +80,9 @@ private sealed class LeafScreen(
 ) {
     fun createRoute(root: Screen) = "${root.route}/$route"
 
+
     object Exercises : LeafScreen("Exercises")
+    object ExtraNumbers : LeafScreen("ExtraNumbers")
 
     object ShowDescription : LeafScreen("Description/{exerciseName}") {
         fun createRoute(root: Screen, exerciseName: ExerciseName): String {
@@ -85,10 +90,10 @@ private sealed class LeafScreen(
         }
     }
 
-    object ShowExercise : LeafScreen("Exercise/{exerciseName}") {
-        fun createRoute(root: Screen, exerciseName: ExerciseName): String {
-            return "${root.route}/Exercise/$exerciseName"
-        }
-    }
 }
 
+private fun mapExerciseNameToLeafScreen(exerciseName: ExerciseName): LeafScreen {
+    return when (exerciseName) {
+        ExerciseName.TEST -> LeafScreen.ExtraNumbers
+    }
+}

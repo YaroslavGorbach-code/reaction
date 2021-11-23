@@ -22,11 +22,11 @@ import androidx.compose.ui.unit.sp
 import yaroslavgorbach.reaction.R
 import yaroslavgorbach.reaction.common.ui.theme.ReactionTheme
 import yaroslavgorbach.reaction.common.ui.theme.Shapes
-import yaroslavgorbach.reaction.feature.listexercises.model.TrainingUi
+import yaroslavgorbach.reaction.data.training.model.Training
 
 @ExperimentalMaterialApi
 @Composable
-fun TrainingSurface(training: TrainingUi, onTraining: () -> Unit, modifier: Modifier) {
+fun TrainingSurface(trainings: List<Training>, onTraining: () -> Unit, modifier: Modifier) {
     Card(
         modifier = modifier,
         onClick = { onTraining() },
@@ -51,7 +51,7 @@ fun TrainingSurface(training: TrainingUi, onTraining: () -> Unit, modifier: Modi
                     .align(CenterHorizontally)
                     .padding(bottom = 4.dp)
             ) {
-                training.trainings.forEach { training ->
+                trainings.forEach { training ->
                     item {
                         TrainingSurfaceItem(training = training)
                     }
@@ -64,8 +64,20 @@ fun TrainingSurface(training: TrainingUi, onTraining: () -> Unit, modifier: Modi
 @ExperimentalMaterialApi
 @Preview(showBackground = true)
 @Composable
-fun TrainingSurfacePreview(training: TrainingUi = TrainingUi.Test, onTraining: () -> Unit = {}) {
+fun TrainingSurfacePreview(
+    trainings: List<Training> = listOf(
+        Training.Test,
+        Training.Test,
+        Training.Test,
+        Training.Test,
+        Training.Test,
+        Training.Test,
+        Training.Test,
+        Training.Test,
+        Training.Test
+    ), onTraining: () -> Unit = {}
+) {
     ReactionTheme {
-        TrainingSurface(training = training, onTraining = onTraining, Modifier)
+        TrainingSurface(trainings = trainings, onTraining = onTraining, Modifier)
     }
 }

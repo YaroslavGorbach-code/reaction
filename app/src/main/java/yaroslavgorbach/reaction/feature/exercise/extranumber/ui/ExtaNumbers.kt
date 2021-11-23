@@ -6,6 +6,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import yaroslavgorbach.reaction.common.ui.theme.ReactionTheme
+import yaroslavgorbach.reaction.data.exercise.extranumber.local.model.NumberPack
 import yaroslavgorbach.reaction.feature.exercise.extranumber.model.ExtraNumberActions
 import yaroslavgorbach.reaction.feature.exercise.extranumber.model.ExtraNumberViewState
 import yaroslavgorbach.reaction.feature.exercise.extranumber.presentation.ExtraNumberViewModel
@@ -29,7 +30,6 @@ internal fun ExtraNumbers(
     onBackClick: () -> Unit,
 ) {
     val viewState = viewModel.state.collectAsState()
-
 
     ExtraNumbers(
         state = viewState.value,
@@ -55,7 +55,7 @@ internal fun ExtraNumbers(
 @Preview(showBackground = true)
 @Composable
 fun ExercisesPreview() {
-    ReactionTheme() {
-
+    ReactionTheme {
+        ExtraNumbers(state = ExtraNumberViewState(numberPacks = listOf(NumberPack.Test)), actioner = {})
     }
 }

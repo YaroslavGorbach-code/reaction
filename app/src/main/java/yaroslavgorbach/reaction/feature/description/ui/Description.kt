@@ -29,6 +29,7 @@ import yaroslavgorbach.reaction.feature.description.presentation.DescriptionView
 @ExperimentalMaterialApi
 @Composable
 fun Description(
+    exerciseName: ExerciseName,
     openExercise: (exerciseName: ExerciseName) -> Unit,
 ) {
     Description(
@@ -64,18 +65,14 @@ internal fun Description(
     Column(Modifier.fillMaxSize()) {
         Text(
             text = stringResource(id = state.exerciseName.res),
-            fontWeight = FontWeight.Bold,
-            fontSize = 40.sp,
             style = MaterialTheme.typography.caption,
-            color = MaterialTheme.colors.onSurface,
+            fontSize = 40.sp,
             modifier = Modifier.padding(top = 8.dp, start = 8.dp, end = 8.dp)
         )
 
         Text(
             text = stringResource(id = state.descriptionRes),
-            fontSize = 18.sp,
-            style = MaterialTheme.typography.caption,
-            color = Color.Gray,
+            style = MaterialTheme.typography.body1,
             modifier = Modifier.padding(8.dp)
         )
 

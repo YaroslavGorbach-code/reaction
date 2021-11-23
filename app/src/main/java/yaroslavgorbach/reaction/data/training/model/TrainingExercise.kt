@@ -13,7 +13,7 @@ data class TrainingExercise(private val exercise: Exercise, val aim: Int, val co
     }
 
     val name: ExerciseName
-        get() = exercise.exerciseName
+        get() = exercise.name
 
     val progressFloat: Float
         get() = (aim.toFloat() / completed.toFloat())

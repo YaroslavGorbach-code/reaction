@@ -1,6 +1,5 @@
 package yaroslavgorbach.reaction.feature.listexercises.ui
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,8 +19,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import yaroslavgorbach.reaction.common.ui.theme.ReactionTheme
+import yaroslavgorbach.reaction.data.listexercises.local.model.Exercise
 import yaroslavgorbach.reaction.data.listexercises.local.model.ExerciseName
-import yaroslavgorbach.reaction.feature.listexercises.model.ExerciseUi
 import yaroslavgorbach.reaction.feature.listexercises.model.ExercisesActions
 import yaroslavgorbach.reaction.feature.listexercises.model.ExercisesViewState
 import yaroslavgorbach.reaction.feature.listexercises.presentation.ExercisesViewModel
@@ -82,7 +81,7 @@ internal fun Exercises(
                 .clickable { actioner(ExercisesActions.OpenSettings) })
 
         TrainingSurface(
-            training = state.trainingUi,
+            trainings = state.trainings,
             onTraining = { actioner(ExercisesActions.OpenTraining) },
             modifier = Modifier
                 .fillMaxWidth()
@@ -109,15 +108,15 @@ fun ExercisesPreview() {
         Exercises(
             state = ExercisesViewState(
                 exercises = listOf(
-                    ExerciseUi.Test,
-                    ExerciseUi.Test,
-                    ExerciseUi.Test,
-                    ExerciseUi.Test,
-                    ExerciseUi.Test,
-                    ExerciseUi.Test,
-                    ExerciseUi.Test,
-                    ExerciseUi.Test,
-                    ExerciseUi.Test
+                    Exercise.Test,
+                    Exercise.Test,
+                    Exercise.Test,
+                    Exercise.Test,
+                    Exercise.Test,
+                    Exercise.Test,
+                    Exercise.Test,
+                    Exercise.Test,
+                    Exercise.Test
                 ),
             )
         ) {

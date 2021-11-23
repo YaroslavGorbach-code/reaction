@@ -8,7 +8,7 @@ import yaroslavgorbach.reaction.data.listexercises.local.model.ExerciseName
 class ObserveDescriptionResInteractor(private val observeExercisesInteractor: ObserveExercisesInteractor) {
     operator fun invoke(exerciseName: ExerciseName): Flow<Int> {
         return observeExercisesInteractor.invoke().map {
-            it.first { exercise -> exercise.exerciseName == exerciseName }.descriptionRes
+            it.first { exercise -> exercise.name == exerciseName }.descriptionRes
         }
     }
 }

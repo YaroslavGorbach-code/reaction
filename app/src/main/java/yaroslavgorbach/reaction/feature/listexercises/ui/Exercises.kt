@@ -1,5 +1,6 @@
 package yaroslavgorbach.reaction.feature.listexercises.ui
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -28,13 +29,14 @@ import yaroslavgorbach.reaction.feature.listexercises.presentation.ExercisesView
 @ExperimentalMaterialApi
 @Composable
 fun Exercises(
-    openDetails: (exerciseName: ExerciseName) -> Unit,
+    openDescription: (exerciseName: ExerciseName) -> Unit,
     openTraining: () -> Unit,
     openSettings: () -> Unit,
 ) {
+
     Exercises(
         viewModel = viewModel(),
-        openDetails = openDetails,
+        openDescription = openDescription,
         openTraining = openTraining,
         openSettings = openSettings,
     )
@@ -44,7 +46,7 @@ fun Exercises(
 @Composable
 internal fun Exercises(
     viewModel: ExercisesViewModel,
-    openDetails: (exerciseName: ExerciseName) -> Unit,
+    openDescription: (exerciseName: ExerciseName) -> Unit,
     openTraining: () -> Unit,
     openSettings: () -> Unit,
 ) {
@@ -54,7 +56,9 @@ internal fun Exercises(
         state = viewState.value,
     ) { action ->
         when (action) {
-            is ExercisesActions.OpenDetails -> openDetails(action.exerciseName)
+            is ExercisesActions.OpenDetails -> {
+                openDescription(action.exerciseName)
+            }
             is ExercisesActions.OpenTraining -> openTraining()
             is ExercisesActions.OpenSettings -> openSettings()
             else -> viewModel.submitAction(action)
@@ -101,7 +105,7 @@ internal fun Exercises(
 @Preview(showBackground = true)
 @Composable
 fun ExercisesPreview() {
-    ReactionTheme() {
+    ReactionTheme {
         Exercises(
             state = ExercisesViewState(
                 exercises = listOf(

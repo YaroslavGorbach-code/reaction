@@ -41,6 +41,7 @@ private fun NavGraphBuilder.addExercisesTopLevel(
     ) {
         addExercises(navController, Screen.Exercises)
         addDescription(navController, Screen.Exercises)
+        addExtraNumbersExercise(navController, Screen.Exercises)
     }
 }
 
@@ -51,8 +52,23 @@ private fun NavGraphBuilder.addExercises(
 ) {
     composable(LeafScreen.Exercises.createRoute(root)) {
         Exercises(openDescription = { exerciseName ->
-            navController.navigate(LeafScreen.ShowDescription.createRoute(root = root, exerciseName = exerciseName))
+            navController.navigate(
+                LeafScreen.ShowDescription.createRoute(
+                    root = root,
+                    exerciseName = exerciseName
+                )
+            )
         }, openTraining = { }, openSettings = {})
+    }
+}
+
+@ExperimentalMaterialApi
+private fun NavGraphBuilder.addExtraNumbersExercise(
+    navController: NavController,
+    root: Screen,
+) {
+    composable(LeafScreen.ExtraNumbers.createRoute(root)) {
+        ExtraNumbers(onBackClick = { navController.popBackStack() })
     }
 }
 
@@ -70,8 +86,14 @@ private fun NavGraphBuilder.addDescription(
         Description(
             exerciseName = backStackEntry.arguments?.getSerializable("exerciseName") as ExerciseName,
             openExercise = { exerciseName ->
-                navController.navigate(mapExerciseNameToLeafScreen(exerciseName = exerciseName).createRoute(root = root))
-            })
+                navController.navigate(
+                    mapExerciseNameToLeafScreen(exerciseName = exerciseName).createRoute(root = root)
+                ) {
+                    popUpTo(LeafScreen.ShowDescription.createRoute(root)) {
+                        inclusive = true
+                    }
+                }
+            }, onBackClick = { navController.popBackStack() })
     }
 }
 
@@ -79,7 +101,6 @@ private sealed class LeafScreen(
     private val route: String,
 ) {
     fun createRoute(root: Screen) = "${root.route}/$route"
-
 
     object Exercises : LeafScreen("Exercises")
     object ExtraNumbers : LeafScreen("ExtraNumbers")

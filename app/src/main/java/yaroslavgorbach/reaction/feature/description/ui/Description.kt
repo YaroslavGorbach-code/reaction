@@ -31,6 +31,7 @@ import yaroslavgorbach.reaction.feature.description.presentation.DescriptionView
 fun Description(
     exerciseName: ExerciseName,
     openExercise: (exerciseName: ExerciseName) -> Unit,
+    onBackClick: () -> Unit,
 ) {
     Description(
         viewModel = viewModel(),

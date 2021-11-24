@@ -1,10 +1,15 @@
-package yaroslavgorbach.reaction.feature.exercise.result.model
+package yaroslavgorbach.reaction.feature.exercise.common.ui
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import yaroslavgorbach.reaction.data.listexercises.local.model.ExerciseName
-import java.io.Serializable
 
-
-data class ExerciseResultUi(val exerciseName: ExerciseName, val correctPoints: Int, val incorrectPoints: Int) : Serializable {
+@Parcelize
+data class ExerciseResultUi(
+    val exerciseName: ExerciseName,
+    val correctPoints: Int,
+    val incorrectPoints: Int
+) : Parcelable {
     companion object {
         val Test = ExerciseResultUi(ExerciseName.TEST, 10, 5)
     }

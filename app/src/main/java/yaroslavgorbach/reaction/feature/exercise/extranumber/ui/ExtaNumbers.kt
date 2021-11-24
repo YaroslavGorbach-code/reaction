@@ -1,13 +1,9 @@
 package yaroslavgorbach.reaction.feature.exercise.extranumber.ui
 
-import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.ExperimentalMaterialApi
@@ -15,8 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.focusModifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -29,8 +23,8 @@ import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseTopBar
 import yaroslavgorbach.reaction.feature.exercise.extranumber.model.ExtraNumberActions
 import yaroslavgorbach.reaction.feature.exercise.extranumber.model.ExtraNumberViewState
 import yaroslavgorbach.reaction.feature.exercise.extranumber.presentation.ExtraNumberViewModel
-import yaroslavgorbach.reaction.feature.exercise.result.model.ExerciseResultUi
-import yaroslavgorbach.reaction.feature.listexercises.model.ExercisesViewState
+import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseResultUi
+import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseResult
 import yaroslavgorbach.reaction.utill.TimerCountDown
 
 @ExperimentalFoundationApi
@@ -38,12 +32,10 @@ import yaroslavgorbach.reaction.utill.TimerCountDown
 @Composable
 fun ExtraNumbers(
     onBackClick: () -> Unit,
-    onExerciseFinished: (ExerciseResultUi) -> Unit,
 ) {
     ExtraNumbers(
         viewModel = viewModel(),
         onBackClick = onBackClick,
-        onExerciseFinished = onExerciseFinished
     )
 }
 
@@ -53,25 +45,15 @@ fun ExtraNumbers(
 internal fun ExtraNumbers(
     viewModel: ExtraNumberViewModel,
     onBackClick: () -> Unit,
-    onExerciseFinished: (ExerciseResultUi) -> Unit,
 ) {
     val viewState = viewModel.state.collectAsState()
-    val context = LocalContext.current
 
     ExtraNumbers(
         state = viewState.value,
     ) { action ->
-        Toast.makeText(context, viewState.value.pointsCorrect.toString(), Toast.LENGTH_SHORT).show()
 
         when (action) {
             is ExtraNumberActions.OnBackAction -> onBackClick()
-            is ExtraNumberActions.OnExerciseFinish -> onExerciseFinished(
-                ExerciseResultUi(
-                    exerciseName = ExerciseName.TEST,
-                    correctPoints = viewState.value.pointsCorrect,
-                    incorrectPoints = viewState.value.pointsIncorrect
-                )
-            )
             else -> viewModel.submitAction(action)
         }
     }
@@ -87,20 +69,40 @@ internal fun ExtraNumbers(
 
     Box(Modifier.fillMaxSize()) {
         when (state.timerState) {
-            TimerCountDown.TimerState.Finish -> actioner(ExtraNumberActions.OnExerciseFinish)
+            TimerCountDown.TimerState.Finish -> {
+                ExerciseResult(
+                    exerciseResultUi = ExerciseResultUi(
+                        exerciseName = ExerciseName.TEST,
+                        correctPoints = state.pointsCorrect,
+                        incorrectPoints = state.pointsIncorrect
+                    ),
+                    onBackClick = { actioner(ExtraNumberActions.OnBackAction) },
+                    onRepeatExercise = {}
+                )
+
+            }
             is TimerCountDown.TimerState.Tick -> {
                 ExerciseTopBar(
                     modifier = Modifier.align(Alignment.TopCenter),
-                    instruction = stringResource(id = ExerciseNameToInstructionResMapper.map(exerciseName = ExerciseName.TEST)),
+                    instruction = stringResource(
+                        id = ExerciseNameToInstructionResMapper.map(
+                            exerciseName = ExerciseName.TEST
+                        )
+                    ),
                     timeProgress = state.timerState.timeUtilFinishedProgress,
                     time = state.timerState.timeUtilFinishedString
                 )
-            }
-        }
 
-        LazyVerticalGrid(cells = GridCells.Adaptive(100.dp), modifier = Modifier.align(Alignment.Center)) {
-            items(state.numberPacks.firstOrNull()?.numbers ?: emptyList()) { number ->
-                NumberItem(number = number, onNumberClick = { actioner(ExtraNumberActions.NumberClick(number)) })
+                LazyVerticalGrid(
+                    cells = GridCells.Adaptive(100.dp),
+                    modifier = Modifier.align(Alignment.Center)
+                ) {
+                    items(state.numberPacks.firstOrNull()?.numbers ?: emptyList()) { number ->
+                        NumberItem(
+                            number = number,
+                            onNumberClick = { actioner(ExtraNumberActions.NumberClick(number)) })
+                    }
+                }
             }
         }
     }

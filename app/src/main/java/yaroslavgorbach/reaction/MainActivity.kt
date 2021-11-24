@@ -8,15 +8,9 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import yaroslavgorbach.reaction.common.ui.theme.ReactionTheme
-import yaroslavgorbach.reaction.feature.description.ui.Description
-import yaroslavgorbach.reaction.feature.listexercises.ui.Exercises
 import yaroslavgorbach.reaction.feature.listexercises.ui.ExercisesPreview
-import yaroslavgorbach.reaction.navigation.AppNavigation
-import yaroslavgorbach.reaction.navigation.Screen
 
 @ExperimentalFoundationApi
 @ExperimentalMaterialApi

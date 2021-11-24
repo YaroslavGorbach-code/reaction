@@ -1,4 +1,4 @@
-package yaroslavgorbach.reaction.navigation
+package yaroslavgorbach.reaction
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.ExperimentalMaterialApi
@@ -72,7 +72,7 @@ private fun NavGraphBuilder.addExtraNumbersExercise(
     root: Screen,
 ) {
     composable(LeafScreen.ExtraNumbers.createRoute(root)) {
-        ExtraNumbers(onBackClick = { navController.popBackStack() }, onExerciseFinished = {})
+        ExtraNumbers(onBackClick = { navController.popBackStack() })
     }
 }
 
@@ -114,7 +114,6 @@ private sealed class LeafScreen(
             return "${root.route}/Description/$exerciseName"
         }
     }
-
 }
 
 private fun mapExerciseNameToLeafScreen(exerciseName: ExerciseName): LeafScreen {

@@ -13,6 +13,7 @@ import yaroslavgorbach.reaction.feature.exercise.extranumber.model.ExtraNumberAc
 import yaroslavgorbach.reaction.feature.exercise.extranumber.model.ExtraNumberViewState
 import yaroslavgorbach.reaction.feature.listexercises.model.ExercisesActions
 import yaroslavgorbach.reaction.feature.listexercises.model.ExercisesViewState
+import yaroslavgorbach.reaction.utill.TimerCountDown
 
 class ExtraNumberViewModel : ViewModel() {
 
@@ -24,10 +25,19 @@ class ExtraNumberViewModel : ViewModel() {
 
     private val pendingActions = MutableSharedFlow<ExtraNumberActions>()
 
+    private val timerCountDown: TimerCountDown =
+        TimerCountDown(
+            coroutineScope = viewModelScope,
+            millisInFuture = TimerCountDown.ONE_MINUTE,
+            countDownInterval = 100
+        )
+
     val state: StateFlow<ExtraNumberViewState> = combine(
-        observeExtraNumbersInteractor()
-    ) { numberPacks ->
-        ExtraNumberViewState(numberPacks = numberPacks[0])
+        observeExtraNumbersInteractor(),
+        timerCountDown.state
+    ) { numberPacks, timerState ->
+        ExtraNumberViewState(numberPacks = numberPacks, timerState = timerState)
+
     }.stateIn(
         scope = viewModelScope,
         started = WhileSubscribed(5000),
@@ -35,6 +45,8 @@ class ExtraNumberViewModel : ViewModel() {
     )
 
     init {
+        timerCountDown.start()
+
         viewModelScope.launch {
             pendingActions.collect { action ->
                 when (action) {

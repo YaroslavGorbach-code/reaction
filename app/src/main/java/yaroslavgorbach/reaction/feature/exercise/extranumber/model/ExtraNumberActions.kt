@@ -5,4 +5,5 @@ import yaroslavgorbach.reaction.data.exercise.extranumber.local.model.Number
 sealed class ExtraNumberActions {
     class NumberClick(val number: Number) : ExtraNumberActions()
     object OnBackAction : ExtraNumberActions()
+    object OnExerciseFinish: ExtraNumberActions()
 }

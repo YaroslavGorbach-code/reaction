@@ -4,6 +4,7 @@ import kotlin.random.Random
 
 data class Number(val number: Int, val isExtra: Boolean) {
     companion object {
-        val Test = Number(Random.nextInt(100), Random.nextBoolean())
+        val Test
+            get() = Number(Random.nextInt(100), Random.nextBoolean())
     }
 }

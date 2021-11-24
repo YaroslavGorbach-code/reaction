@@ -5,7 +5,9 @@ import yaroslavgorbach.reaction.utill.TimerCountDown
 
 data class ExtraNumberViewState(
     val numberPacks: List<NumberPack> = emptyList(),
-    val timerState: TimerCountDown.TimerState = TimerCountDown.TimerState.Tick(0, "00:00", 0f)
+    val timerState: TimerCountDown.TimerState = TimerCountDown.TimerState.Tick(0, "00:00", 0f),
+    var pointsCorrect: Int = 0,
+    var pointsIncorrect: Int = 0
 ) {
     companion object {
         val Empty = ExtraNumberViewState()

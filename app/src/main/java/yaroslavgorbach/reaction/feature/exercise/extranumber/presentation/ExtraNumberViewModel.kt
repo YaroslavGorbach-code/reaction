@@ -20,8 +20,7 @@ class ExtraNumberViewModel : ViewModel() {
     private val repo: RepoExercise
         get() = RepoExerciseImp()
 
-    private val observeExtraNumbersInteractor: ObserveExtraNumbersInteractor
-        get() = ObserveExtraNumbersInteractor(repo)
+    private val observeExtraNumbersInteractor = ObserveExtraNumbersInteractor(repo)
 
     private val pendingActions = MutableSharedFlow<ExtraNumberActions>()
 
@@ -32,11 +31,22 @@ class ExtraNumberViewModel : ViewModel() {
             countDownInterval = 100
         )
 
+    private val pointsCorrect: MutableStateFlow<Int> = MutableStateFlow(0)
+
+    private val pointsInCorrect: MutableStateFlow<Int> = MutableStateFlow(0)
+
     val state: StateFlow<ExtraNumberViewState> = combine(
         observeExtraNumbersInteractor(),
-        timerCountDown.state
-    ) { numberPacks, timerState ->
-        ExtraNumberViewState(numberPacks = numberPacks, timerState = timerState)
+        timerCountDown.state,
+        pointsCorrect,
+        pointsInCorrect
+    ) { numberPacks, timerState, pointsCorrect, pointsIncorrect ->
+        ExtraNumberViewState(
+            numberPacks = numberPacks,
+            timerState = timerState,
+            pointsCorrect = pointsCorrect,
+            pointsIncorrect = pointsIncorrect
+        )
 
     }.stateIn(
         scope = viewModelScope,
@@ -58,7 +68,13 @@ class ExtraNumberViewModel : ViewModel() {
     }
 
     private fun onNumberClick(number: Number) {
-
+        viewModelScope.launch {
+            if (number.isExtra) {
+                pointsCorrect.emit(pointsCorrect.value + 1)
+            } else {
+                pointsInCorrect.emit(pointsInCorrect.value + 1)
+            }
+        }
     }
 
     fun submitAction(action: ExtraNumberActions) {

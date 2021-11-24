@@ -23,10 +23,15 @@ fun NumberItem(number: Number, onNumberClick: () -> Unit) {
         shape = MaterialTheme.shapes.small,
         modifier = Modifier
             .clickable { onNumberClick() }
-            .size(40.dp)) {
+            .size(60.dp)) {
 
         Box(modifier = Modifier.wrapContentSize()) {
-            Text(text = number.number.toString(), textAlign = TextAlign.Center, modifier = Modifier.align(Alignment.Center))
+            Text(
+                text = number.number.toString(),
+                textAlign = TextAlign.Center,
+                modifier = Modifier.align(Alignment.Center),
+                style = MaterialTheme.typography.caption
+            )
         }
     }
 

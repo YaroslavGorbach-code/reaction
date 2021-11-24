@@ -18,8 +18,8 @@ import yaroslavgorbach.reaction.R
 import yaroslavgorbach.reaction.common.ui.theme.ReactionTheme
 
 @Composable
-fun ExerciseTopBar(instruction: String, timeProgress: Float, time: String) {
-    Column {
+fun ExerciseTopBar(modifier: Modifier = Modifier, instruction: String, timeProgress: Float, time: String) {
+    Column(modifier = modifier) {
         LinearProgressIndicator(
             progress = timeProgress,
             modifier = Modifier

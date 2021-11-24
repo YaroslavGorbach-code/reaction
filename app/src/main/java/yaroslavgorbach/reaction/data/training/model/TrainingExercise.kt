@@ -1,6 +1,5 @@
 package yaroslavgorbach.reaction.data.training.model
 
-import android.util.Log
 import yaroslavgorbach.reaction.data.listexercises.local.model.Exercise
 import yaroslavgorbach.reaction.data.listexercises.local.model.ExerciseName
 
@@ -16,7 +15,7 @@ data class TrainingExercise(private val exercise: Exercise, val aim: Int, val co
         get() = exercise.name
 
     val progressFloat: Float
-        get() = (aim.toFloat() / completed.toFloat())
+        get() = (completed.toFloat() / aim.toFloat())
 
     val progressInt: Int
         get() = ((completed.toFloat() / aim.toFloat()) * 100f).toInt()

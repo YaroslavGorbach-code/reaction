@@ -29,6 +29,7 @@ import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseTopBar
 import yaroslavgorbach.reaction.feature.exercise.extranumber.model.ExtraNumberActions
 import yaroslavgorbach.reaction.feature.exercise.extranumber.model.ExtraNumberViewState
 import yaroslavgorbach.reaction.feature.exercise.extranumber.presentation.ExtraNumberViewModel
+import yaroslavgorbach.reaction.feature.exercise.result.model.ExerciseResultUi
 import yaroslavgorbach.reaction.feature.listexercises.model.ExercisesViewState
 import yaroslavgorbach.reaction.utill.TimerCountDown
 
@@ -37,10 +38,12 @@ import yaroslavgorbach.reaction.utill.TimerCountDown
 @Composable
 fun ExtraNumbers(
     onBackClick: () -> Unit,
+    onExerciseFinished: (ExerciseResultUi) -> Unit,
 ) {
     ExtraNumbers(
         viewModel = viewModel(),
         onBackClick = onBackClick,
+        onExerciseFinished = onExerciseFinished
     )
 }
 
@@ -50,6 +53,7 @@ fun ExtraNumbers(
 internal fun ExtraNumbers(
     viewModel: ExtraNumberViewModel,
     onBackClick: () -> Unit,
+    onExerciseFinished: (ExerciseResultUi) -> Unit,
 ) {
     val viewState = viewModel.state.collectAsState()
     val context = LocalContext.current
@@ -61,6 +65,13 @@ internal fun ExtraNumbers(
 
         when (action) {
             is ExtraNumberActions.OnBackAction -> onBackClick()
+            is ExtraNumberActions.OnExerciseFinish -> onExerciseFinished(
+                ExerciseResultUi(
+                    exerciseName = ExerciseName.TEST,
+                    correctPoints = viewState.value.pointsCorrect,
+                    incorrectPoints = viewState.value.pointsIncorrect
+                )
+            )
             else -> viewModel.submitAction(action)
         }
     }

@@ -1,5 +1,6 @@
 package yaroslavgorbach.reaction.navigation
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -16,6 +17,7 @@ sealed class Screen(val route: String) {
     object Exercises : Screen("Exercises")
 }
 
+@ExperimentalFoundationApi
 @ExperimentalMaterialApi
 @Composable
 internal fun AppNavigation(
@@ -31,6 +33,7 @@ internal fun AppNavigation(
     }
 }
 
+@ExperimentalFoundationApi
 @ExperimentalMaterialApi
 private fun NavGraphBuilder.addExercisesTopLevel(
     navController: NavController,
@@ -62,13 +65,14 @@ private fun NavGraphBuilder.addExercises(
     }
 }
 
+@ExperimentalFoundationApi
 @ExperimentalMaterialApi
 private fun NavGraphBuilder.addExtraNumbersExercise(
     navController: NavController,
     root: Screen,
 ) {
     composable(LeafScreen.ExtraNumbers.createRoute(root)) {
-        ExtraNumbers(onBackClick = { navController.popBackStack() })
+        ExtraNumbers(onBackClick = { navController.popBackStack() }, onExerciseFinished = {})
     }
 }
 

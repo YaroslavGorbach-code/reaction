@@ -9,11 +9,13 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
+import dagger.hilt.android.AndroidEntryPoint
 import yaroslavgorbach.reaction.common.ui.theme.ReactionTheme
 import yaroslavgorbach.reaction.feature.listexercises.ui.ExercisesPreview
 
 @ExperimentalFoundationApi
 @ExperimentalMaterialApi
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

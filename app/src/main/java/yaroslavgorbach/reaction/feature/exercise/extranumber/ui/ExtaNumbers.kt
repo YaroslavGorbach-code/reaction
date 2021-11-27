@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import yaroslavgorbach.reaction.common.ui.theme.ReactionTheme
 import yaroslavgorbach.reaction.data.exercise.extranumber.local.model.NumberPack
@@ -34,7 +35,7 @@ fun ExtraNumbers(
     onBackClick: () -> Unit,
 ) {
     ExtraNumbers(
-        viewModel = viewModel(),
+        viewModel = hiltViewModel(),
         onBackClick = onBackClick,
     )
 }

@@ -2,28 +2,21 @@ package yaroslavgorbach.reaction.feature.description.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import yaroslavgorbach.reaction.business.description.ObserveDescriptionResInteractor
-import yaroslavgorbach.reaction.business.listexercises.ObserveExercisesInteractor
 import yaroslavgorbach.reaction.data.listexercises.local.model.ExerciseName
-import yaroslavgorbach.reaction.data.listexercises.repo.RepoExercises
-import yaroslavgorbach.reaction.data.listexercises.repo.RepoExercisesImp
 import yaroslavgorbach.reaction.feature.description.model.DescriptionActions
 import yaroslavgorbach.reaction.feature.description.model.DescriptionViewState
+import javax.inject.Inject
 
-class DescriptionViewModel : ViewModel() {
+@HiltViewModel
+class DescriptionViewModel @Inject constructor(
+    observeDescriptionInteractor: ObserveDescriptionResInteractor
+) : ViewModel() {
     private val exerciseName: ExerciseName
         get() = ExerciseName.TEST
-
-    private val repo: RepoExercises
-        get() = RepoExercisesImp()
-
-    private val observeExercisesInteractor: ObserveExercisesInteractor
-        get() = ObserveExercisesInteractor(repo)
-
-    private val observeDescriptionInteractor: ObserveDescriptionResInteractor
-        get() = ObserveDescriptionResInteractor(observeExercisesInteractor)
 
     private val pendingActions = MutableSharedFlow<DescriptionActions>()
 

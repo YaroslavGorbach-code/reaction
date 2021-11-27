@@ -13,6 +13,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import yaroslavgorbach.reaction.R
 import yaroslavgorbach.reaction.common.ui.theme.ReactionTheme
@@ -29,7 +30,7 @@ fun Description(
     onBackClick: () -> Unit,
 ) {
     Description(
-        viewModel = viewModel(),
+        viewModel = hiltViewModel(),
         openExercise = openExercise,
         onBack = onBackClick
     )

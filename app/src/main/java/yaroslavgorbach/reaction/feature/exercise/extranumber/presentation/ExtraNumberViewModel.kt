@@ -2,25 +2,22 @@ package yaroslavgorbach.reaction.feature.exercise.extranumber.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.launch
 import yaroslavgorbach.reaction.business.exercise.ObserveExtraNumbersInteractor
 import yaroslavgorbach.reaction.data.exercise.extranumber.local.model.Number
-import yaroslavgorbach.reaction.data.exercise.repo.RepoExercise
-import yaroslavgorbach.reaction.data.exercise.repo.RepoExerciseImp
 import yaroslavgorbach.reaction.feature.exercise.extranumber.model.ExtraNumberActions
 import yaroslavgorbach.reaction.feature.exercise.extranumber.model.ExtraNumberViewState
-import yaroslavgorbach.reaction.feature.listexercises.model.ExercisesActions
-import yaroslavgorbach.reaction.feature.listexercises.model.ExercisesViewState
 import yaroslavgorbach.reaction.utill.TimerCountDown
+import javax.inject.Inject
 
-class ExtraNumberViewModel : ViewModel() {
-
-    private val repo: RepoExercise
-        get() = RepoExerciseImp()
-
-    private val observeExtraNumbersInteractor = ObserveExtraNumbersInteractor(repo)
+@HiltViewModel
+class ExtraNumberViewModel @Inject constructor(
+    observeExtraNumbersInteractor: ObserveExtraNumbersInteractor
+) :
+    ViewModel() {
 
     private val pendingActions = MutableSharedFlow<ExtraNumberActions>()
 

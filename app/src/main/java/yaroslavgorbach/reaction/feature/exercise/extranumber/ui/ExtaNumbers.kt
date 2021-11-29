@@ -15,18 +15,18 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import yaroslavgorbach.reaction.common.ui.theme.ReactionTheme
 import yaroslavgorbach.reaction.data.exercise.extranumber.local.model.NumberPack
 import yaroslavgorbach.reaction.data.listexercises.local.model.ExerciseName
 import yaroslavgorbach.reaction.feature.exercise.common.mapper.ExerciseNameToInstructionResMapper
+import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseResult
+import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseResultUi
 import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseTopBar
 import yaroslavgorbach.reaction.feature.exercise.extranumber.model.ExtraNumberActions
 import yaroslavgorbach.reaction.feature.exercise.extranumber.model.ExtraNumberViewState
 import yaroslavgorbach.reaction.feature.exercise.extranumber.presentation.ExtraNumberViewModel
-import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseResultUi
-import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseResult
 import yaroslavgorbach.reaction.utill.TimerCountDown
+import kotlin.random.Random
 
 @ExperimentalFoundationApi
 @ExperimentalMaterialApi
@@ -66,12 +66,14 @@ internal fun ExtraNumbers(
     state: ExtraNumberViewState,
     actioner: (ExtraNumberActions) -> Unit,
 ) {
+
     if (state.isFinished) {
         ExerciseResult(
             exerciseResultUi = ExerciseResultUi(
                 exerciseName = ExerciseName.TEST,
                 correctPoints = state.pointsCorrect,
-                incorrectPoints = state.pointsIncorrect
+                incorrectPoints = state.pointsIncorrect,
+                Random.nextBoolean()
             ),
             onBackClick = { actioner(ExtraNumberActions.OnBackAction) },
             onRepeatExercise = {}
@@ -91,18 +93,21 @@ internal fun ExtraNumbers(
                             )
                         ),
                         timeProgress = state.timerState.timeUtilFinishedProgress,
-                        time = state.timerState.timeUtilFinishedString
+                        time = state.timerState.timeUtilFinishedString,
+                        onBack = { actioner(ExtraNumberActions.OnBackAction) }
                     )
 
                     LazyVerticalGrid(
                         cells = GridCells.Adaptive(100.dp),
                         modifier = Modifier.align(Alignment.Center)
                     ) {
-                        items(state.numberPacks.firstOrNull()?.numbers ?: emptyList()) { number ->
-                            NumberItem(
-                                number = number,
-                                onNumberClick = { actioner(ExtraNumberActions.NumberClick(number)) })
-                        }
+                        state.numberPacks.firstOrNull()?.numbers?.let { numbers ->
+                            items(numbers) { number ->
+                                NumberItem(
+                                    number = number,
+                                    onNumberClick = { actioner(ExtraNumberActions.NumberClick(number)) })
+                            }
+                        } ?: run { actioner(ExtraNumberActions.FinishExercise) }
                     }
                 }
             }

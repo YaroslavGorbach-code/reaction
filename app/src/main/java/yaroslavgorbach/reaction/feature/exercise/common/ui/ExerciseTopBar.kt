@@ -16,10 +16,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import yaroslavgorbach.reaction.R
 import yaroslavgorbach.reaction.common.ui.theme.ReactionTheme
+import yaroslavgorbach.reaction.feature.common.ui.Toolbar
 
 @Composable
-fun ExerciseTopBar(modifier: Modifier = Modifier, instruction: String, timeProgress: Float, time: String) {
+fun ExerciseTopBar(
+    modifier: Modifier = Modifier,
+    instruction: String,
+    timeProgress: Float,
+    time: String,
+    onBack: () -> Unit
+) {
     Column(modifier = modifier) {
+        Toolbar { onBack() }
+
         LinearProgressIndicator(
             progress = timeProgress,
             modifier = Modifier
@@ -53,7 +62,8 @@ fun ExerciseTopBarPreview() {
             ExerciseTopBar(
                 instruction = stringResource(id = R.string.test_instruction),
                 timeProgress = 0.5f,
-                time = "00:59"
+                time = "00:59",
+                onBack = {}
             )
         }
     }

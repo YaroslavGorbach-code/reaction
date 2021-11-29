@@ -1,10 +1,13 @@
 package yaroslavgorbach.reaction.feature.description.ui
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Close
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
@@ -14,10 +17,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import yaroslavgorbach.reaction.R
 import yaroslavgorbach.reaction.common.ui.theme.ReactionTheme
 import yaroslavgorbach.reaction.data.listexercises.local.model.ExerciseName
+import yaroslavgorbach.reaction.feature.common.ui.Toolbar
 import yaroslavgorbach.reaction.feature.description.model.DescriptionActions
 import yaroslavgorbach.reaction.feature.description.model.DescriptionViewState
 import yaroslavgorbach.reaction.feature.description.presentation.DescriptionViewModel
@@ -63,16 +66,8 @@ internal fun Description(
     actioner: (DescriptionActions) -> Unit,
 ) {
     Column(Modifier.fillMaxSize()) {
-        TopAppBar(backgroundColor = MaterialTheme.colors.background, elevation = 0.dp) {
-            Box (Modifier.fillMaxWidth()){
-                Icon(
-                    Icons.Outlined.Close,
-                    "Close",
-                    modifier = Modifier
-                        .clickable { actioner(DescriptionActions.Back) }
-                        .size(30.dp).align(Alignment.CenterEnd))
-            }
-        }
+        Toolbar { actioner(DescriptionActions.Back) }
+
         Text(
             text = stringResource(id = state.exerciseName.res),
             style = MaterialTheme.typography.caption,
@@ -92,6 +87,7 @@ internal fun Description(
                 .clickable {
                     actioner(DescriptionActions.OpenExercise(exerciseName = state.exerciseName))
                 }) {
+
             Text(
                 fontSize = 40.sp,
                 color = MaterialTheme.colors.primary,

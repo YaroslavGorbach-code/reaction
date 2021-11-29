@@ -9,8 +9,6 @@ import kotlinx.coroutines.launch
 import yaroslavgorbach.reaction.business.exercise.ObserveExtraNumbersInteractor
 import yaroslavgorbach.reaction.data.exercise.extranumber.local.model.Number
 import yaroslavgorbach.reaction.data.exercise.extranumber.local.model.NumberPack
-import yaroslavgorbach.reaction.data.exercise.repo.RepoExercise
-import yaroslavgorbach.reaction.data.exercise.repo.RepoExerciseImp
 import yaroslavgorbach.reaction.feature.exercise.extranumber.model.ExtraNumberActions
 import yaroslavgorbach.reaction.feature.exercise.extranumber.model.ExtraNumberViewState
 import yaroslavgorbach.reaction.utill.TimerCountDown
@@ -35,21 +33,24 @@ class ExtraNumberViewModel @Inject constructor(
 
     private val pointsInCorrect: MutableStateFlow<Int> = MutableStateFlow(0)
 
+    private val isExerciseFinished: MutableStateFlow<Boolean> = MutableStateFlow(false)
+
     private val numberPacks: MutableStateFlow<List<NumberPack>> = MutableStateFlow(emptyList())
 
-    val state: StateFlow<ExtraNumberViewState> = combine(
+    var state: StateFlow<ExtraNumberViewState> = combine(
         numberPacks,
         timerCountDown.state,
         pointsCorrect,
-        pointsInCorrect
-    ) { numberPacks, timerState, pointsCorrect, pointsIncorrect ->
+        pointsInCorrect,
+        isExerciseFinished
+    ) { numberPacks, timerState, pointsCorrect, pointsIncorrect, isExerciseFinished ->
         ExtraNumberViewState(
             numberPacks = numberPacks,
             timerState = timerState,
             pointsCorrect = pointsCorrect,
-            pointsIncorrect = pointsIncorrect
+            pointsIncorrect = pointsIncorrect,
+            isFinished = isExerciseFinished
         )
-
     }.stateIn(
         scope = viewModelScope,
         started = WhileSubscribed(5000),
@@ -65,9 +66,16 @@ class ExtraNumberViewModel @Inject constructor(
             pendingActions.collect { action ->
                 when (action) {
                     is ExtraNumberActions.NumberClick -> onNumberClick(action.number)
+                    is ExtraNumberActions.FinishExercise -> onFinishExercise()
                     else -> error("$action is not handled")
                 }
             }
+        }
+    }
+
+    private fun onFinishExercise() {
+        viewModelScope.launch {
+            isExerciseFinished.emit(true)
         }
     }
 

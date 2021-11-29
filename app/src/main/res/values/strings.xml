@@ -5,9 +5,9 @@
     <string name="training">Ежедневная тренировка</string>
     <string name="test">Test exercise</string>
     <string name="start">Начать</string>
-
     <string name="result">Результат</string>
-
     <string name="correct">Правильных:</string>
     <string name="incorrect">Не правильных:</string>
+    <string name="to_menu">В меню</string>
+    <string name="one_more_time">Ещё раз</string>
 </resources>

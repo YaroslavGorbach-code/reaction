@@ -65,9 +65,7 @@ fun ExerciseResult(exerciseResultUi: ExerciseResultUi, onBackClick: () -> Unit, 
                 Text(text = stringResource(id = R.string.incorrect) + " ${exerciseResultUi.incorrectPoints}")
             }
         }
-
     }
-
 }
 
 @Preview(showSystemUi = true)

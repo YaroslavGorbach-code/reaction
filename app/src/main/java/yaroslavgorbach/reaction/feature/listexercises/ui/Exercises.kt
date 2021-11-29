@@ -17,7 +17,9 @@ import androidx.compose.ui.Alignment.Companion.End
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import yaroslavgorbach.reaction.common.ui.theme.ReactionTheme
 import yaroslavgorbach.reaction.data.listexercises.local.model.Exercise
 import yaroslavgorbach.reaction.data.listexercises.local.model.ExerciseName
@@ -32,9 +34,8 @@ fun Exercises(
     openTraining: () -> Unit,
     openSettings: () -> Unit,
 ) {
-
     Exercises(
-        viewModel = viewModel(),
+        viewModel = hiltViewModel(),
         openDescription = openDescription,
         openTraining = openTraining,
         openSettings = openSettings,

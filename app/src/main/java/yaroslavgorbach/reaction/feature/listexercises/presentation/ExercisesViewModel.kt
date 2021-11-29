@@ -2,23 +2,19 @@ package yaroslavgorbach.reaction.feature.listexercises.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.launch
 import yaroslavgorbach.reaction.business.listexercises.ObserveExercisesInteractor
-import yaroslavgorbach.reaction.data.listexercises.repo.RepoExercises
-import yaroslavgorbach.reaction.data.listexercises.repo.RepoExercisesImp
 import yaroslavgorbach.reaction.feature.listexercises.model.ExercisesActions
 import yaroslavgorbach.reaction.feature.listexercises.model.ExercisesViewState
+import javax.inject.Inject
 
-class ExercisesViewModel : ViewModel() {
-
-    private val repo: RepoExercises
-        get() = RepoExercisesImp()
-
-    private val observeExercisesInteractor: ObserveExercisesInteractor
-        get() = ObserveExercisesInteractor(repo)
-
+@HiltViewModel
+class ExercisesViewModel @Inject constructor(
+    observeExercisesInteractor: ObserveExercisesInteractor
+) : ViewModel() {
     private val pendingActions = MutableSharedFlow<ExercisesActions>()
 
     val state: StateFlow<ExercisesViewState> = combine(

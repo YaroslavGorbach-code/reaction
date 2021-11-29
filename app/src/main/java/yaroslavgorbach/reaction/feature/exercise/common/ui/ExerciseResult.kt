@@ -47,14 +47,22 @@ fun ExerciseResult(exerciseResultUi: ExerciseResultUi, onBackClick: () -> Unit, 
                 .padding(16.dp)
         ) {
             Box {
-                Text(text = "10%", modifier = Modifier.align(Center), textAlign = TextAlign.Center, fontSize = 16.sp)
-                CircularProgressIndicator(progress = 1f, color = Color.Red.copy(alpha = 0.4f), modifier = Modifier.size(50.dp))
-                CircularProgressIndicator(progress = 0.5f, color = Color.Green, modifier = Modifier.size(50.dp))
+                Text(
+                    text = exerciseResultUi.progressString,
+                    modifier = Modifier.align(Center),
+                    textAlign = TextAlign.Center,
+                    fontSize = 16.sp
+                )
+                CircularProgressIndicator(progress = 1f, color = Color.Red.copy(alpha = 0.4f), modifier = Modifier.size(70.dp))
+                CircularProgressIndicator(progress = exerciseResultUi.correctPresent, color = Color.Green, modifier = Modifier.size(70.dp))
             }
 
-            Column(Modifier.padding(start = 16.dp).align(Alignment.CenterVertically)) {
+            Column(
+                Modifier
+                    .padding(start = 16.dp)
+                    .align(Alignment.CenterVertically)) {
                 Text(text = stringResource(id = R.string.correct) + " ${exerciseResultUi.correctPoints}")
-                Text(text = stringResource(id = R.string.incorrect) + " ${ exerciseResultUi.incorrectPoints}")
+                Text(text = stringResource(id = R.string.incorrect) + " ${exerciseResultUi.incorrectPoints}")
             }
         }
 

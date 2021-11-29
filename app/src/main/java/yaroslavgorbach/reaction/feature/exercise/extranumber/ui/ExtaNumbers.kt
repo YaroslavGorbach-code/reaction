@@ -51,7 +51,6 @@ internal fun ExtraNumbers(
     ExtraNumbers(
         state = viewState.value,
     ) { action ->
-
         when (action) {
             is ExtraNumberActions.OnBackAction -> onBackClick()
             else -> viewModel.submitAction(action)
@@ -66,46 +65,49 @@ internal fun ExtraNumbers(
     state: ExtraNumberViewState,
     actioner: (ExtraNumberActions) -> Unit,
 ) {
+    if (state.isFinished) {
+        ExerciseResult(
+            exerciseResultUi = ExerciseResultUi(
+                exerciseName = ExerciseName.TEST,
+                correctPoints = state.pointsCorrect,
+                incorrectPoints = state.pointsIncorrect
+            ),
+            onBackClick = { actioner(ExtraNumberActions.OnBackAction) },
+            onRepeatExercise = {}
+        )
+    } else {
+        Box(Modifier.fillMaxSize()) {
+            when (state.timerState) {
+                TimerCountDown.TimerState.Finish -> {
+                    actioner(ExtraNumberActions.FinishExercise)
+                }
+                is TimerCountDown.TimerState.Tick -> {
+                    ExerciseTopBar(
+                        modifier = Modifier.align(Alignment.TopCenter),
+                        instruction = stringResource(
+                            id = ExerciseNameToInstructionResMapper.map(
+                                exerciseName = ExerciseName.TEST
+                            )
+                        ),
+                        timeProgress = state.timerState.timeUtilFinishedProgress,
+                        time = state.timerState.timeUtilFinishedString
+                    )
 
-    Box(Modifier.fillMaxSize()) {
-        when (state.timerState) {
-            TimerCountDown.TimerState.Finish -> {
-                ExerciseResult(
-                    exerciseResultUi = ExerciseResultUi(
-                        exerciseName = ExerciseName.TEST,
-                        correctPoints = state.pointsCorrect,
-                        incorrectPoints = state.pointsIncorrect
-                    ),
-                    onBackClick = { actioner(ExtraNumberActions.OnBackAction) },
-                    onRepeatExercise = {}
-                )
-
-            }
-            is TimerCountDown.TimerState.Tick -> {
-                ExerciseTopBar(
-                    modifier = Modifier.align(Alignment.TopCenter),
-                    instruction = stringResource(
-                        id = ExerciseNameToInstructionResMapper.map(
-                            exerciseName = ExerciseName.TEST
-                        )
-                    ),
-                    timeProgress = state.timerState.timeUtilFinishedProgress,
-                    time = state.timerState.timeUtilFinishedString
-                )
-
-                LazyVerticalGrid(
-                    cells = GridCells.Adaptive(100.dp),
-                    modifier = Modifier.align(Alignment.Center)
-                ) {
-                    items(state.numberPacks.firstOrNull()?.numbers ?: emptyList()) { number ->
-                        NumberItem(
-                            number = number,
-                            onNumberClick = { actioner(ExtraNumberActions.NumberClick(number)) })
+                    LazyVerticalGrid(
+                        cells = GridCells.Adaptive(100.dp),
+                        modifier = Modifier.align(Alignment.Center)
+                    ) {
+                        items(state.numberPacks.firstOrNull()?.numbers ?: emptyList()) { number ->
+                            NumberItem(
+                                number = number,
+                                onNumberClick = { actioner(ExtraNumberActions.NumberClick(number)) })
+                        }
                     }
                 }
             }
         }
     }
+
 }
 
 

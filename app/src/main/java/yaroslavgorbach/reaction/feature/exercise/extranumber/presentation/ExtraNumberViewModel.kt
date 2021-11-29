@@ -7,12 +7,11 @@ import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.launch
 import yaroslavgorbach.reaction.business.exercise.ObserveExtraNumbersInteractor
 import yaroslavgorbach.reaction.data.exercise.extranumber.local.model.Number
+import yaroslavgorbach.reaction.data.exercise.extranumber.local.model.NumberPack
 import yaroslavgorbach.reaction.data.exercise.repo.RepoExercise
 import yaroslavgorbach.reaction.data.exercise.repo.RepoExerciseImp
 import yaroslavgorbach.reaction.feature.exercise.extranumber.model.ExtraNumberActions
 import yaroslavgorbach.reaction.feature.exercise.extranumber.model.ExtraNumberViewState
-import yaroslavgorbach.reaction.feature.listexercises.model.ExercisesActions
-import yaroslavgorbach.reaction.feature.listexercises.model.ExercisesViewState
 import yaroslavgorbach.reaction.utill.TimerCountDown
 
 class ExtraNumberViewModel : ViewModel() {
@@ -35,8 +34,10 @@ class ExtraNumberViewModel : ViewModel() {
 
     private val pointsInCorrect: MutableStateFlow<Int> = MutableStateFlow(0)
 
+    private val numberPacks: MutableStateFlow<List<NumberPack>> = MutableStateFlow(emptyList())
+
     val state: StateFlow<ExtraNumberViewState> = combine(
-        observeExtraNumbersInteractor(),
+        numberPacks,
         timerCountDown.state,
         pointsCorrect,
         pointsInCorrect
@@ -58,6 +59,8 @@ class ExtraNumberViewModel : ViewModel() {
         timerCountDown.start()
 
         viewModelScope.launch {
+            observeExtraNumbersInteractor().collect(numberPacks::emit)
+
             pendingActions.collect { action ->
                 when (action) {
                     is ExtraNumberActions.NumberClick -> onNumberClick(action.number)
@@ -74,6 +77,8 @@ class ExtraNumberViewModel : ViewModel() {
             } else {
                 pointsInCorrect.emit(pointsInCorrect.value + 1)
             }
+
+            numberPacks.emit(numberPacks.value.drop(1))
         }
     }
 
@@ -82,7 +87,6 @@ class ExtraNumberViewModel : ViewModel() {
             pendingActions.emit(action)
         }
     }
-
 }
 
 

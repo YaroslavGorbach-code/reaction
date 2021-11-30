@@ -26,17 +26,18 @@ import yaroslavgorbach.reaction.feature.exercise.extranumber.model.ExtraNumberAc
 import yaroslavgorbach.reaction.feature.exercise.extranumber.model.ExtraNumberViewState
 import yaroslavgorbach.reaction.feature.exercise.extranumber.presentation.ExtraNumberViewModel
 import yaroslavgorbach.reaction.utill.TimerCountDown
-import kotlin.random.Random
 
 @ExperimentalFoundationApi
 @ExperimentalMaterialApi
 @Composable
 fun ExtraNumbers(
     onBackClick: () -> Unit,
+    onRepeatExerciseClick: () -> Unit,
 ) {
     ExtraNumbers(
         viewModel = hiltViewModel(),
         onBackClick = onBackClick,
+        onRepeatExerciseClick = onRepeatExerciseClick
     )
 }
 
@@ -46,6 +47,7 @@ fun ExtraNumbers(
 internal fun ExtraNumbers(
     viewModel: ExtraNumberViewModel,
     onBackClick: () -> Unit,
+    onRepeatExerciseClick: () -> Unit,
 ) {
     val viewState = viewModel.state.collectAsState()
 
@@ -53,7 +55,8 @@ internal fun ExtraNumbers(
         state = viewState.value,
     ) { action ->
         when (action) {
-            is ExtraNumberActions.OnBackAction -> onBackClick()
+            is ExtraNumberActions.Back -> onBackClick()
+            is ExtraNumberActions.Repeat -> onRepeatExerciseClick()
             else -> viewModel.submitAction(action)
         }
     }
@@ -74,8 +77,8 @@ internal fun ExtraNumbers(
                 correctPoints = state.pointsCorrect,
                 incorrectPoints = state.pointsIncorrect,
             ),
-            onBackClick = { actioner(ExtraNumberActions.OnBackAction) },
-            onRepeatExercise = {}
+            onBackClick = { actioner(ExtraNumberActions.Back) },
+            onRepeatExercise = { actioner(ExtraNumberActions.Repeat) }
         )
     } else {
         Box(Modifier.fillMaxSize()) {
@@ -93,7 +96,7 @@ internal fun ExtraNumbers(
                         ),
                         timeProgress = state.timerState.timeUtilFinishedProgress,
                         time = state.timerState.timeUtilFinishedString,
-                        onBack = { actioner(ExtraNumberActions.OnBackAction) }
+                        onBack = { actioner(ExtraNumberActions.Back) }
                     )
 
                     LazyVerticalGrid(

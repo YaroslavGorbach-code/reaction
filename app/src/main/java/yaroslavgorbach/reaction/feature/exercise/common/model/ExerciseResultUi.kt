@@ -17,7 +17,7 @@ data class ExerciseResultUi(
     }
 
     private val isResultGood: Boolean
-        get() = correctPresent > 0.9f
+        get() = correctPresent > 0.95f
 
     val correctPresent: Float
         get() = ((correctPoints.toFloat() / (incorrectPoints.toFloat() + correctPoints.toFloat())))

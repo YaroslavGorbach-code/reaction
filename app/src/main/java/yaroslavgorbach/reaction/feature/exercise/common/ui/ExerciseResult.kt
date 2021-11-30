@@ -24,7 +24,7 @@ import yaroslavgorbach.reaction.feature.exercise.common.model.ExerciseResultUi
 
 
 @Composable
-fun ExerciseResult(exerciseResultUi: ExerciseResultUi, onBackClick: () -> Unit, onRepeatExercise: (ExerciseName) -> Unit) {
+fun ExerciseResult(exerciseResultUi: ExerciseResultUi, onBackClick: () -> Unit, onRepeatExercise: () -> Unit) {
 
     Column(Modifier.fillMaxSize()) {
         Toolbar { onBackClick() }
@@ -53,7 +53,6 @@ fun ExerciseResult(exerciseResultUi: ExerciseResultUi, onBackClick: () -> Unit, 
         ) {
 
             Box {
-
                 Text(
                     text = exerciseResultUi.progressString,
                     modifier = Modifier.align(Center),
@@ -61,9 +60,19 @@ fun ExerciseResult(exerciseResultUi: ExerciseResultUi, onBackClick: () -> Unit, 
                     fontSize = 16.sp
                 )
 
-                CircularProgressIndicator(progress = 1f, color = Color.Red.copy(alpha = 0.4f), modifier = Modifier.size(60.dp), strokeWidth = 4.dp)
+                CircularProgressIndicator(
+                    progress = 1f,
+                    color = Color.Red.copy(alpha = 0.4f),
+                    modifier = Modifier.size(60.dp),
+                    strokeWidth = 4.dp
+                )
 
-                CircularProgressIndicator(progress = exerciseResultUi.correctPresent, color = Color.Green, modifier = Modifier.size(60.dp), strokeWidth = 4.dp)
+                CircularProgressIndicator(
+                    progress = exerciseResultUi.correctPresent,
+                    color = Color.Green,
+                    modifier = Modifier.size(60.dp),
+                    strokeWidth = 4.dp
+                )
             }
 
             Column(
@@ -71,7 +80,6 @@ fun ExerciseResult(exerciseResultUi: ExerciseResultUi, onBackClick: () -> Unit, 
                     .padding(start = 16.dp)
                     .align(Alignment.CenterVertically)
             ) {
-
                 Text(
                     modifier = Modifier.padding(bottom = 4.dp),
                     text = stringResource(id = R.string.correct) + " ${exerciseResultUi.correctPoints}",
@@ -88,10 +96,20 @@ fun ExerciseResult(exerciseResultUi: ExerciseResultUi, onBackClick: () -> Unit, 
             }
         }
 
-        Box(modifier = Modifier.fillMaxSize() ) {
-            Column(modifier = Modifier.align(Center).padding(bottom = 100.dp)) {
+        Box(modifier = Modifier.fillMaxSize()) {
+            Column(
+                modifier = Modifier
+                    .align(Center)
+                    .padding(bottom = 100.dp)
+            ) {
 
-                Icon(modifier = Modifier.size(100.dp).align(CenterHorizontally), imageVector = exerciseResultUi.icon, contentDescription = null)
+                Icon(
+                    modifier = Modifier
+                        .size(100.dp)
+                        .align(CenterHorizontally),
+                    imageVector = exerciseResultUi.icon,
+                    contentDescription = null
+                )
 
                 Text(
                     modifier = Modifier.fillMaxWidth(),
@@ -107,10 +125,9 @@ fun ExerciseResult(exerciseResultUi: ExerciseResultUi, onBackClick: () -> Unit, 
                     .align(BottomCenter)
                     .padding(8.dp),
             ) {
-
                 Button(
                     modifier = Modifier.padding(8.dp),
-                    onClick = {},
+                    onClick = { onBackClick() },
                     colors = ButtonDefaults.outlinedButtonColors()
                 ) {
 
@@ -123,10 +140,9 @@ fun ExerciseResult(exerciseResultUi: ExerciseResultUi, onBackClick: () -> Unit, 
 
                 Button(
                     modifier = Modifier.padding(8.dp),
-                    onClick = {},
+                    onClick = { onRepeatExercise() },
                     colors = ButtonDefaults.outlinedButtonColors()
                 ) {
-
                     Text(
                         modifier = Modifier.padding(8.dp),
                         text = stringResource(id = R.string.one_more_time),

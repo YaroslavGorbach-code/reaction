@@ -72,7 +72,18 @@ private fun NavGraphBuilder.addExtraNumbersExercise(
     root: Screen,
 ) {
     composable(LeafScreen.ExtraNumbers.createRoute(root)) {
-        ExtraNumbers(onBackClick = { navController.popBackStack() })
+        ExtraNumbers(onBackClick = { navController.popBackStack() }, onRepeatExerciseClick = {
+            navController.navigate(
+                LeafScreen.ShowDescription.createRoute(
+                    root = root,
+                    exerciseName = ExerciseName.TEST
+                )
+            ) {
+                popUpTo(LeafScreen.Exercises.createRoute(root = root)) {
+                    inclusive = false
+                }
+            }
+        })
     }
 }
 

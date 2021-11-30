@@ -10,4 +10,6 @@
     <string name="incorrect">Не правильных:</string>
     <string name="to_menu">В меню</string>
     <string name="one_more_time">Ещё раз</string>
+    <string name="result_good">Отличный резульат! \n Повторим?</string>
+    <string name="result_bad">Не плохо, но нужно лутьше \n Попробуете еще раз?</string>
 </resources>

@@ -7,6 +7,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.BottomCenter
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
+import androidx.compose.ui.Alignment.Companion.CenterVertically
+import androidx.compose.ui.Alignment.Companion.TopCenter
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -18,6 +20,7 @@ import yaroslavgorbach.reaction.R
 import yaroslavgorbach.reaction.common.ui.theme.ReactionTheme
 import yaroslavgorbach.reaction.data.listexercises.local.model.ExerciseName
 import yaroslavgorbach.reaction.feature.common.ui.Toolbar
+import yaroslavgorbach.reaction.feature.exercise.common.model.ExerciseResultUi
 
 
 @Composable
@@ -48,15 +51,19 @@ fun ExerciseResult(exerciseResultUi: ExerciseResultUi, onBackClick: () -> Unit, 
                 .wrapContentSize()
                 .padding(16.dp)
         ) {
+
             Box {
+
                 Text(
                     text = exerciseResultUi.progressString,
                     modifier = Modifier.align(Center),
                     textAlign = TextAlign.Center,
                     fontSize = 16.sp
                 )
-                CircularProgressIndicator(progress = 1f, color = Color.Red.copy(alpha = 0.4f), modifier = Modifier.size(70.dp))
-                CircularProgressIndicator(progress = exerciseResultUi.correctPresent, color = Color.Green, modifier = Modifier.size(70.dp))
+
+                CircularProgressIndicator(progress = 1f, color = Color.Red.copy(alpha = 0.4f), modifier = Modifier.size(60.dp), strokeWidth = 4.dp)
+
+                CircularProgressIndicator(progress = exerciseResultUi.correctPresent, color = Color.Green, modifier = Modifier.size(60.dp), strokeWidth = 4.dp)
             }
 
             Column(
@@ -64,24 +71,35 @@ fun ExerciseResult(exerciseResultUi: ExerciseResultUi, onBackClick: () -> Unit, 
                     .padding(start = 16.dp)
                     .align(Alignment.CenterVertically)
             ) {
+
                 Text(
                     modifier = Modifier.padding(bottom = 4.dp),
                     text = stringResource(id = R.string.correct) + " ${exerciseResultUi.correctPoints}",
                     style = MaterialTheme.typography.caption,
-                    fontSize = 16.sp
+                    fontSize = 18.sp
                 )
+
                 Text(
                     modifier = Modifier.padding(top = 4.dp),
                     text = stringResource(id = R.string.incorrect) + " ${exerciseResultUi.incorrectPoints}",
                     style = MaterialTheme.typography.caption,
-                    fontSize = 16.sp
+                    fontSize = 18.sp
                 )
             }
         }
 
-        Box(modifier = Modifier.fillMaxSize()) {
-            Column(modifier = Modifier.align(Center)) {
+        Box(modifier = Modifier.fillMaxSize() ) {
+            Column(modifier = Modifier.align(Center).padding(bottom = 100.dp)) {
 
+                Icon(modifier = Modifier.size(100.dp).align(CenterHorizontally), imageVector = exerciseResultUi.icon, contentDescription = null)
+
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = stringResource(exerciseResultUi.textRes),
+                    style = MaterialTheme.typography.body1,
+                    fontSize = 24.sp,
+                    textAlign = TextAlign.Center
+                )
             }
 
             Row(
@@ -89,11 +107,13 @@ fun ExerciseResult(exerciseResultUi: ExerciseResultUi, onBackClick: () -> Unit, 
                     .align(BottomCenter)
                     .padding(8.dp),
             ) {
+
                 Button(
                     modifier = Modifier.padding(8.dp),
                     onClick = {},
                     colors = ButtonDefaults.outlinedButtonColors()
                 ) {
+
                     Text(
                         modifier = Modifier.padding(8.dp),
                         text = stringResource(id = R.string.to_menu),
@@ -106,6 +126,7 @@ fun ExerciseResult(exerciseResultUi: ExerciseResultUi, onBackClick: () -> Unit, 
                     onClick = {},
                     colors = ButtonDefaults.outlinedButtonColors()
                 ) {
+
                     Text(
                         modifier = Modifier.padding(8.dp),
                         text = stringResource(id = R.string.one_more_time),

@@ -20,7 +20,7 @@ import yaroslavgorbach.reaction.data.exercise.extranumber.local.model.NumberPack
 import yaroslavgorbach.reaction.data.listexercises.local.model.ExerciseName
 import yaroslavgorbach.reaction.feature.exercise.common.mapper.ExerciseNameToInstructionResMapper
 import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseResult
-import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseResultUi
+import yaroslavgorbach.reaction.feature.exercise.common.model.ExerciseResultUi
 import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseTopBar
 import yaroslavgorbach.reaction.feature.exercise.extranumber.model.ExtraNumberActions
 import yaroslavgorbach.reaction.feature.exercise.extranumber.model.ExtraNumberViewState
@@ -73,7 +73,6 @@ internal fun ExtraNumbers(
                 exerciseName = ExerciseName.TEST,
                 correctPoints = state.pointsCorrect,
                 incorrectPoints = state.pointsIncorrect,
-                Random.nextBoolean()
             ),
             onBackClick = { actioner(ExtraNumberActions.OnBackAction) },
             onRepeatExercise = {}

@@ -49,7 +49,7 @@ fun ExerciseResult(exerciseResultUi: ExerciseResultUi, onBackClick: () -> Unit, 
             Modifier
                 .align(CenterHorizontally)
                 .wrapContentSize()
-                .padding(16.dp)
+                .padding(24.dp)
         ) {
 
             Box {
@@ -80,18 +80,23 @@ fun ExerciseResult(exerciseResultUi: ExerciseResultUi, onBackClick: () -> Unit, 
                     .padding(start = 16.dp)
                     .align(Alignment.CenterVertically)
             ) {
+
                 Text(
-                    modifier = Modifier.padding(bottom = 4.dp),
-                    text = stringResource(id = R.string.correct) + " ${exerciseResultUi.correctPoints}",
+                    text = stringResource(id = R.string.number_of_rounds) + " ${exerciseResultUi.summaryPints}",
                     style = MaterialTheme.typography.caption,
                     fontSize = 18.sp
                 )
 
                 Text(
-                    modifier = Modifier.padding(top = 4.dp),
+                    text = stringResource(id = R.string.correct) + " ${exerciseResultUi.correctPoints}",
+                    style = MaterialTheme.typography.body1,
+                    fontSize = 12.sp
+                )
+
+                Text(
                     text = stringResource(id = R.string.incorrect) + " ${exerciseResultUi.incorrectPoints}",
-                    style = MaterialTheme.typography.caption,
-                    fontSize = 18.sp
+                    style = MaterialTheme.typography.body1,
+                    fontSize = 12.sp
                 )
             }
         }
@@ -102,7 +107,6 @@ fun ExerciseResult(exerciseResultUi: ExerciseResultUi, onBackClick: () -> Unit, 
                     .align(Center)
                     .padding(bottom = 100.dp)
             ) {
-
                 Icon(
                     modifier = Modifier
                         .size(100.dp)
@@ -112,10 +116,18 @@ fun ExerciseResult(exerciseResultUi: ExerciseResultUi, onBackClick: () -> Unit, 
                 )
 
                 Text(
-                    modifier = Modifier.fillMaxWidth(),
-                    text = stringResource(exerciseResultUi.textRes),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 8.dp),
+                    text = if (exerciseResultUi.isWin)
+                        stringResource(id = R.string.result_good)
+                    else stringResource(
+                        id = R.string.result_bad,
+                        exerciseResultUi.winRule.minRounds,
+                        exerciseResultUi.winRule.minCorrectPresent
+                    ),
                     style = MaterialTheme.typography.body1,
-                    fontSize = 24.sp,
+                    fontSize = 16.sp,
                     textAlign = TextAlign.Center
                 )
             }

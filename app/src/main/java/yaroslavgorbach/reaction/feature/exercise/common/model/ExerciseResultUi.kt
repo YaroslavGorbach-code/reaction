@@ -9,24 +9,25 @@ import yaroslavgorbach.reaction.data.listexercises.local.model.ExerciseName
 
 data class ExerciseResultUi(
     val exerciseName: ExerciseName,
+    val winRule: WinRule,
     val correctPoints: Int,
     val incorrectPoints: Int
 ) {
     companion object {
-        val Test = ExerciseResultUi(ExerciseName.TEST, 10, 5)
+        val Test = ExerciseResultUi(ExerciseName.TEST, winRule = WinRule.Default, correctPoints = 30, incorrectPoints = 20)
     }
 
-    private val isResultGood: Boolean
-        get() = correctPresent > 0.95f
+    val summaryPints: Int
+        get() = correctPoints + incorrectPoints
 
     val correctPresent: Float
         get() = ((correctPoints.toFloat() / (incorrectPoints.toFloat() + correctPoints.toFloat())))
 
     val icon: ImageVector
-        get() = if (isResultGood) Icons.Outlined.SentimentSatisfied else Icons.Outlined.SentimentDissatisfied
+        get() = if (isWin) Icons.Outlined.SentimentSatisfied else Icons.Outlined.SentimentDissatisfied
 
-    val textRes: Int
-        get() = if (isResultGood) R.string.result_good else R.string.result_bad
+    val isWin: Boolean
+        get() = correctPresent > winRule.minCorrectPresent / 100f
 
     val progressString: String
         get() = "${(correctPresent * 100).toInt()} %"

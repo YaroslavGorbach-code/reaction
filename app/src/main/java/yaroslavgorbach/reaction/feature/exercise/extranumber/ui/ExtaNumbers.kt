@@ -19,11 +19,13 @@ import yaroslavgorbach.reaction.common.ui.theme.ReactionTheme
 import yaroslavgorbach.reaction.data.exercise.extranumber.local.model.NumberPack
 import yaroslavgorbach.reaction.data.listexercises.local.model.ExerciseName
 import yaroslavgorbach.reaction.feature.exercise.common.mapper.ExerciseNameToInstructionResMapper
+import yaroslavgorbach.reaction.feature.exercise.common.mapper.ExerciseNameToWinRuleMapper
 import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseResult
 import yaroslavgorbach.reaction.feature.exercise.common.model.ExerciseResultUi
 import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseTopBar
 import yaroslavgorbach.reaction.feature.exercise.extranumber.model.ExtraNumberActions
 import yaroslavgorbach.reaction.feature.exercise.extranumber.model.ExtraNumberViewState
+import yaroslavgorbach.reaction.feature.exercise.extranumber.model.ExtraNumberWinRule
 import yaroslavgorbach.reaction.feature.exercise.extranumber.presentation.ExtraNumberViewModel
 import yaroslavgorbach.reaction.utill.TimerCountDown
 
@@ -69,13 +71,13 @@ internal fun ExtraNumbers(
     state: ExtraNumberViewState,
     actioner: (ExtraNumberActions) -> Unit,
 ) {
-
     if (state.isFinished) {
         ExerciseResult(
             exerciseResultUi = ExerciseResultUi(
                 exerciseName = ExerciseName.TEST,
                 correctPoints = state.pointsCorrect,
                 incorrectPoints = state.pointsIncorrect,
+                winRule = ExerciseNameToWinRuleMapper.map(ExerciseName.TEST)
             ),
             onBackClick = { actioner(ExtraNumberActions.Back) },
             onRepeatExercise = { actioner(ExtraNumberActions.Repeat) }

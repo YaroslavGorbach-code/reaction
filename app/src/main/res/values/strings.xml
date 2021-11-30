@@ -6,10 +6,12 @@
     <string name="test">Test exercise</string>
     <string name="start">Начать</string>
     <string name="result">Результат</string>
-    <string name="correct">Правильных:</string>
-    <string name="incorrect">Не правильных:</string>
+    <string name="correct">Правильных ответов:</string>
+    <string name="number_of_rounds">Всего раундов:</string>
+    <string name="incorrect">Не правильных ответов:</string>
     <string name="to_menu">В меню</string>
     <string name="one_more_time">Ещё раз</string>
     <string name="result_good">Отличный резульат! \n Повторим?</string>
-    <string name="result_bad">Не плохо, но нужно лутьше \n Попробуете еще раз?</string>
+    <string name="result_bad">Не плохо, но для прохождения данного уровня необходимо выполнить минимум %1$d раундов
+        и получить больше %2$d процентов правильных ответов. \n Попробуете еще раз?</string>
 </resources>

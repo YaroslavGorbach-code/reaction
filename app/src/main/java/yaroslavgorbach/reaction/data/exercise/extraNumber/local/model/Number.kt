@@ -1,4 +1,4 @@
-package yaroslavgorbach.reaction.data.exercise.extranumber.local.model
+package yaroslavgorbach.reaction.data.exercise.extraNumber.local.model
 
 import kotlin.random.Random
 

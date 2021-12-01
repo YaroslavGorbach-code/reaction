@@ -1,4 +1,4 @@
-package yaroslavgorbach.reaction.feature.exercise.extranumber.presentation
+package yaroslavgorbach.reaction.feature.exercise.extraNumber.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,10 +8,10 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.launch
 import yaroslavgorbach.reaction.business.exercise.ObserveExtraNumbersInteractor
-import yaroslavgorbach.reaction.data.exercise.extranumber.local.model.Number
-import yaroslavgorbach.reaction.data.exercise.extranumber.local.model.NumberPack
-import yaroslavgorbach.reaction.feature.exercise.extranumber.model.ExtraNumberActions
-import yaroslavgorbach.reaction.feature.exercise.extranumber.model.ExtraNumberViewState
+import yaroslavgorbach.reaction.data.exercise.extraNumber.local.model.Number
+import yaroslavgorbach.reaction.data.exercise.extraNumber.local.model.NumberPack
+import yaroslavgorbach.reaction.feature.exercise.extraNumber.model.ExtraNumberActions
+import yaroslavgorbach.reaction.feature.exercise.extraNumber.model.ExtraNumberViewState
 import yaroslavgorbach.reaction.utill.TimerCountDown
 import javax.inject.Inject
 

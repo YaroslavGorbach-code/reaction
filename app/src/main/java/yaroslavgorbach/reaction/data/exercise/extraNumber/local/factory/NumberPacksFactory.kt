@@ -1,7 +1,7 @@
-package yaroslavgorbach.reaction.data.exercise.extranumber.local.factory
+package yaroslavgorbach.reaction.data.exercise.extraNumber.local.factory
 
-import yaroslavgorbach.reaction.data.exercise.extranumber.local.model.Number
-import yaroslavgorbach.reaction.data.exercise.extranumber.local.model.NumberPack
+import yaroslavgorbach.reaction.data.exercise.extraNumber.local.model.Number
+import yaroslavgorbach.reaction.data.exercise.extraNumber.local.model.NumberPack
 import kotlin.random.Random
 
 @ExperimentalStdlibApi

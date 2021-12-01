@@ -4,7 +4,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.SentimentDissatisfied
 import androidx.compose.material.icons.outlined.SentimentSatisfied
 import androidx.compose.ui.graphics.vector.ImageVector
-import yaroslavgorbach.reaction.data.listexercises.local.model.ExerciseName
+import yaroslavgorbach.reaction.data.listExercises.local.model.ExerciseName
 
 data class ExerciseResultUi(
     val exerciseName: ExerciseName,

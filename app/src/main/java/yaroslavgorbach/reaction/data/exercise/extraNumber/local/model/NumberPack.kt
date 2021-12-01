@@ -1,4 +1,4 @@
-package yaroslavgorbach.reaction.data.exercise.extranumber.local.model
+package yaroslavgorbach.reaction.data.exercise.extraNumber.local.model
 
 data class NumberPack(val numbers: List<Number>) {
     companion object {

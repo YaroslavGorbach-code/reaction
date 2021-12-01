@@ -1,4 +1,4 @@
-package yaroslavgorbach.reaction.feature.exercise.extranumber.ui
+package yaroslavgorbach.reaction.feature.exercise.extraNumber.ui
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
@@ -16,17 +16,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import yaroslavgorbach.reaction.common.ui.theme.ReactionTheme
-import yaroslavgorbach.reaction.data.exercise.extranumber.local.model.NumberPack
-import yaroslavgorbach.reaction.data.listexercises.local.model.ExerciseName
+import yaroslavgorbach.reaction.data.exercise.extraNumber.local.model.NumberPack
+import yaroslavgorbach.reaction.data.listExercises.local.model.ExerciseName
 import yaroslavgorbach.reaction.feature.exercise.common.mapper.ExerciseNameToInstructionResMapper
 import yaroslavgorbach.reaction.feature.exercise.common.mapper.ExerciseNameToWinRuleMapper
 import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseResult
 import yaroslavgorbach.reaction.feature.exercise.common.model.ExerciseResultUi
 import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseTopBar
-import yaroslavgorbach.reaction.feature.exercise.extranumber.model.ExtraNumberActions
-import yaroslavgorbach.reaction.feature.exercise.extranumber.model.ExtraNumberViewState
-import yaroslavgorbach.reaction.feature.exercise.extranumber.model.ExtraNumberWinRule
-import yaroslavgorbach.reaction.feature.exercise.extranumber.presentation.ExtraNumberViewModel
+import yaroslavgorbach.reaction.feature.exercise.extraNumber.model.ExtraNumberActions
+import yaroslavgorbach.reaction.feature.exercise.extraNumber.model.ExtraNumberViewState
+import yaroslavgorbach.reaction.feature.exercise.extraNumber.presentation.ExtraNumberViewModel
 import yaroslavgorbach.reaction.utill.TimerCountDown
 
 @ExperimentalFoundationApi

@@ -1,4 +1,4 @@
-package yaroslavgorbach.reaction.feature.exercise.extranumber.ui
+package yaroslavgorbach.reaction.feature.exercise.extraNumber.ui
 
 import android.content.res.Configuration
 import androidx.compose.foundation.clickable
@@ -15,7 +15,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import yaroslavgorbach.reaction.common.ui.theme.ReactionTheme
-import yaroslavgorbach.reaction.data.exercise.extranumber.local.model.Number
+import yaroslavgorbach.reaction.data.exercise.extraNumber.local.model.Number
 
 @Composable
 fun NumberItem(number: Number, onNumberClick: () -> Unit) {

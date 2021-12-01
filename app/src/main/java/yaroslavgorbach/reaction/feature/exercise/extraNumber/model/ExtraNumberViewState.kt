@@ -1,6 +1,6 @@
-package yaroslavgorbach.reaction.feature.exercise.extranumber.model
+package yaroslavgorbach.reaction.feature.exercise.extraNumber.model
 
-import yaroslavgorbach.reaction.data.exercise.extranumber.local.model.NumberPack
+import yaroslavgorbach.reaction.data.exercise.extraNumber.local.model.NumberPack
 import yaroslavgorbach.reaction.utill.TimerCountDown
 
 data class ExtraNumberViewState(

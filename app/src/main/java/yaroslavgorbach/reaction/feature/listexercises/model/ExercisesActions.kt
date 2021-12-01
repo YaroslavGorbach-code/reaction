@@ -1,6 +1,6 @@
 package yaroslavgorbach.reaction.feature.listexercises.model
 
-import yaroslavgorbach.reaction.data.listexercises.local.model.ExerciseName
+import yaroslavgorbach.reaction.data.listExercises.local.model.ExerciseName
 
 sealed class ExercisesActions {
     data class OpenDetails(val exerciseName: ExerciseName) : ExercisesActions()

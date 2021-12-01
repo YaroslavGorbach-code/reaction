@@ -1,7 +1,7 @@
 package yaroslavgorbach.reaction.data.training.model
 
-import yaroslavgorbach.reaction.data.listexercises.local.model.Exercise
-import yaroslavgorbach.reaction.data.listexercises.local.model.ExerciseName
+import yaroslavgorbach.reaction.data.listExercises.local.model.Exercise
+import yaroslavgorbach.reaction.data.listExercises.local.model.ExerciseName
 
 data class TrainingExercise(private val exercise: Exercise, val aim: Int, val completed: Int) {
 

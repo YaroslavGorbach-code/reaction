@@ -5,7 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import yaroslavgorbach.reaction.business.description.ObserveDescriptionResInteractor
-import yaroslavgorbach.reaction.business.listexercises.ObserveExercisesInteractor
+import yaroslavgorbach.reaction.business.listExercises.ObserveExercisesInteractor
 import yaroslavgorbach.reaction.di.business.exericseslist.BusinessExercisesModule
 
 @Module(includes = [BusinessExercisesModule::class])

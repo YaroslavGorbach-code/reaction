@@ -1,4 +1,4 @@
-package yaroslavgorbach.reaction.feature.exercise.extranumber.model
+package yaroslavgorbach.reaction.feature.exercise.extraNumber.model
 
 import yaroslavgorbach.reaction.feature.exercise.common.model.WinRule
 

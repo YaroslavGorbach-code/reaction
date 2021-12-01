@@ -3,15 +3,15 @@
 
     <string name="level_complexity">Уровень сложности</string>
     <string name="training">Ежедневная тренировка</string>
-    <string name="test">Test exercise</string>
     <string name="start">Начать</string>
     <string name="result">Результат</string>
     <string name="correct">Правильных ответов:</string>
     <string name="number_of_rounds">Всего раундов:</string>
     <string name="incorrect">Не правильных ответов:</string>
-    <string name="to_menu">В меню</string>
+    <string name="to_menu">На главную</string>
     <string name="one_more_time">Ещё раз</string>
     <string name="result_good">Отличный резульат! \n Повторим?</string>
     <string name="result_bad">Не плохо, но для прохождения данного уровня необходимо выполнить минимум %1$d раундов
         и получить больше %2$d процентов правильных ответов. \n Попробуете еще раз?</string>
+    <string name="empty" />
 </resources>

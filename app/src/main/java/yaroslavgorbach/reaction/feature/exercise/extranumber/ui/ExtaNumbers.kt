@@ -74,10 +74,10 @@ internal fun ExtraNumbers(
     if (state.isFinished) {
         ExerciseResult(
             exerciseResultUi = ExerciseResultUi(
-                exerciseName = ExerciseName.TEST,
+                exerciseName = ExerciseName.EXTRA_NUMBER,
                 correctPoints = state.pointsCorrect,
                 incorrectPoints = state.pointsIncorrect,
-                winRule = ExerciseNameToWinRuleMapper.map(ExerciseName.TEST)
+                winRule = ExerciseNameToWinRuleMapper.map(ExerciseName.EXTRA_NUMBER)
             ),
             onBackClick = { actioner(ExtraNumberActions.Back) },
             onRepeatExercise = { actioner(ExtraNumberActions.Repeat) }
@@ -93,32 +93,30 @@ internal fun ExtraNumbers(
                         modifier = Modifier.align(Alignment.TopCenter),
                         instruction = stringResource(
                             id = ExerciseNameToInstructionResMapper.map(
-                                exerciseName = ExerciseName.TEST
+                                exerciseName = ExerciseName.EXTRA_NUMBER
                             )
                         ),
                         timeProgress = state.timerState.timeUtilFinishedProgress,
                         time = state.timerState.timeUtilFinishedString,
                         onBack = { actioner(ExtraNumberActions.Back) }
                     )
-
-                    LazyVerticalGrid(
-                        cells = GridCells.Adaptive(100.dp),
-                        modifier = Modifier.align(Alignment.Center)
-                    ) {
-                        state.numberPacks.firstOrNull()?.numbers?.let { numbers ->
-                            items(numbers) { number ->
-                                NumberItem(
-                                    number = number,
-                                    onNumberClick = { actioner(ExtraNumberActions.NumberClick(number)) })
-                            }
-                        } ?: run { actioner(ExtraNumberActions.FinishExercise) }
+                }
+            }
+                LazyVerticalGrid(
+                    cells = GridCells.Adaptive(100.dp),
+                    modifier = Modifier.align(Alignment.Center)
+                ) {
+                    state.numberPacks.firstOrNull()?.numbers?.let { numbers ->
+                        items(numbers) { number ->
+                            NumberItem(
+                                number = number,
+                                onNumberClick = { actioner(ExtraNumberActions.NumberClick(number)) })
+                        }
                     }
                 }
             }
         }
     }
-
-}
 
 
 @ExperimentalFoundationApi
@@ -127,6 +125,6 @@ internal fun ExtraNumbers(
 @Composable
 fun ExercisesPreview() {
     ReactionTheme {
-        ExtraNumbers(state = ExtraNumberViewState(numberPacks = listOf(NumberPack.Test)), actioner = {})
+        ExtraNumbers(state = ExtraNumberViewState(numberPacks = listOf(NumberPack.Empty)), actioner = {})
     }
 }

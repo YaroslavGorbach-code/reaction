@@ -32,8 +32,10 @@ fun Description(
     openExercise: (exerciseName: ExerciseName) -> Unit,
     onBackClick: () -> Unit,
 ) {
+    val viewModel: DescriptionViewModel = hiltViewModel()
+
     Description(
-        viewModel = hiltViewModel(),
+        viewModel = viewModel,
         openExercise = openExercise,
         onBack = onBackClick
     )

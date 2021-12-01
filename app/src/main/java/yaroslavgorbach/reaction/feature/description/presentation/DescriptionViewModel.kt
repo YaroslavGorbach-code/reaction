@@ -1,10 +1,12 @@
 package yaroslavgorbach.reaction.feature.description.presentation
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import yaroslavgorbach.reaction.EXERCISE_NAME_ARG
 import yaroslavgorbach.reaction.business.description.ObserveDescriptionResInteractor
 import yaroslavgorbach.reaction.data.listexercises.local.model.ExerciseName
 import yaroslavgorbach.reaction.feature.description.model.DescriptionActions
@@ -13,10 +15,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DescriptionViewModel @Inject constructor(
-    observeDescriptionInteractor: ObserveDescriptionResInteractor
+    observeDescriptionInteractor: ObserveDescriptionResInteractor,
+    savedState: SavedStateHandle
 ) : ViewModel() {
-    private val exerciseName: ExerciseName
-        get() = ExerciseName.TEST
+
+    val exerciseName: ExerciseName = savedState[EXERCISE_NAME_ARG]!!
 
     private val pendingActions = MutableSharedFlow<DescriptionActions>()
 

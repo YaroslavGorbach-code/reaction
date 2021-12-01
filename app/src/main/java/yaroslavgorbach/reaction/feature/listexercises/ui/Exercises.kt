@@ -108,17 +108,7 @@ fun ExercisesPreview() {
     ReactionTheme {
         Exercises(
             state = ExercisesViewState(
-                exercises = listOf(
-                    Exercise.Test,
-                    Exercise.Test,
-                    Exercise.Test,
-                    Exercise.Test,
-                    Exercise.Test,
-                    Exercise.Test,
-                    Exercise.Test,
-                    Exercise.Test,
-                    Exercise.Test
-                ),
+                exercises = listOf(Exercise.Empty),
             )
         ) {
 

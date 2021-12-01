@@ -49,7 +49,10 @@ fun ExerciseTopBar(
         Text(
             text = instruction,
             style = MaterialTheme.typography.body1,
-            modifier = Modifier.padding(start = 8.dp, end = 8.dp)
+            modifier = Modifier
+                .padding(start = 8.dp, end = 8.dp, top = 16.dp)
+                .fillMaxWidth(),
+            textAlign = TextAlign.Center,
         )
     }
 }

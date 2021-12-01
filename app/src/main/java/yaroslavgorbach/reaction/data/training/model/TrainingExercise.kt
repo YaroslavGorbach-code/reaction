@@ -6,8 +6,8 @@ import yaroslavgorbach.reaction.data.listexercises.local.model.ExerciseName
 data class TrainingExercise(private val exercise: Exercise, val aim: Int, val completed: Int) {
 
     companion object {
-        val Test = TrainingExercise(
-            exercise = Exercise.Test, aim = 10, completed = 6
+        val Empty = TrainingExercise(
+            exercise = Exercise.Empty, aim = 0, completed = 0
         )
     }
 

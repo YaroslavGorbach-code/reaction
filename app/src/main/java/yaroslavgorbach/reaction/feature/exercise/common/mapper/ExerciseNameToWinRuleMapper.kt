@@ -7,7 +7,8 @@ import yaroslavgorbach.reaction.feature.exercise.extranumber.model.ExtraNumberWi
 object ExerciseNameToWinRuleMapper {
     fun map(exerciseName: ExerciseName): WinRule {
         return when (exerciseName) {
-            ExerciseName.TEST -> ExtraNumberWinRule
+            ExerciseName.EXTRA_NUMBER -> ExtraNumberWinRule
+            ExerciseName.NO_NAME -> WinRule.Default
         }
     }
 }

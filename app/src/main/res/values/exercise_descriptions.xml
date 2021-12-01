@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="description_extra_number">
+     Ваша задача - как можно скорее определить несоответствие одного числа по сравнению с другими и нажать на данную ячейку.
+    </string>
+</resources>

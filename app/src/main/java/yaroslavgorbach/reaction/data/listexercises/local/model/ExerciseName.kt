@@ -3,5 +3,6 @@ package yaroslavgorbach.reaction.data.listexercises.local.model
 import yaroslavgorbach.reaction.R
 
 enum class ExerciseName(val res: Int) {
-    TEST(R.string.test)
+    NO_NAME(R.string.empty),
+    EXTRA_NUMBER(R.string.name_extra_number)
 }

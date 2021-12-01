@@ -65,17 +65,7 @@ fun TrainingSurface(trainings: List<Training>, onTraining: () -> Unit, modifier:
 @Preview(showBackground = true)
 @Composable
 fun TrainingSurfacePreview(
-    trainings: List<Training> = listOf(
-        Training.Test,
-        Training.Test,
-        Training.Test,
-        Training.Test,
-        Training.Test,
-        Training.Test,
-        Training.Test,
-        Training.Test,
-        Training.Test
-    ), onTraining: () -> Unit = {}
+    trainings: List<Training> = listOf(Training.Empty), onTraining: () -> Unit = {}
 ) {
     ReactionTheme {
         TrainingSurface(trainings = trainings, onTraining = onTraining, Modifier)

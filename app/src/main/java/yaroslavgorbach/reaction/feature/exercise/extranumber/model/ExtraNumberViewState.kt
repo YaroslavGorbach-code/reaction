@@ -4,7 +4,7 @@ import yaroslavgorbach.reaction.data.exercise.extranumber.local.model.NumberPack
 import yaroslavgorbach.reaction.utill.TimerCountDown
 
 data class ExtraNumberViewState(
-    val numberPacks: List<NumberPack> = listOf(NumberPack.Test),
+    val numberPacks: List<NumberPack> = listOf(NumberPack.Empty),
     val timerState: TimerCountDown.TimerState = TimerCountDown.TimerState.Tick(0, "00:00", 0f),
     val pointsCorrect: Int = 0,
     val pointsIncorrect: Int = 0,

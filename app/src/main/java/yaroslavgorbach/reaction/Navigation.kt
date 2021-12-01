@@ -13,9 +13,27 @@ import yaroslavgorbach.reaction.feature.description.ui.Description
 import yaroslavgorbach.reaction.feature.exercise.extranumber.ui.ExtraNumbers
 import yaroslavgorbach.reaction.feature.listexercises.ui.Exercises
 
+const val EXERCISE_NAME_ARG = "EXERCISE_NAME_ARG"
+
 sealed class Screen(val route: String) {
     object Exercises : Screen("Exercises")
 }
+
+private sealed class LeafScreen(
+    private val route: String,
+) {
+    fun createRoute(root: Screen) = "${root.route}/$route"
+
+    object Exercises : LeafScreen("Exercises")
+    object ExtraNumbers : LeafScreen("ExtraNumbers")
+
+    object ShowDescription : LeafScreen("Description/{${EXERCISE_NAME_ARG}}") {
+        fun createRoute(root: Screen, exerciseName: ExerciseName): String {
+            return "${root.route}/Description/$exerciseName"
+        }
+    }
+}
+
 
 @ExperimentalFoundationApi
 @ExperimentalMaterialApi
@@ -76,7 +94,7 @@ private fun NavGraphBuilder.addExtraNumbersExercise(
             navController.navigate(
                 LeafScreen.ShowDescription.createRoute(
                     root = root,
-                    exerciseName = ExerciseName.TEST
+                    exerciseName = ExerciseName.EXTRA_NUMBER
                 )
             ) {
                 popUpTo(LeafScreen.Exercises.createRoute(root = root)) {
@@ -94,12 +112,12 @@ private fun NavGraphBuilder.addDescription(
 ) {
     composable(
         LeafScreen.ShowDescription.createRoute(root), arguments = listOf(
-            navArgument("exerciseName") {
+            navArgument(EXERCISE_NAME_ARG) {
                 type = NavType.EnumType(ExerciseName::class.java)
             })
     ) { backStackEntry ->
         Description(
-            exerciseName = backStackEntry.arguments?.getSerializable("exerciseName") as ExerciseName,
+            exerciseName = backStackEntry.arguments?.getSerializable(EXERCISE_NAME_ARG) as ExerciseName,
             openExercise = { exerciseName ->
                 navController.navigate(
                     mapExerciseNameToLeafScreen(exerciseName = exerciseName).createRoute(root = root)
@@ -112,23 +130,10 @@ private fun NavGraphBuilder.addDescription(
     }
 }
 
-private sealed class LeafScreen(
-    private val route: String,
-) {
-    fun createRoute(root: Screen) = "${root.route}/$route"
-
-    object Exercises : LeafScreen("Exercises")
-    object ExtraNumbers : LeafScreen("ExtraNumbers")
-
-    object ShowDescription : LeafScreen("Description/{exerciseName}") {
-        fun createRoute(root: Screen, exerciseName: ExerciseName): String {
-            return "${root.route}/Description/$exerciseName"
-        }
-    }
-}
 
 private fun mapExerciseNameToLeafScreen(exerciseName: ExerciseName): LeafScreen {
     return when (exerciseName) {
-        ExerciseName.TEST -> LeafScreen.ExtraNumbers
+        ExerciseName.EXTRA_NUMBER -> LeafScreen.ExtraNumbers
+        ExerciseName.NO_NAME -> error("No name screen")
     }
 }

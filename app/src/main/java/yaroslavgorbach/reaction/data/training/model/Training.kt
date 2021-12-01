@@ -3,14 +3,7 @@ package yaroslavgorbach.reaction.data.training.model
 data class Training(val exercises: List<TrainingExercise>) {
 
     companion object {
-        val Test = Training(
-            listOf(
-                TrainingExercise.Test,
-                TrainingExercise.Test,
-                TrainingExercise.Test,
-                TrainingExercise.Test
-            )
-        )
+        val Empty = Training(emptyList())
     }
 
     val isFinished: Boolean

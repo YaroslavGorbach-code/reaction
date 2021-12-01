@@ -11,6 +11,7 @@ import yaroslavgorbach.reaction.data.exercise.repo.RepoExerciseImp
 @InstallIn(SingletonComponent::class)
 class DataExerciseModule {
 
+    @ExperimentalStdlibApi
     @Provides
     fun provideExerciseRepo(): RepoExercise {
         return RepoExerciseImp()

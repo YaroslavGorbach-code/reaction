@@ -3,6 +3,7 @@ package yaroslavgorbach.reaction.feature.exercise.extranumber.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.launch
@@ -17,8 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ExtraNumberViewModel @Inject constructor(
     observeExtraNumbersInteractor: ObserveExtraNumbersInteractor
-) :
-    ViewModel() {
+) : ViewModel() {
 
     private val pendingActions = MutableSharedFlow<ExtraNumberActions>()
 
@@ -61,7 +61,9 @@ class ExtraNumberViewModel @Inject constructor(
         timerCountDown.start()
 
         viewModelScope.launch {
-            observeExtraNumbersInteractor().collect(numberPacks::emit)
+            observeExtraNumbersInteractor()
+                .flowOn(Dispatchers.IO)
+                .collect(numberPacks::emit)
 
             pendingActions.collect { action ->
                 when (action) {

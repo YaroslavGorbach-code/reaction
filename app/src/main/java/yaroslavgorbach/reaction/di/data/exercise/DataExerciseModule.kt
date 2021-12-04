@@ -1,5 +1,6 @@
 package yaroslavgorbach.reaction.di.data.exercise
 
+import android.app.Application
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,8 +14,8 @@ class DataExerciseModule {
 
     @ExperimentalStdlibApi
     @Provides
-    fun provideExerciseRepo(): RepoExercise {
-        return RepoExerciseImp()
+    fun provideExerciseRepo(application: Application): RepoExercise {
+        return RepoExerciseImp(application)
     }
 
 }

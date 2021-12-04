@@ -54,9 +54,8 @@ internal fun Exercises(
         state = viewState.value,
     ) { action ->
         when (action) {
-            is ExercisesActions.OpenDetails -> {
-                openDescription(action.exerciseName)
-            }
+            is ExercisesActions.OpenDetails -> openDescription(action.exerciseName)
+
             is ExercisesActions.OpenTraining -> openTraining()
             is ExercisesActions.OpenSettings -> openSettings()
             else -> viewModel.submitAction(action)
@@ -90,8 +89,8 @@ internal fun Exercises(
 
         LazyColumn {
             items(state.exercises) { exercise ->
-                ExerciseItem(exercise = exercise) { name ->
-                    actioner(ExercisesActions.OpenDetails(name))
+                ExerciseItem(exercise = exercise) {
+                    actioner(ExercisesActions.OpenDetails(exerciseName = exercise.name))
                 }
             }
         }

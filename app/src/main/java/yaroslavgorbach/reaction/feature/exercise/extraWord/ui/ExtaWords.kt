@@ -17,25 +17,27 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import yaroslavgorbach.reaction.common.ui.theme.ReactionTheme
 import yaroslavgorbach.reaction.data.exercise.extraNumber.local.model.NumberPack
+import yaroslavgorbach.reaction.data.exercise.extraWord.model.WordPack
 import yaroslavgorbach.reaction.data.listExercises.local.model.ExerciseName
 import yaroslavgorbach.reaction.feature.exercise.common.mapper.ExerciseNameToInstructionResMapper
 import yaroslavgorbach.reaction.feature.exercise.common.mapper.ExerciseNameToWinRuleMapper
-import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseResult
 import yaroslavgorbach.reaction.feature.exercise.common.model.ExerciseResultUi
+import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseResult
 import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseTopBar
-import yaroslavgorbach.reaction.feature.exercise.extraNumber.model.ExtraNumberActions
 import yaroslavgorbach.reaction.feature.exercise.extraNumber.model.ExtraNumberViewState
-import yaroslavgorbach.reaction.feature.exercise.extraNumber.presentation.ExtraNumberViewModel
+import yaroslavgorbach.reaction.feature.exercise.extraWord.model.ExtraWordActions
+import yaroslavgorbach.reaction.feature.exercise.extraWord.model.ExtraWordViewState
+import yaroslavgorbach.reaction.feature.exercise.extraWord.presentation.ExtraWordViewModel
 import yaroslavgorbach.reaction.utill.TimerCountDown
 
 @ExperimentalFoundationApi
 @ExperimentalMaterialApi
 @Composable
-fun ExtraNumbers(
+fun ExtraWords(
     onBackClick: () -> Unit,
     onRepeatExerciseClick: () -> Unit,
 ) {
-    ExtraNumbers(
+    ExtraWords(
         viewModel = hiltViewModel(),
         onBackClick = onBackClick,
         onRepeatExerciseClick = onRepeatExerciseClick
@@ -45,19 +47,19 @@ fun ExtraNumbers(
 @ExperimentalFoundationApi
 @ExperimentalMaterialApi
 @Composable
-internal fun ExtraNumbers(
-    viewModel: ExtraNumberViewModel,
+internal fun ExtraWords(
+    viewModel: ExtraWordViewModel,
     onBackClick: () -> Unit,
     onRepeatExerciseClick: () -> Unit,
 ) {
     val viewState = viewModel.state.collectAsState()
 
-    ExtraNumbers(
+    ExtraWords(
         state = viewState.value,
     ) { action ->
         when (action) {
-            is ExtraNumberActions.Back -> onBackClick()
-            is ExtraNumberActions.Repeat -> onRepeatExerciseClick()
+            is ExtraWordActions.Back -> onBackClick()
+            is ExtraWordActions.Repeat -> onRepeatExerciseClick()
             else -> viewModel.submitAction(action)
         }
     }
@@ -66,38 +68,38 @@ internal fun ExtraNumbers(
 @ExperimentalFoundationApi
 @ExperimentalMaterialApi
 @Composable
-internal fun ExtraNumbers(
-    state: ExtraNumberViewState,
-    actioner: (ExtraNumberActions) -> Unit,
+internal fun ExtraWords(
+    state: ExtraWordViewState,
+    actioner: (ExtraWordActions) -> Unit,
 ) {
     if (state.isFinished) {
         ExerciseResult(
             exerciseResultUi = ExerciseResultUi(
-                exerciseName = ExerciseName.EXTRA_NUMBER,
+                exerciseName = ExerciseName.EXTRA_WORD,
                 correctPoints = state.pointsCorrect,
                 incorrectPoints = state.pointsIncorrect,
-                winRule = ExerciseNameToWinRuleMapper.map(ExerciseName.EXTRA_NUMBER)
+                winRule = ExerciseNameToWinRuleMapper.map(ExerciseName.EXTRA_WORD)
             ),
-            onBackClick = { actioner(ExtraNumberActions.Back) },
-            onRepeatExercise = { actioner(ExtraNumberActions.Repeat) }
+            onBackClick = { actioner(ExtraWordActions.Back) },
+            onRepeatExercise = { actioner(ExtraWordActions.Repeat) }
         )
     } else {
         Box(Modifier.fillMaxSize()) {
             when (state.timerState) {
                 TimerCountDown.TimerState.Finish -> {
-                    actioner(ExtraNumberActions.FinishExercise)
+                    actioner(ExtraWordActions.FinishExercise)
                 }
                 is TimerCountDown.TimerState.Tick -> {
                     ExerciseTopBar(
                         modifier = Modifier.align(Alignment.TopCenter),
                         instruction = stringResource(
                             id = ExerciseNameToInstructionResMapper.map(
-                                exerciseName = ExerciseName.EXTRA_NUMBER
+                                exerciseName = ExerciseName.EXTRA_WORD
                             )
                         ),
                         timeProgress = state.timerState.timeUtilFinishedProgress,
                         time = state.timerState.timeUtilFinishedString,
-                        onBack = { actioner(ExtraNumberActions.Back) }
+                        onBack = { actioner(ExtraWordActions.Back) }
                     )
                 }
             }
@@ -105,11 +107,11 @@ internal fun ExtraNumbers(
                     cells = GridCells.Adaptive(100.dp),
                     modifier = Modifier.align(Alignment.Center)
                 ) {
-                    state.numberPacks.firstOrNull()?.numbers?.let { numbers ->
-                        items(numbers) { number ->
+                    state.wordPacks.firstOrNull()?.words?.let { words ->
+                        items(words) { word ->
                             WordItem(
-                                number = number,
-                                onNumberClick = { actioner(ExtraNumberActions.NumberClick(number)) })
+                                word = word,
+                                onWordClick = { actioner(ExtraWordActions.WordClick(word)) })
                         }
                     }
                 }
@@ -124,6 +126,6 @@ internal fun ExtraNumbers(
 @Composable
 fun ExercisesPreview() {
     ReactionTheme {
-        ExtraNumbers(state = ExtraNumberViewState(numberPacks = listOf(NumberPack.Empty)), actioner = {})
+        ExtraWords(state = ExtraWordViewState(wordPacks = listOf(WordPack.Empty)), actioner = {})
     }
 }

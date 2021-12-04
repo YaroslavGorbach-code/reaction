@@ -16,15 +16,13 @@ import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import yaroslavgorbach.reaction.R
 import yaroslavgorbach.reaction.common.ui.theme.ReactionTheme
 import yaroslavgorbach.reaction.data.listExercises.local.model.Exercise
-import yaroslavgorbach.reaction.data.listExercises.local.model.ExerciseName
 
 @Composable
-fun ExerciseItem(exercise: Exercise, onExerciseClick: (ExerciseName) -> Unit) {
+fun ExerciseItem(exercise: Exercise, onExerciseClick: () -> Unit) {
     Column(modifier = Modifier
-        .clickable { onExerciseClick(exercise.name) }
+        .clickable { onExerciseClick() }
         .fillMaxWidth()
         .wrapContentHeight()
         .padding(8.dp)
@@ -42,11 +40,14 @@ fun ExerciseItem(exercise: Exercise, onExerciseClick: (ExerciseName) -> Unit) {
 //            style = MaterialTheme.typography.body1,
 //        )
 
-        val benefits = stringArrayResource(id = R.array.benefits_extra_number)
+        val benefits = stringArrayResource(exercise.benefitsArrayRes)
 
         repeat(benefits.size) {
             Row {
-                Icon(imageVector = Icons.Outlined.Circle, contentDescription = "", Modifier.size(10.dp).align(CenterVertically))
+                Icon(imageVector = Icons.Outlined.Circle, contentDescription = "",
+                    Modifier
+                        .size(10.dp)
+                        .align(CenterVertically))
                 Text(text = benefits[it], Modifier.padding(start = 4.dp))
             }
         }

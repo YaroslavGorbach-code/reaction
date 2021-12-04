@@ -11,6 +11,7 @@ import androidx.navigation.compose.navigation
 import yaroslavgorbach.reaction.data.listExercises.local.model.ExerciseName
 import yaroslavgorbach.reaction.feature.description.ui.Description
 import yaroslavgorbach.reaction.feature.exercise.extraNumber.ui.ExtraNumbers
+import yaroslavgorbach.reaction.feature.exercise.extraWord.ui.ExtraWords
 import yaroslavgorbach.reaction.feature.listexercises.ui.Exercises
 
 const val EXERCISE_NAME_ARG = "EXERCISE_NAME_ARG"

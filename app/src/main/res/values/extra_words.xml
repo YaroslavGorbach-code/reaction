@@ -1,101 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="extra_word_1">ага</string>
-    <string name="extra_word_2">азы</string>
-    <string name="extra_word_3">айс</string>
-    <string name="extra_word_4">акт</string>
-    <string name="extra_word_5">бак</string>
-    <string name="extra_word_6">бал</string>
-    <string name="extra_word_7">бас</string>
-    <string name="extra_word_8">бит</string>
-    <string name="extra_word_9">бок</string>
-    <string name="extra_word_10">бот</string>
-    <string name="extra_word_11">бро</string>
-    <string name="extra_word_12">буй</string>
-    <string name="extra_word_13">бур</string>
-    <string name="extra_word_14">бык</string>
-    <string name="extra_word_15">быт</string>
-    <string name="extra_word_16">вал</string>
-    <string name="extra_word_17">век</string>
-    <string name="extra_word_18">веб</string>
-    <string name="extra_word_19">вес</string>
-    <string name="extra_word_20">вол</string>
-    <string name="extra_word_22">газ</string>
-    <string name="extra_word_23">гав</string>
-    <string name="extra_word_24">газ</string>
-    <string name="extra_word_25">ген</string>
-    <string name="extra_word_26">дар</string>
-    <string name="extra_word_27">днк</string>
-    <string name="extra_word_28">дом</string>
-    <string name="extra_word_29">дуб</string>
-    <string name="extra_word_30">дух</string>
-    <string name="extra_word_31">дур</string>
-    <string name="extra_word_32">дым</string>
-    <string name="extra_word_33">дых</string>
-    <string name="extra_word_34">еда</string>
-    <string name="extra_word_35">ель</string>
-    <string name="extra_word_36">жар</string>
-    <string name="extra_word_37">жид</string>
-    <string name="extra_word_39">жим</string>
-    <string name="extra_word_40">жир</string>
-    <string name="extra_word_41">жор</string>
-    <string name="extra_word_42">жук</string>
-    <string name="extra_word_43">зев</string>
-    <string name="extra_word_44">зил</string>
-    <string name="extra_word_45">зум</string>
-    <string name="extra_word_46">зуд</string>
-    <string name="extra_word_47">зуб</string>
-    <string name="extra_word_48">йод</string>
-    <string name="extra_word_49">код</string>
-    <string name="extra_word_50">кол</string>
-    <string name="extra_word_51">кот</string>
-    <string name="extra_word_52">кто</string>
-    <string name="extra_word_53">куб</string>
-    <string name="extra_word_54">лай</string>
-    <string name="extra_word_55">лак</string>
-    <string name="extra_word_56">лев</string>
-    <string name="extra_word_57">лёд</string>
-    <string name="extra_word_58">лис</string>
-    <string name="extra_word_59">лоб</string>
-    <string name="extra_word_60">лук</string>
-    <string name="extra_word_61">люк</string>
-    <string name="extra_word_62">маг</string>
-    <string name="extra_word_63">мак</string>
-    <string name="extra_word_64">мат</string>
-    <string name="extra_word_65">мёд</string>
-    <string name="extra_word_66">мех</string>
-    <string name="extra_word_67">меч</string>
-    <string name="extra_word_68">миг</string>
-    <string name="extra_word_69">мир</string>
-    <string name="extra_word_70">миф</string>
-    <string name="extra_word_71">муж</string>
-    <string name="extra_word_72">мул</string>
-    <string name="extra_word_73">низ</string>
-    <string name="extra_word_74">нож</string>
-    <string name="extra_word_75">оса</string>
-    <string name="extra_word_76">пот</string>
-    <string name="extra_word_77">пух</string>
-    <string name="extra_word_78">ржа</string>
-    <string name="extra_word_79">рис</string>
-    <string name="extra_word_80">риф</string>
-    <string name="extra_word_81">ров</string>
-    <string name="extra_word_82">рог</string>
-    <string name="extra_word_83">рок</string>
-    <string name="extra_word_84">рол</string>
-    <string name="extra_word_85">ром</string>
-    <string name="extra_word_86">таз</string>
-    <string name="extra_word_87">тур</string>
-    <string name="extra_word_88">усы</string>
-    <string name="extra_word_89">ухо</string>
-    <string name="extra_word_90">уют</string>
-    <string name="extra_word_91">хит</string>
-    <string name="extra_word_92">хор</string>
-    <string name="extra_word_93">цех</string>
-    <string name="extra_word_94">чай</string>
-    <string name="extra_word_95">чат</string>
-    <string name="extra_word_96">чек</string>
-    <string name="extra_word_97">чип</string>
-    <string name="extra_word_98">чуб</string>
-    <string name="extra_word_99">шеф</string>
-    <string name="extra_word_100">шум</string>
+    <string-array name="extra_words">
+        <item>ага</item>
+        <item>азы</item>
+        <item>айс</item>
+        <item>акт</item>
+        <item>бак</item>
+        <item>бал</item>
+        <item>бас</item>
+        <item>бит</item>
+        <item>бок</item>
+        <item>бот</item>
+        <item>бро</item>
+        <item>буй</item>
+        <item>бур</item>
+        <item>бык</item>
+        <item>быт</item>
+        <item>вал</item>
+        <item>век</item>
+        <item>веб</item>
+        <item>вес</item>
+        <item>вол</item>
+        <item>газ</item>
+        <item>гав</item>
+        <item>газ</item>
+        <item>ген</item>
+        <item>дар</item>
+        <item>днк</item>
+        <item>дом</item>
+        <item>дуб</item>
+        <item>дух</item>
+        <item>дур</item>
+        <item>дым</item>
+        <item>дых</item>
+        <item>еда</item>
+        <item>ель</item>
+        <item>жар</item>
+        <item>жид</item>
+        <item>жим</item>
+        <item>жир</item>
+        <item>жор</item>
+        <item>жук</item>
+        <item>зев</item>
+        <item>зил</item>
+        <item>зум</item>
+        <item>зуд</item>
+        <item>зуб</item>
+        <item>йод</item>
+        <item>код</item>
+        <item>кол</item>
+        <item>кот</item>
+        <item>кто</item>
+        <item>куб</item>
+        <item>лай</item>
+        <item>лак</item>
+        <item>лев</item>
+        <item>лёд</item>
+        <item>лис</item>
+        <item>лоб</item>
+        <item>лук</item>
+        <item>люк</item>
+        <item>маг</item>
+        <item>мак</item>
+        <item>мат</item>
+        <item>мёд</item>
+        <item>мех</item>
+        <item>меч</item>
+        <item>миг</item>
+        <item>мир</item>
+        <item>миф</item>
+        <item>муж</item>
+        <item>мул</item>
+        <item>низ</item>
+        <item>нож</item>
+        <item>оса</item>
+        <item>пот</item>
+        <item>пух</item>
+        <item>ржа</item>
+        <item>рис</item>
+        <item>риф</item>
+        <item>ров</item>
+        <item>рог</item>
+        <item>рок</item>
+        <item>рол</item>
+        <item>ром</item>
+        <item>таз</item>
+        <item>тур</item>
+        <item>усы</item>
+        <item>ухо</item>
+        <item>уют</item>
+        <item>хит</item>
+        <item>хор</item>
+        <item>цех</item>
+        <item>чай</item>
+        <item>чат</item>
+        <item>чек</item>
+        <item>чип</item>
+        <item>чуб</item>
+        <item>шеф</item>
+        <item>шум</item>
+    </string-array>
 </resources>

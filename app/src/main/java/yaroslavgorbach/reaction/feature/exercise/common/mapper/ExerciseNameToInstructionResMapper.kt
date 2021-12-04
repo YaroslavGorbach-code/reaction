@@ -7,6 +7,7 @@ object ExerciseNameToInstructionResMapper {
     fun map(exerciseName: ExerciseName): Int {
         return when (exerciseName) {
             ExerciseName.EXTRA_NUMBER -> R.string.instruction_extra_number
+            ExerciseName.EXTRA_WORD -> R.string.instruction_extra_word
             ExerciseName.NO_NAME -> 0
         }
     }

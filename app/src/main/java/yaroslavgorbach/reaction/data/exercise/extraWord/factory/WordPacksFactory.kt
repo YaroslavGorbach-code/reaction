@@ -1,29 +1,33 @@
 package yaroslavgorbach.reaction.data.exercise.extraWord.factory
 
-import yaroslavgorbach.reaction.data.exercise.extraNumber.local.model.Number
-import yaroslavgorbach.reaction.data.exercise.extraNumber.local.model.NumberPack
+import android.content.Context
+import yaroslavgorbach.reaction.R
+import yaroslavgorbach.reaction.data.exercise.extraWord.model.Word
+import yaroslavgorbach.reaction.data.exercise.extraWord.model.WordPack
 import kotlin.random.Random
 
 @ExperimentalStdlibApi
-class WordPacksFactory {
-    fun create(maxValue: Int = 100): List<NumberPack> {
+class WordPacksFactory(context: Context) {
+    private val words = context.resources.getStringArray(R.array.extra_words)
+
+    fun create(maxValue: Int = 100): List<WordPack> {
         return buildList {
             repeat(1000) {
                 this.add(
-                    NumberPack(buildList {
+                    WordPack(buildList {
+                        var extraWord = words.random()
+                        val word = words.random()
                         val extraIndex = Random.nextInt(15)
-                        val number = Random.nextInt(maxValue)
-                        var extraNumber = Random.nextInt(maxValue)
 
-                        while (extraNumber == number) {
-                            extraNumber = Random.nextInt(maxValue)
+                        while (extraWord == word) {
+                            extraWord = words.random()
                         }
 
                         repeat(15) { index ->
                             if (index == extraIndex) {
-                                this.add(Number(extraNumber, true))
+                                this.add(Word(extraWord, true))
                             } else {
-                                this.add(Number(number, false))
+                                this.add(Word(word, false))
                             }
                         }
                     })

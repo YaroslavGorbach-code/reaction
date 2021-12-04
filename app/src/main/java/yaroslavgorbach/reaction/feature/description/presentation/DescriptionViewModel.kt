@@ -26,7 +26,10 @@ class DescriptionViewModel @Inject constructor(
     val state: StateFlow<DescriptionViewState> = combine(
         observeDescriptionInteractor(exerciseName)
     ) { description ->
-        DescriptionViewState(descriptionRes = description[0])
+        DescriptionViewState(
+            exerciseName = exerciseName,
+            descriptionRes = description[0]
+        )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),

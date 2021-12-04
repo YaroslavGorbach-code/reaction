@@ -1,13 +1,20 @@
 package yaroslavgorbach.reaction.data.exercise.repo
 
+import android.content.Context
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
-import yaroslavgorbach.reaction.data.exercise.extranumber.local.factory.NumberPacksFactory
-import yaroslavgorbach.reaction.data.exercise.extranumber.local.model.NumberPack
+import yaroslavgorbach.reaction.data.exercise.extraNumber.local.factory.NumberPacksFactory
+import yaroslavgorbach.reaction.data.exercise.extraNumber.local.model.NumberPack
+import yaroslavgorbach.reaction.data.exercise.extraWord.factory.WordPacksFactory
+import yaroslavgorbach.reaction.data.exercise.extraWord.model.WordPack
 
 @ExperimentalStdlibApi
-class RepoExerciseImp : RepoExercise {
+class RepoExerciseImp(private val context: Context) : RepoExercise {
     override fun observeExtraNumber(): Flow<List<NumberPack>> {
-        return flowOf(NumberPacksFactory().create(100))
+        return flowOf(NumberPacksFactory().create())
+    }
+
+    override fun observeExtraWord(): Flow<List<WordPack>> {
+        return flowOf(WordPacksFactory(context).create())
     }
 }

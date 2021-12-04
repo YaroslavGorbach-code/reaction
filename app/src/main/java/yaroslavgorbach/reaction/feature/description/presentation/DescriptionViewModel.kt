@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import yaroslavgorbach.reaction.EXERCISE_NAME_ARG
 import yaroslavgorbach.reaction.business.description.ObserveDescriptionResInteractor
-import yaroslavgorbach.reaction.data.listexercises.local.model.ExerciseName
+import yaroslavgorbach.reaction.data.listExercises.local.model.ExerciseName
 import yaroslavgorbach.reaction.feature.description.model.DescriptionActions
 import yaroslavgorbach.reaction.feature.description.model.DescriptionViewState
 import javax.inject.Inject
@@ -26,7 +26,10 @@ class DescriptionViewModel @Inject constructor(
     val state: StateFlow<DescriptionViewState> = combine(
         observeDescriptionInteractor(exerciseName)
     ) { description ->
-        DescriptionViewState(descriptionRes = description[0])
+        DescriptionViewState(
+            exerciseName = exerciseName,
+            descriptionRes = description[0]
+        )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),

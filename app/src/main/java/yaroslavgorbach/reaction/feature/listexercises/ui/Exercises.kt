@@ -18,11 +18,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
-import dagger.hilt.android.lifecycle.HiltViewModel
 import yaroslavgorbach.reaction.common.ui.theme.ReactionTheme
-import yaroslavgorbach.reaction.data.listexercises.local.model.Exercise
-import yaroslavgorbach.reaction.data.listexercises.local.model.ExerciseName
+import yaroslavgorbach.reaction.data.listExercises.local.model.Exercise
+import yaroslavgorbach.reaction.data.listExercises.local.model.ExerciseName
 import yaroslavgorbach.reaction.feature.listexercises.model.ExercisesActions
 import yaroslavgorbach.reaction.feature.listexercises.model.ExercisesViewState
 import yaroslavgorbach.reaction.feature.listexercises.presentation.ExercisesViewModel
@@ -56,9 +54,8 @@ internal fun Exercises(
         state = viewState.value,
     ) { action ->
         when (action) {
-            is ExercisesActions.OpenDetails -> {
-                openDescription(action.exerciseName)
-            }
+            is ExercisesActions.OpenDetails -> openDescription(action.exerciseName)
+
             is ExercisesActions.OpenTraining -> openTraining()
             is ExercisesActions.OpenSettings -> openSettings()
             else -> viewModel.submitAction(action)
@@ -92,8 +89,8 @@ internal fun Exercises(
 
         LazyColumn {
             items(state.exercises) { exercise ->
-                ExerciseItem(exercise = exercise) { name ->
-                    actioner(ExercisesActions.OpenDetails(name))
+                ExerciseItem(exercise = exercise) {
+                    actioner(ExercisesActions.OpenDetails(exerciseName = exercise.name))
                 }
             }
         }

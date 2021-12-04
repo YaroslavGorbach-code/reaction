@@ -4,8 +4,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import yaroslavgorbach.reaction.data.listexercises.repo.RepoExercises
-import yaroslavgorbach.reaction.data.listexercises.repo.RepoExercisesImp
+import yaroslavgorbach.reaction.data.listExercises.repo.RepoExercises
+import yaroslavgorbach.reaction.data.listExercises.repo.RepoExercisesImp
 
 @Module
 @InstallIn(SingletonComponent::class)

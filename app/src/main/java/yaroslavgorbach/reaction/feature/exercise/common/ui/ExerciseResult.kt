@@ -7,8 +7,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.BottomCenter
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
-import androidx.compose.ui.Alignment.Companion.CenterVertically
-import androidx.compose.ui.Alignment.Companion.TopCenter
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -18,7 +16,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import yaroslavgorbach.reaction.R
 import yaroslavgorbach.reaction.common.ui.theme.ReactionTheme
-import yaroslavgorbach.reaction.data.listexercises.local.model.ExerciseName
 import yaroslavgorbach.reaction.feature.common.ui.Toolbar
 import yaroslavgorbach.reaction.feature.exercise.common.model.ExerciseResultUi
 

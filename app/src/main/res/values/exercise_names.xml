@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="name_extra_number">Лишнее число</string>
+    <string name="name_extra_word">Лишнее слово</string>
 </resources>

@@ -12,6 +12,7 @@ import yaroslavgorbach.reaction.data.listExercises.local.model.ExerciseName
 import yaroslavgorbach.reaction.feature.description.ui.Description
 import yaroslavgorbach.reaction.feature.exercise.extraNumber.ui.ExtraNumbers
 import yaroslavgorbach.reaction.feature.exercise.extraWord.ui.ExtraWords
+import yaroslavgorbach.reaction.feature.exercise.faceControl.ui.FaceControl
 import yaroslavgorbach.reaction.feature.listexercises.ui.Exercises
 
 const val EXERCISE_NAME_ARG = "EXERCISE_NAME_ARG"
@@ -28,6 +29,7 @@ private sealed class LeafScreen(
     object Exercises : LeafScreen("Exercises")
     object ExtraNumbers : LeafScreen("ExtraNumbers")
     object ExtraWords : LeafScreen("ExtraWords")
+    object FaceControl : LeafScreen("FaceControl")
 
     object ShowDescription : LeafScreen("Description/{${EXERCISE_NAME_ARG}}") {
         fun createRoute(root: Screen, exerciseName: ExerciseName): String {
@@ -35,7 +37,6 @@ private sealed class LeafScreen(
         }
     }
 }
-
 
 @ExperimentalFoundationApi
 @ExperimentalMaterialApi
@@ -66,6 +67,7 @@ private fun NavGraphBuilder.addExercisesTopLevel(
         addDescription(navController, Screen.Exercises)
         addExtraNumbersExercise(navController, Screen.Exercises)
         addExtraWordsExercise(navController, Screen.Exercises)
+        addFaceControlExercise(navController, Screen.Exercises)
     }
 }
 
@@ -155,11 +157,33 @@ private fun NavGraphBuilder.addExtraWordsExercise(
     }
 }
 
+@ExperimentalFoundationApi
+@ExperimentalMaterialApi
+private fun NavGraphBuilder.addFaceControlExercise(
+    navController: NavController,
+    root: Screen,
+) {
+    composable(LeafScreen.FaceControl.createRoute(root)) {
+        FaceControl(onBackClick = { navController.popBackStack() }, onRepeatExerciseClick = {
+            navController.navigate(
+                LeafScreen.ShowDescription.createRoute(
+                    root = root,
+                    exerciseName = ExerciseName.FACE_CONTROL
+                )
+            ) {
+                popUpTo(LeafScreen.Exercises.createRoute(root = root)) {
+                    inclusive = false
+                }
+            }
+        })
+    }
+}
 
 private fun mapExerciseNameToLeafScreen(exerciseName: ExerciseName): LeafScreen {
     return when (exerciseName) {
         ExerciseName.EXTRA_NUMBER -> LeafScreen.ExtraNumbers
         ExerciseName.EXTRA_WORD -> LeafScreen.ExtraWords
+        ExerciseName.FACE_CONTROL -> LeafScreen.FaceControl
         ExerciseName.NO_NAME -> error("No name screen")
     }
 }

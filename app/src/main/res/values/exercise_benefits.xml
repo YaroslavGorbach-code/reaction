@@ -11,4 +11,10 @@
         <item>Ускоряет реакцию</item>
         <item>Расширяет угол восприятия</item>
     </string-array>
+
+    <string-array name="benefits_face_control">
+        <item>Развивает внимание</item>
+        <item>Ускоряет реакцию</item>
+        <item>Расширяет угол восприятия</item>
+    </string-array>
 </resources>

@@ -37,7 +37,7 @@ class ExtraNumberViewModel @Inject constructor(
 
     private val numberPacks: MutableStateFlow<List<NumberPack>> = MutableStateFlow(emptyList())
 
-    var state: StateFlow<ExtraNumberViewState> = combine(
+    val state: StateFlow<ExtraNumberViewState> = combine(
         numberPacks,
         timerCountDown.state,
         pointsCorrect,

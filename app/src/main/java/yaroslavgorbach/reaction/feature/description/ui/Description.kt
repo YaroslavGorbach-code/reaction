@@ -1,6 +1,5 @@
 package yaroslavgorbach.reaction.feature.description.ui
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,6 +23,7 @@ import yaroslavgorbach.reaction.feature.common.ui.Toolbar
 import yaroslavgorbach.reaction.feature.description.model.DescriptionActions
 import yaroslavgorbach.reaction.feature.description.model.DescriptionViewState
 import yaroslavgorbach.reaction.feature.description.presentation.DescriptionViewModel
+import yaroslavgorbach.reaction.utill.singleClickable
 
 @ExperimentalMaterialApi
 @Composable
@@ -86,7 +86,7 @@ internal fun Description(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .clickable {
+                .singleClickable {
                     actioner(DescriptionActions.OpenExercise(exerciseName = state.exerciseName))
                 }) {
 

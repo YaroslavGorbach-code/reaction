@@ -37,7 +37,7 @@ class ExtraWordViewModel @Inject constructor(
 
     private val wordPacks: MutableStateFlow<List<WordPack>> = MutableStateFlow(emptyList())
 
-    var state: StateFlow<ExtraWordViewState> = combine(
+    val state: StateFlow<ExtraWordViewState> = combine(
         wordPacks,
         timerCountDown.state,
         pointsCorrect,

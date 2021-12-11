@@ -2,4 +2,5 @@
 <resources>
     <string name="name_extra_number">Лишнее число</string>
     <string name="name_extra_word">Лишнее слово</string>
+    <string name="name_face_control">Фейсконтроль</string>
 </resources>

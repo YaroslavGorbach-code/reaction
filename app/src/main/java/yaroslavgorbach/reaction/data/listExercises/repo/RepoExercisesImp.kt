@@ -23,6 +23,13 @@ class RepoExercisesImp : RepoExercises {
                 instructionRes = R.string.instruction_extra_word,
                 levelComplexity = 6,
                 benefitsArrayRes = R.array.benefits_extra_word
+            ),
+            Exercise(
+                name = ExerciseName.FACE_CONTROL,
+                descriptionRes = R.string.description_face_control,
+                instructionRes = R.string.instruction_face_control,
+                levelComplexity = 6,
+                benefitsArrayRes = R.array.benefits_face_control
             )
         )
 

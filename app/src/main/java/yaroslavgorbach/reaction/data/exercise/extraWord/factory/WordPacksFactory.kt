@@ -10,7 +10,7 @@ import kotlin.random.Random
 class WordPacksFactory(context: Context) {
     private val words = context.resources.getStringArray(R.array.extra_words)
 
-    fun create(maxValue: Int = 100): List<WordPack> {
+    fun create(): List<WordPack> {
         return buildList {
             repeat(1000) {
                 this.add(

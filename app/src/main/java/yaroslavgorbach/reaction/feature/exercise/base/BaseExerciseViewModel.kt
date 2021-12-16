@@ -25,7 +25,7 @@ abstract class BaseExerciseViewModel : ViewModel() {
 
     protected val isExerciseFinished: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
-    protected fun onFinishExercise() {
+    protected fun finishExercise() {
         viewModelScope.launch {
             isExerciseFinished.emit(true)
         }

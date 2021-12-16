@@ -51,7 +51,7 @@ class ComplexSortViewModel @Inject constructor(
             pendingActions.collect { action ->
                 when (action) {
                     is ComplexSortActions.ItemClick -> onItemClick(action.item)
-                    is ComplexSortActions.FinishExercise -> onFinishExercise()
+                    is ComplexSortActions.FinishExercise -> finishExercise()
                     else -> error("$action is not handled")
                 }
             }

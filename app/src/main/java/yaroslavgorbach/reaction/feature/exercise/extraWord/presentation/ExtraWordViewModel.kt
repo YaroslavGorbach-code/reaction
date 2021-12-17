@@ -1,6 +1,5 @@
 package yaroslavgorbach.reaction.feature.exercise.extraWord.presentation
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -10,30 +9,17 @@ import kotlinx.coroutines.launch
 import yaroslavgorbach.reaction.business.exercise.ObserveExtraWordsInteractor
 import yaroslavgorbach.reaction.data.exercise.extraWord.model.Word
 import yaroslavgorbach.reaction.data.exercise.extraWord.model.WordPack
+import yaroslavgorbach.reaction.feature.exercise.base.BaseExerciseViewModel
 import yaroslavgorbach.reaction.feature.exercise.extraWord.model.ExtraWordActions
 import yaroslavgorbach.reaction.feature.exercise.extraWord.model.ExtraWordViewState
-import yaroslavgorbach.reaction.utill.TimerCountDown
 import javax.inject.Inject
 
 @HiltViewModel
 class ExtraWordViewModel @Inject constructor(
     observeExtraWordsInteractor: ObserveExtraWordsInteractor
-) : ViewModel() {
+) : BaseExerciseViewModel() {
 
     private val pendingActions = MutableSharedFlow<ExtraWordActions>()
-
-    private val timerCountDown: TimerCountDown =
-        TimerCountDown(
-            coroutineScope = viewModelScope,
-            millisInFuture = TimerCountDown.ONE_MINUTE,
-            countDownInterval = 100
-        )
-
-    private val pointsCorrect: MutableStateFlow<Int> = MutableStateFlow(0)
-
-    private val pointsInCorrect: MutableStateFlow<Int> = MutableStateFlow(0)
-
-    private val isExerciseFinished: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     private val wordPacks: MutableStateFlow<List<WordPack>> = MutableStateFlow(emptyList())
 
@@ -58,8 +44,6 @@ class ExtraWordViewModel @Inject constructor(
     )
 
     init {
-        timerCountDown.start()
-
         viewModelScope.launch {
             observeExtraWordsInteractor()
                 .flowOn(Dispatchers.IO)
@@ -72,12 +56,6 @@ class ExtraWordViewModel @Inject constructor(
                     else -> error("$action is not handled")
                 }
             }
-        }
-    }
-
-    private fun onFinishExercise() {
-        viewModelScope.launch {
-            isExerciseFinished.emit(true)
         }
     }
 

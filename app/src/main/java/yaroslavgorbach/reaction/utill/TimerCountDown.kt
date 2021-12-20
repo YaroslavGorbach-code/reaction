@@ -11,7 +11,7 @@ class TimerCountDown(private val coroutineScope: CoroutineScope, private val mil
     CountDownTimer(millisInFuture, countDownInterval) {
 
     sealed class TimerState {
-        class Tick(val millisUntilFinished: Long, val timeUtilFinishedString: String, val timeUtilFinishedProgress: Float) : TimerState()
+        class Tick(val millisUntilFinished: Long, val timeUtilFinishedString: String, val timeUntilFinishedProgress: Float) : TimerState()
         object Finish : TimerState()
     }
 

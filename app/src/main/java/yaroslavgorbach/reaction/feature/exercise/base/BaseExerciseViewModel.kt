@@ -2,11 +2,13 @@ package yaroslavgorbach.reaction.feature.exercise.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import yaroslavgorbach.reaction.feature.exercise.faceControl.model.FaceControlActions
 import yaroslavgorbach.reaction.utill.TimerCountDown
+import javax.inject.Inject
 
 abstract class BaseExerciseViewModel : ViewModel() {
 

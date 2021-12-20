@@ -14,12 +14,12 @@ import yaroslavgorbach.reaction.common.ui.theme.ReactionTheme
 import yaroslavgorbach.reaction.data.exercise.faceControl.model.Face
 
 @Composable
-fun FaceItem(face: Face, onFaceClick: () -> Unit) {
+fun FaceItem(modifier: Modifier = Modifier, face: Face, onFaceClick: () -> Unit) {
     Surface(
         shape = MaterialTheme.shapes.small,
-        modifier = Modifier
+        modifier = modifier
             .clickable { onFaceClick() }
-            .size(60.dp)) {
+            .size(100.dp)) {
         Image(
             imageVector = face.icon,
             contentDescription = ""

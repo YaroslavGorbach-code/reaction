@@ -95,7 +95,7 @@ internal fun ExtraNumbers(
                                 exerciseName = ExerciseName.EXTRA_NUMBER
                             )
                         ),
-                        timeProgress = state.timerState.timeUtilFinishedProgress,
+                        timeProgress = state.timerState.timeUntilFinishedProgress,
                         time = state.timerState.timeUtilFinishedString,
                         onBack = { actioner(ExtraNumberActions.Back) }
                     )

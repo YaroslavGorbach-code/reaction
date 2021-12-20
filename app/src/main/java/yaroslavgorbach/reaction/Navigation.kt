@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import yaroslavgorbach.reaction.data.listExercises.local.model.ExerciseName
 import yaroslavgorbach.reaction.feature.description.ui.Description
+import yaroslavgorbach.reaction.feature.exercise.cpmplexSort.ui.ComplexSort
 import yaroslavgorbach.reaction.feature.exercise.extraNumber.ui.ExtraNumbers
 import yaroslavgorbach.reaction.feature.exercise.extraWord.ui.ExtraWords
 import yaroslavgorbach.reaction.feature.exercise.faceControl.ui.FaceControl
@@ -30,6 +31,7 @@ private sealed class LeafScreen(
     object ExtraNumbers : LeafScreen("ExtraNumbers")
     object ExtraWords : LeafScreen("ExtraWords")
     object FaceControl : LeafScreen("FaceControl")
+    object ComplexSort : LeafScreen("ComplexSort")
 
     object ShowDescription : LeafScreen("Description/{${EXERCISE_NAME_ARG}}") {
         fun createRoute(root: Screen, exerciseName: ExerciseName): String {
@@ -68,6 +70,7 @@ private fun NavGraphBuilder.addExercisesTopLevel(
         addExtraNumbersExercise(navController, Screen.Exercises)
         addExtraWordsExercise(navController, Screen.Exercises)
         addFaceControlExercise(navController, Screen.Exercises)
+        addComplexSortExercise(navController, Screen.Exercises)
     }
 }
 
@@ -179,11 +182,34 @@ private fun NavGraphBuilder.addFaceControlExercise(
     }
 }
 
+@ExperimentalFoundationApi
+@ExperimentalMaterialApi
+private fun NavGraphBuilder.addComplexSortExercise(
+    navController: NavController,
+    root: Screen,
+) {
+    composable(LeafScreen.ComplexSort.createRoute(root)) {
+        ComplexSort(onBackClick = { navController.popBackStack() }, onRepeatExerciseClick = {
+            navController.navigate(
+                LeafScreen.ShowDescription.createRoute(
+                    root = root,
+                    exerciseName = ExerciseName.COMPLEX_SORT
+                )
+            ) {
+                popUpTo(LeafScreen.Exercises.createRoute(root = root)) {
+                    inclusive = false
+                }
+            }
+        })
+    }
+}
+
 private fun mapExerciseNameToLeafScreen(exerciseName: ExerciseName): LeafScreen {
     return when (exerciseName) {
         ExerciseName.EXTRA_NUMBER -> LeafScreen.ExtraNumbers
         ExerciseName.EXTRA_WORD -> LeafScreen.ExtraWords
         ExerciseName.FACE_CONTROL -> LeafScreen.FaceControl
+        ExerciseName.COMPLEX_SORT -> LeafScreen.ComplexSort
         ExerciseName.NO_NAME -> error("No name screen")
     }
 }

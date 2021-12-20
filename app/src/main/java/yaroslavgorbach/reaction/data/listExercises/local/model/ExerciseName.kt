@@ -7,4 +7,5 @@ enum class ExerciseName(val res: Int) {
     EXTRA_NUMBER(R.string.name_extra_number),
     EXTRA_WORD(R.string.name_extra_word),
     FACE_CONTROL(R.string.name_face_control),
+    COMPLEX_SORT(R.string.name_complex_sort),
 }

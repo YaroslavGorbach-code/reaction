@@ -1,11 +1,12 @@
-package yaroslavgorbach.reaction.feature.exercise.extraWord.ui
+package yaroslavgorbach.reaction.feature.exercise.cpmplexSort.ui
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -16,26 +17,26 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import yaroslavgorbach.reaction.common.ui.theme.ReactionTheme
-import yaroslavgorbach.reaction.data.exercise.extraWord.model.WordPack
+import yaroslavgorbach.reaction.data.exercise.complexSort.model.ComplexSortItem
 import yaroslavgorbach.reaction.data.listExercises.local.model.ExerciseName
 import yaroslavgorbach.reaction.feature.exercise.common.mapper.ExerciseNameToInstructionResMapper
 import yaroslavgorbach.reaction.feature.exercise.common.mapper.ExerciseNameToWinRuleMapper
 import yaroslavgorbach.reaction.feature.exercise.common.model.ExerciseResultUi
 import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseResult
 import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseTopBar
-import yaroslavgorbach.reaction.feature.exercise.extraWord.model.ExtraWordActions
-import yaroslavgorbach.reaction.feature.exercise.extraWord.model.ExtraWordViewState
-import yaroslavgorbach.reaction.feature.exercise.extraWord.presentation.ExtraWordViewModel
+import yaroslavgorbach.reaction.feature.exercise.cpmplexSort.model.ComplexSortActions
+import yaroslavgorbach.reaction.feature.exercise.cpmplexSort.model.ComplexSortViewState
+import yaroslavgorbach.reaction.feature.exercise.cpmplexSort.presentation.ComplexSortViewModel
 import yaroslavgorbach.reaction.utill.TimerCountDown
 
 @ExperimentalFoundationApi
 @ExperimentalMaterialApi
 @Composable
-fun ExtraWords(
+fun ComplexSort(
     onBackClick: () -> Unit,
     onRepeatExerciseClick: () -> Unit,
 ) {
-    ExtraWords(
+    ComplexSort(
         viewModel = hiltViewModel(),
         onBackClick = onBackClick,
         onRepeatExerciseClick = onRepeatExerciseClick
@@ -45,19 +46,19 @@ fun ExtraWords(
 @ExperimentalFoundationApi
 @ExperimentalMaterialApi
 @Composable
-internal fun ExtraWords(
-    viewModel: ExtraWordViewModel,
+internal fun ComplexSort(
+    viewModel: ComplexSortViewModel,
     onBackClick: () -> Unit,
     onRepeatExerciseClick: () -> Unit,
 ) {
     val viewState = viewModel.state.collectAsState()
 
-    ExtraWords(
+    ComplexSort(
         state = viewState.value,
     ) { action ->
         when (action) {
-            is ExtraWordActions.Back -> onBackClick()
-            is ExtraWordActions.Repeat -> onRepeatExerciseClick()
+            is ComplexSortActions.Back -> onBackClick()
+            is ComplexSortActions.Repeat -> onRepeatExerciseClick()
             else -> viewModel.submitAction(action)
         }
     }
@@ -66,57 +67,85 @@ internal fun ExtraWords(
 @ExperimentalFoundationApi
 @ExperimentalMaterialApi
 @Composable
-internal fun ExtraWords(
-    state: ExtraWordViewState,
-    actioner: (ExtraWordActions) -> Unit,
+internal fun ComplexSort(
+    state: ComplexSortViewState,
+    actioner: (ComplexSortActions) -> Unit,
 ) {
     if (state.isFinished) {
         ExerciseResult(
             exerciseResultUi = ExerciseResultUi(
-                exerciseName = ExerciseName.EXTRA_WORD,
+                exerciseName = ExerciseName.COMPLEX_SORT,
                 correctPoints = state.pointsCorrect,
                 incorrectPoints = state.pointsIncorrect,
-                winRule = ExerciseNameToWinRuleMapper.map(ExerciseName.EXTRA_WORD)
+                winRule = ExerciseNameToWinRuleMapper.map(ExerciseName.COMPLEX_SORT)
             ),
-            onBackClick = { actioner(ExtraWordActions.Back) },
-            onRepeatExercise = { actioner(ExtraWordActions.Repeat) }
+            onBackClick = { actioner(ComplexSortActions.Back) },
+            onRepeatExercise = { actioner(ComplexSortActions.Repeat) }
         )
     } else {
         Box(Modifier.fillMaxSize()) {
             when (state.timerState) {
                 TimerCountDown.TimerState.Finish -> {
-                    actioner(ExtraWordActions.FinishExercise)
+                    actioner(ComplexSortActions.FinishExercise)
                 }
                 is TimerCountDown.TimerState.Tick -> {
                     ExerciseTopBar(
                         modifier = Modifier.align(Alignment.TopCenter),
                         instruction = stringResource(
                             id = ExerciseNameToInstructionResMapper.map(
-                                exerciseName = ExerciseName.EXTRA_WORD
+                                exerciseName = ExerciseName.COMPLEX_SORT,
+                                complexSortIsSimilar = state.items.firstOrNull()?.isSimilar ?: false
                             )
                         ),
                         timeProgress = state.timerState.timeUntilFinishedProgress,
                         time = state.timerState.timeUtilFinishedString,
-                        onBack = { actioner(ExtraWordActions.Back) }
+                        onBack = { actioner(ComplexSortActions.Back) }
                     )
                 }
             }
-                LazyVerticalGrid(
-                    cells = GridCells.Adaptive(100.dp),
-                    modifier = Modifier.align(Alignment.Center)
-                ) {
-                    state.wordPacks.firstOrNull()?.words?.let { words ->
-                        items(words) { word ->
-                            WordItem(
-                                word = word,
-                                onWordClick = { actioner(ExtraWordActions.WordClick(word)) })
-                        }
+
+            ComplexSortItemUi(
+                modifier = Modifier
+                    .padding(end = 8.dp)
+                    .align(Alignment.Center),
+                item = state.items.firstOrNull() ?: ComplexSortItem.Test,
+                isClickable = false
+            ) {}
+
+            LazyVerticalGrid(
+                cells = GridCells.Adaptive(100.dp),
+                modifier = Modifier.align(Alignment.BottomCenter),
+                contentPadding = PaddingValues(8.dp)
+            ) {
+                item {
+                    ComplexSortItemUi(
+                        modifier = Modifier.padding(end = 8.dp),
+                        item = ComplexSortItem.ExampleFirst,
+                        isClickable = true
+                    ) {
+                        actioner(ComplexSortActions.ItemClick(ComplexSortItem.ExampleFirst))
+                    }
+                }
+
+                item {
+                    ComplexSortItemUi(
+                        modifier = Modifier.padding(end = 8.dp),
+                        item = ComplexSortItem.ExampleSecond,
+                        isClickable = true
+                    ) {
+                        actioner(ComplexSortActions.ItemClick(ComplexSortItem.ExampleSecond))
+                    }
+                }
+
+                item {
+                    ComplexSortItemUi(item = ComplexSortItem.ExampleThird, isClickable = true) {
+                        actioner(ComplexSortActions.ItemClick(ComplexSortItem.ExampleThird))
                     }
                 }
             }
         }
     }
-
+}
 
 @ExperimentalFoundationApi
 @ExperimentalMaterialApi
@@ -124,6 +153,6 @@ internal fun ExtraWords(
 @Composable
 fun ExercisesPreview() {
     ReactionTheme {
-        ExtraWords(state = ExtraWordViewState(wordPacks = listOf(WordPack.Empty)), actioner = {})
+        ComplexSort(state = ComplexSortViewState.Test, actioner = {})
     }
 }

@@ -19,6 +19,7 @@ object ExerciseNameToInstructionResMapper {
             }
             ExerciseName.NO_NAME -> 0
             ExerciseName.STROOP -> R.string.instruction_stroop
+            ExerciseName.GEO_SWITCHING ->R.string.instruction_geo_switching
         }
     }
 }

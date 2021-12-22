@@ -2,4 +2,10 @@
 <resources>
     <string name="red">Красный</string>
     <string name="green">Зеленый</string>
+
+    <string name="is_square">Фигура квадрат?</string>
+    <string name="is_blue">Цвет синий?</string>
+
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
 </resources>

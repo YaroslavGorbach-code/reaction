@@ -111,22 +111,27 @@ internal fun StroopExercise(
                 modifier = Modifier.align(Alignment.Center)
             )
 
-            Row(modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(16.dp)
-                .wrapContentSize()) {
-                Button(onClick = { actioner(StroopActions.OnChose(WordColorVariant.RED)) }) {
-                    Text(
-                        text = stringResource(id = R.string.red),
-                        fontSize = 24.sp
-                    )
+            Row(
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(16.dp)
+                    .wrapContentSize()
+            ) {
+                Button(
+                    onClick = { actioner(StroopActions.OnChose(WordColorVariant.RED)) },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(0.5f)
+                ) {
+                    Text(text = stringResource(id = R.string.red), fontSize = 24.sp)
                 }
 
-                Button(modifier = Modifier.padding(start = 16.dp), onClick = { actioner(StroopActions.OnChose(WordColorVariant.GREEN)) }) {
-                    Text(
-                        text = stringResource(id = R.string.green),
-                        fontSize = 24.sp
-                    )
+                Button(modifier = Modifier
+                    .padding(start = 16.dp)
+                    .fillMaxWidth()
+                    .weight(0.5f),
+                    onClick = { actioner(StroopActions.OnChose(WordColorVariant.GREEN)) }) {
+                    Text(text = stringResource(id = R.string.green), fontSize = 24.sp)
                 }
             }
         }

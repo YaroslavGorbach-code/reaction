@@ -52,7 +52,7 @@ class FaceControlViewModel @Inject constructor(
             pendingActions.collect { action ->
                 when (action) {
                     is FaceControlActions.FaceClick -> onFaceClick(action.face)
-                    is FaceControlActions.FinishExercise -> onFinishExercise()
+                    is FaceControlActions.FinishExercise -> finishExercise()
                     else -> error("$action is not handled")
                 }
             }

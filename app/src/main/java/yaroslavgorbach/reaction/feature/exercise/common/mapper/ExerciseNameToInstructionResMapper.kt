@@ -18,6 +18,7 @@ object ExerciseNameToInstructionResMapper {
                 }
             }
             ExerciseName.NO_NAME -> 0
+            ExerciseName.STROOP -> R.string.instruction_stroop
         }
     }
 }

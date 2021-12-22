@@ -52,7 +52,7 @@ class ExtraWordViewModel @Inject constructor(
             pendingActions.collect { action ->
                 when (action) {
                     is ExtraWordActions.WordClick -> onWordClick(action.word)
-                    is ExtraWordActions.FinishExercise -> onFinishExercise()
+                    is ExtraWordActions.FinishExercise -> finishExercise()
                     else -> error("$action is not handled")
                 }
             }

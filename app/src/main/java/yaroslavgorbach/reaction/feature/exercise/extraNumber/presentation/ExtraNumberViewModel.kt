@@ -54,7 +54,7 @@ class ExtraNumberViewModel @Inject constructor(
             pendingActions.collect { action ->
                 when (action) {
                     is ExtraNumberActions.NumberClick -> onNumberClick(action.number)
-                    is ExtraNumberActions.FinishExercise -> onFinishExercise()
+                    is ExtraNumberActions.FinishExercise -> finishExercise()
                     else -> error("$action is not handled")
                 }
             }

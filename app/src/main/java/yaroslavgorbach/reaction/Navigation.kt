@@ -8,12 +8,14 @@ import androidx.navigation.*
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import kotlinx.coroutines.InternalCoroutinesApi
 import yaroslavgorbach.reaction.data.listExercises.local.model.ExerciseName
 import yaroslavgorbach.reaction.feature.description.ui.Description
 import yaroslavgorbach.reaction.feature.exercise.cpmplexSort.ui.ComplexSort
 import yaroslavgorbach.reaction.feature.exercise.extraNumber.ui.ExtraNumbers
 import yaroslavgorbach.reaction.feature.exercise.extraWord.ui.ExtraWords
 import yaroslavgorbach.reaction.feature.exercise.faceControl.ui.FaceControl
+import yaroslavgorbach.reaction.feature.exercise.stroop.ui.StroopExercise
 import yaroslavgorbach.reaction.feature.listexercises.ui.Exercises
 
 const val EXERCISE_NAME_ARG = "EXERCISE_NAME_ARG"
@@ -32,6 +34,7 @@ private sealed class LeafScreen(
     object ExtraWords : LeafScreen("ExtraWords")
     object FaceControl : LeafScreen("FaceControl")
     object ComplexSort : LeafScreen("ComplexSort")
+    object Stroop : LeafScreen("Stroop")
 
     object ShowDescription : LeafScreen("Description/{${EXERCISE_NAME_ARG}}") {
         fun createRoute(root: Screen, exerciseName: ExerciseName): String {
@@ -40,6 +43,7 @@ private sealed class LeafScreen(
     }
 }
 
+@InternalCoroutinesApi
 @ExperimentalFoundationApi
 @ExperimentalMaterialApi
 @Composable
@@ -56,6 +60,7 @@ internal fun AppNavigation(
     }
 }
 
+@InternalCoroutinesApi
 @ExperimentalFoundationApi
 @ExperimentalMaterialApi
 private fun NavGraphBuilder.addExercisesTopLevel(
@@ -71,6 +76,7 @@ private fun NavGraphBuilder.addExercisesTopLevel(
         addExtraWordsExercise(navController, Screen.Exercises)
         addFaceControlExercise(navController, Screen.Exercises)
         addComplexSortExercise(navController, Screen.Exercises)
+        addStroopExercise(navController, Screen.Exercises)
     }
 }
 
@@ -204,12 +210,36 @@ private fun NavGraphBuilder.addComplexSortExercise(
     }
 }
 
+@InternalCoroutinesApi
+@ExperimentalFoundationApi
+@ExperimentalMaterialApi
+private fun NavGraphBuilder.addStroopExercise(
+    navController: NavController,
+    root: Screen,
+) {
+    composable(LeafScreen.Stroop.createRoute(root)) {
+        StroopExercise(onBackClick = { navController.popBackStack() }, onRepeatExerciseClick = {
+            navController.navigate(
+                LeafScreen.ShowDescription.createRoute(
+                    root = root,
+                    exerciseName = ExerciseName.STROOP
+                )
+            ) {
+                popUpTo(LeafScreen.Exercises.createRoute(root = root)) {
+                    inclusive = false
+                }
+            }
+        })
+    }
+}
+
 private fun mapExerciseNameToLeafScreen(exerciseName: ExerciseName): LeafScreen {
     return when (exerciseName) {
         ExerciseName.EXTRA_NUMBER -> LeafScreen.ExtraNumbers
         ExerciseName.EXTRA_WORD -> LeafScreen.ExtraWords
         ExerciseName.FACE_CONTROL -> LeafScreen.FaceControl
         ExerciseName.COMPLEX_SORT -> LeafScreen.ComplexSort
+        ExerciseName.STROOP -> LeafScreen.Stroop
         ExerciseName.NO_NAME -> error("No name screen")
     }
 }

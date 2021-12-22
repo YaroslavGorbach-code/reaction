@@ -6,6 +6,7 @@ import yaroslavgorbach.reaction.feature.exercise.cpmplexSort.model.ComplexSortWi
 import yaroslavgorbach.reaction.feature.exercise.extraNumber.model.ExtraNumberWinRule
 import yaroslavgorbach.reaction.feature.exercise.extraWord.model.ExtraWordWinRule
 import yaroslavgorbach.reaction.feature.exercise.faceControl.model.FaceControlWinRule
+import yaroslavgorbach.reaction.feature.exercise.stroop.model.StroopWinRule
 
 object ExerciseNameToWinRuleMapper {
     fun map(exerciseName: ExerciseName): WinRule {
@@ -14,6 +15,7 @@ object ExerciseNameToWinRuleMapper {
             ExerciseName.EXTRA_WORD -> ExtraWordWinRule
             ExerciseName.FACE_CONTROL -> FaceControlWinRule
             ExerciseName.COMPLEX_SORT -> ComplexSortWinRule
+            ExerciseName.STROOP -> StroopWinRule
             ExerciseName.NO_NAME -> WinRule
         }
     }

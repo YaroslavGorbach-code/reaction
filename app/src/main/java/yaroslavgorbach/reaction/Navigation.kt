@@ -15,6 +15,7 @@ import yaroslavgorbach.reaction.feature.exercise.cpmplexSort.ui.ComplexSort
 import yaroslavgorbach.reaction.feature.exercise.extraNumber.ui.ExtraNumbers
 import yaroslavgorbach.reaction.feature.exercise.extraWord.ui.ExtraWords
 import yaroslavgorbach.reaction.feature.exercise.faceControl.ui.FaceControl
+import yaroslavgorbach.reaction.feature.exercise.geoSwitching.ui.GeoSwitchingExercise
 import yaroslavgorbach.reaction.feature.exercise.stroop.ui.StroopExercise
 import yaroslavgorbach.reaction.feature.listexercises.ui.Exercises
 
@@ -35,6 +36,7 @@ private sealed class LeafScreen(
     object FaceControl : LeafScreen("FaceControl")
     object ComplexSort : LeafScreen("ComplexSort")
     object Stroop : LeafScreen("Stroop")
+    object GeoSwitching : LeafScreen("GeoSwitching")
 
     object ShowDescription : LeafScreen("Description/{${EXERCISE_NAME_ARG}}") {
         fun createRoute(root: Screen, exerciseName: ExerciseName): String {
@@ -77,6 +79,7 @@ private fun NavGraphBuilder.addExercisesTopLevel(
         addFaceControlExercise(navController, Screen.Exercises)
         addComplexSortExercise(navController, Screen.Exercises)
         addStroopExercise(navController, Screen.Exercises)
+        addGeoSwitchingExercise(navController, Screen.Exercises)
     }
 }
 
@@ -118,7 +121,7 @@ private fun NavGraphBuilder.addDescription(
                         inclusive = true
                     }
                 }
-            }, onBackClick = { navController.popBackStack() })
+            }, onBackClick = navController::popBackStack)
     }
 }
 
@@ -129,7 +132,7 @@ private fun NavGraphBuilder.addExtraNumbersExercise(
     root: Screen,
 ) {
     composable(LeafScreen.ExtraNumbers.createRoute(root)) {
-        ExtraNumbers(onBackClick = { navController.popBackStack() }, onRepeatExerciseClick = {
+        ExtraNumbers(onBackClick = navController::popBackStack, onRepeatExerciseClick = {
             navController.navigate(
                 LeafScreen.ShowDescription.createRoute(
                     root = root,
@@ -151,7 +154,7 @@ private fun NavGraphBuilder.addExtraWordsExercise(
     root: Screen,
 ) {
     composable(LeafScreen.ExtraWords.createRoute(root)) {
-        ExtraWords(onBackClick = { navController.popBackStack() }, onRepeatExerciseClick = {
+        ExtraWords(onBackClick = navController::popBackStack, onRepeatExerciseClick = {
             navController.navigate(
                 LeafScreen.ShowDescription.createRoute(
                     root = root,
@@ -173,7 +176,7 @@ private fun NavGraphBuilder.addFaceControlExercise(
     root: Screen,
 ) {
     composable(LeafScreen.FaceControl.createRoute(root)) {
-        FaceControl(onBackClick = { navController.popBackStack() }, onRepeatExerciseClick = {
+        FaceControl(onBackClick = navController::popBackStack, onRepeatExerciseClick = {
             navController.navigate(
                 LeafScreen.ShowDescription.createRoute(
                     root = root,
@@ -195,7 +198,7 @@ private fun NavGraphBuilder.addComplexSortExercise(
     root: Screen,
 ) {
     composable(LeafScreen.ComplexSort.createRoute(root)) {
-        ComplexSort(onBackClick = { navController.popBackStack() }, onRepeatExerciseClick = {
+        ComplexSort(onBackClick = navController::popBackStack, onRepeatExerciseClick = {
             navController.navigate(
                 LeafScreen.ShowDescription.createRoute(
                     root = root,
@@ -218,11 +221,34 @@ private fun NavGraphBuilder.addStroopExercise(
     root: Screen,
 ) {
     composable(LeafScreen.Stroop.createRoute(root)) {
-        StroopExercise(onBackClick = { navController.popBackStack() }, onRepeatExerciseClick = {
+        StroopExercise(onBackClick = navController::popBackStack, onRepeatExerciseClick = {
             navController.navigate(
                 LeafScreen.ShowDescription.createRoute(
                     root = root,
                     exerciseName = ExerciseName.STROOP
+                )
+            ) {
+                popUpTo(LeafScreen.Exercises.createRoute(root = root)) {
+                    inclusive = false
+                }
+            }
+        })
+    }
+}
+
+@InternalCoroutinesApi
+@ExperimentalFoundationApi
+@ExperimentalMaterialApi
+private fun NavGraphBuilder.addGeoSwitchingExercise(
+    navController: NavController,
+    root: Screen,
+) {
+    composable(LeafScreen.GeoSwitching.createRoute(root)) {
+        GeoSwitchingExercise(onBackClick = navController::popBackStack, onRepeatExerciseClick = {
+            navController.navigate(
+                LeafScreen.ShowDescription.createRoute(
+                    root = root,
+                    exerciseName = ExerciseName.GEO_SWITCHING
                 )
             ) {
                 popUpTo(LeafScreen.Exercises.createRoute(root = root)) {
@@ -240,6 +266,7 @@ private fun mapExerciseNameToLeafScreen(exerciseName: ExerciseName): LeafScreen 
         ExerciseName.FACE_CONTROL -> LeafScreen.FaceControl
         ExerciseName.COMPLEX_SORT -> LeafScreen.ComplexSort
         ExerciseName.STROOP -> LeafScreen.Stroop
+        ExerciseName.GEO_SWITCHING -> LeafScreen.GeoSwitching
         ExerciseName.NO_NAME -> error("No name screen")
     }
 }

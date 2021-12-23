@@ -6,4 +6,5 @@
     <string name="instruction_extra_word">Найдите лишнее слово</string>
     <string name="instruction_face_control">Найдите грустный смайлик</string>
     <string name="instruction_stroop">Выбирете цвет шрифта слова</string>
+    <string name="instruction_geo_switching">Ответьте на вопрос</string>
 </resources>

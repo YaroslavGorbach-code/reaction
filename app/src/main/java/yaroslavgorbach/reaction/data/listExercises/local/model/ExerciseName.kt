@@ -9,4 +9,5 @@ enum class ExerciseName(val res: Int) {
     FACE_CONTROL(R.string.name_face_control),
     COMPLEX_SORT(R.string.name_complex_sort),
     STROOP(R.string.name_stroop),
+    GEO_SWITCHING(R.string.name_geo_switching),
 }

@@ -11,6 +11,8 @@ import yaroslavgorbach.reaction.data.exercise.extraWord.factory.WordPacksFactory
 import yaroslavgorbach.reaction.data.exercise.extraWord.model.WordPack
 import yaroslavgorbach.reaction.data.exercise.faceControl.factory.FacePacksFactory
 import yaroslavgorbach.reaction.data.exercise.faceControl.model.FacePack
+import yaroslavgorbach.reaction.data.exercise.geoSwitching.factory.GeoFiguresFactory
+import yaroslavgorbach.reaction.data.exercise.geoSwitching.model.GeoFigure
 import yaroslavgorbach.reaction.data.exercise.stroop.factory.StroopWordsFactory
 import yaroslavgorbach.reaction.data.exercise.stroop.model.StroopWord
 
@@ -34,6 +36,10 @@ class RepoExerciseImp(private val context: Context) : RepoExercise {
 
     override fun observeComplexSort(): Flow<List<ComplexSortItem>> {
         return flowOf(ComplexSortItemsFactory().create())
+    }
+
+    override fun observeGeoFigures(): Flow<List<GeoFigure>> {
+        return flowOf(GeoFiguresFactory().create())
     }
 
 }

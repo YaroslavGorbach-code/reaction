@@ -10,4 +10,5 @@ enum class ExerciseName(val res: Int) {
     COMPLEX_SORT(R.string.name_complex_sort),
     STROOP(R.string.name_stroop),
     GEO_SWITCHING(R.string.name_geo_switching),
+    NUMBERS_AND_LETTERS(R.string.name_numbers_and_letters),
 }

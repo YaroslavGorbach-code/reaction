@@ -13,11 +13,15 @@ import yaroslavgorbach.reaction.data.exercise.faceControl.factory.FacePacksFacto
 import yaroslavgorbach.reaction.data.exercise.faceControl.model.FacePack
 import yaroslavgorbach.reaction.data.exercise.geoSwitching.factory.GeoFiguresFactory
 import yaroslavgorbach.reaction.data.exercise.geoSwitching.model.GeoFigure
+import yaroslavgorbach.reaction.data.exercise.numbersLetters.factory.NumbersAndLettersFactory
+import yaroslavgorbach.reaction.data.exercise.numbersLetters.model.NumberAndLetter
 import yaroslavgorbach.reaction.data.exercise.stroop.factory.StroopWordsFactory
 import yaroslavgorbach.reaction.data.exercise.stroop.model.StroopWord
 
 @ExperimentalStdlibApi
 class RepoExerciseImp(private val context: Context) : RepoExercise {
+
+
     override fun observeExtraNumber(): Flow<List<NumberPack>> {
         return flowOf(NumberPacksFactory().create())
     }
@@ -40,6 +44,10 @@ class RepoExerciseImp(private val context: Context) : RepoExercise {
 
     override fun observeGeoFigures(): Flow<List<GeoFigure>> {
         return flowOf(GeoFiguresFactory().create())
+    }
+
+    override fun observeNumbersAnLetters(): Flow<List<NumberAndLetter>> {
+        return flowOf(NumbersAndLettersFactory(context).create())
     }
 
 }

@@ -16,6 +16,7 @@ import yaroslavgorbach.reaction.feature.exercise.extraNumber.ui.ExtraNumbers
 import yaroslavgorbach.reaction.feature.exercise.extraWord.ui.ExtraWords
 import yaroslavgorbach.reaction.feature.exercise.faceControl.ui.FaceControl
 import yaroslavgorbach.reaction.feature.exercise.geoSwitching.ui.GeoSwitchingExercise
+import yaroslavgorbach.reaction.feature.exercise.numbersAndLetters.ui.NumbersAndLettersExercise
 import yaroslavgorbach.reaction.feature.exercise.stroop.ui.StroopExercise
 import yaroslavgorbach.reaction.feature.listexercises.ui.Exercises
 
@@ -37,6 +38,7 @@ private sealed class LeafScreen(
     object ComplexSort : LeafScreen("ComplexSort")
     object Stroop : LeafScreen("Stroop")
     object GeoSwitching : LeafScreen("GeoSwitching")
+    object NumberAndLetter : LeafScreen("NumberAndLetter")
 
     object ShowDescription : LeafScreen("Description/{${EXERCISE_NAME_ARG}}") {
         fun createRoute(root: Screen, exerciseName: ExerciseName): String {
@@ -80,6 +82,7 @@ private fun NavGraphBuilder.addExercisesTopLevel(
         addComplexSortExercise(navController, Screen.Exercises)
         addStroopExercise(navController, Screen.Exercises)
         addGeoSwitchingExercise(navController, Screen.Exercises)
+        addNumberAndLetterExercise(navController, Screen.Exercises)
     }
 }
 
@@ -259,6 +262,29 @@ private fun NavGraphBuilder.addGeoSwitchingExercise(
     }
 }
 
+@InternalCoroutinesApi
+@ExperimentalFoundationApi
+@ExperimentalMaterialApi
+private fun NavGraphBuilder.addNumberAndLetterExercise(
+    navController: NavController,
+    root: Screen,
+) {
+    composable(LeafScreen.NumberAndLetter.createRoute(root)) {
+        NumbersAndLettersExercise(onBackClick = navController::popBackStack, onRepeatExerciseClick = {
+            navController.navigate(
+                LeafScreen.ShowDescription.createRoute(
+                    root = root,
+                    exerciseName = ExerciseName.NUMBERS_AND_LETTERS
+                )
+            ) {
+                popUpTo(LeafScreen.Exercises.createRoute(root = root)) {
+                    inclusive = false
+                }
+            }
+        })
+    }
+}
+
 private fun mapExerciseNameToLeafScreen(exerciseName: ExerciseName): LeafScreen {
     return when (exerciseName) {
         ExerciseName.EXTRA_NUMBER -> LeafScreen.ExtraNumbers
@@ -267,6 +293,7 @@ private fun mapExerciseNameToLeafScreen(exerciseName: ExerciseName): LeafScreen 
         ExerciseName.COMPLEX_SORT -> LeafScreen.ComplexSort
         ExerciseName.STROOP -> LeafScreen.Stroop
         ExerciseName.GEO_SWITCHING -> LeafScreen.GeoSwitching
+        ExerciseName.NUMBERS_AND_LETTERS -> LeafScreen.NumberAndLetter
         ExerciseName.NO_NAME -> error("No name screen")
     }
 }

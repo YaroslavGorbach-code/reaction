@@ -1,7 +1,7 @@
 package yaroslavgorbach.reaction.data.exercise.geoSwitching.model
 
 import androidx.compose.ui.graphics.Color
-import yaroslavgorbach.reaction.feature.exercise.geoSwitching.model.ChoseVariations
+import yaroslavgorbach.reaction.feature.exercise.common.model.YesNoChoseVariations
 
 data class GeoFigure(val figure: FigureVariant, val color: Color, val taskVariant: TaskVariant) {
 
@@ -10,15 +10,15 @@ data class GeoFigure(val figure: FigureVariant, val color: Color, val taskVarian
     }
 
 
-    inline fun checkAnswer(answer: ChoseVariations, onResult: (isCorrect: Boolean) -> Unit) {
+    inline fun checkAnswer(answer: YesNoChoseVariations, onResult: (isCorrect: Boolean) -> Unit) {
         when (answer) {
-            ChoseVariations.NO -> {
+            YesNoChoseVariations.NO -> {
                 when (taskVariant) {
                     TaskVariant.IS_SQUARE -> onResult(figure != FigureVariant.SQUARE)
                     TaskVariant.IS_BLUE -> onResult(color != Color.Blue)
                 }
             }
-            ChoseVariations.YES -> {
+            YesNoChoseVariations.YES -> {
                 when (taskVariant) {
                     TaskVariant.IS_SQUARE -> onResult(figure == FigureVariant.SQUARE)
                     TaskVariant.IS_BLUE -> onResult(color == Color.Blue)

@@ -7,6 +7,7 @@ import yaroslavgorbach.reaction.feature.exercise.extraNumber.model.ExtraNumberWi
 import yaroslavgorbach.reaction.feature.exercise.extraWord.model.ExtraWordWinRule
 import yaroslavgorbach.reaction.feature.exercise.faceControl.model.FaceControlWinRule
 import yaroslavgorbach.reaction.feature.exercise.geoSwitching.model.GeoSwitchingWinRule
+import yaroslavgorbach.reaction.feature.exercise.numbersAndLetters.model.NumbersAndLettersWinRule
 import yaroslavgorbach.reaction.feature.exercise.stroop.model.StroopWinRule
 
 object ExerciseNameToWinRuleMapper {
@@ -18,6 +19,7 @@ object ExerciseNameToWinRuleMapper {
             ExerciseName.COMPLEX_SORT -> ComplexSortWinRule
             ExerciseName.STROOP -> StroopWinRule
             ExerciseName.GEO_SWITCHING -> GeoSwitchingWinRule
+            ExerciseName.NUMBERS_AND_LETTERS -> NumbersAndLettersWinRule
             ExerciseName.NO_NAME -> WinRule
         }
     }

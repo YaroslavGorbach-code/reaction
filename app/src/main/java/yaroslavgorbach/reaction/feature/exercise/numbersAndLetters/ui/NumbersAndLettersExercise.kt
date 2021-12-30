@@ -1,10 +1,8 @@
-package yaroslavgorbach.reaction.feature.exercise.geoSwitching.ui
+package yaroslavgorbach.reaction.feature.exercise.numbersAndLetters.ui
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -20,18 +18,17 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.InternalCoroutinesApi
 import yaroslavgorbach.reaction.R
 import yaroslavgorbach.reaction.common.ui.theme.ReactionTheme
-import yaroslavgorbach.reaction.data.exercise.geoSwitching.model.TaskVariant
+import yaroslavgorbach.reaction.data.exercise.numbersLetters.model.NumberAndLetterTaskVariant
 import yaroslavgorbach.reaction.data.listExercises.local.model.ExerciseName
 import yaroslavgorbach.reaction.feature.exercise.common.mapper.ExerciseNameToInstructionResMapper
 import yaroslavgorbach.reaction.feature.exercise.common.mapper.ExerciseNameToWinRuleMapper
 import yaroslavgorbach.reaction.feature.exercise.common.model.ExerciseResultUi
 import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseResult
 import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseTopBar
-import yaroslavgorbach.reaction.feature.exercise.common.model.YesNoChoseVariations
 import yaroslavgorbach.reaction.feature.exercise.common.ui.YesNoBottomButtons
-import yaroslavgorbach.reaction.feature.exercise.geoSwitching.model.GeoSwitchingActions
-import yaroslavgorbach.reaction.feature.exercise.geoSwitching.model.GeoSwitchingViewState
-import yaroslavgorbach.reaction.feature.exercise.geoSwitching.presentation.GeoSwitchingViewModel
+import yaroslavgorbach.reaction.feature.exercise.numbersAndLetters.model.NumbersAndLettersActions
+import yaroslavgorbach.reaction.feature.exercise.numbersAndLetters.model.NumbersAndLettersViewState
+import yaroslavgorbach.reaction.feature.exercise.numbersAndLetters.presentation.NumbersAndLettersViewModel
 import yaroslavgorbach.reaction.utill.TimerCountDown
 
 
@@ -39,11 +36,11 @@ import yaroslavgorbach.reaction.utill.TimerCountDown
 @ExperimentalFoundationApi
 @InternalCoroutinesApi
 @Composable
-fun GeoSwitchingExercise(
+fun NumbersAndLettersExercise(
     onBackClick: () -> Unit,
     onRepeatExerciseClick: () -> Unit,
 ) {
-    GeoSwitchingExercise(
+    NumbersAndLettersExercise(
         viewModel = hiltViewModel(),
         onBackClick = onBackClick,
         onRepeatExerciseClick = onRepeatExerciseClick
@@ -54,19 +51,19 @@ fun GeoSwitchingExercise(
 @ExperimentalFoundationApi
 @ExperimentalMaterialApi
 @Composable
-internal fun GeoSwitchingExercise(
-    viewModel: GeoSwitchingViewModel,
+internal fun NumbersAndLettersExercise(
+    viewModel: NumbersAndLettersViewModel,
     onBackClick: () -> Unit,
     onRepeatExerciseClick: () -> Unit,
 ) {
     val viewState = viewModel.state.collectAsState()
 
-    GeoSwitchingExercise(
+    NumbersAndLettersExercise(
         state = viewState.value,
     ) { action ->
         when (action) {
-            is GeoSwitchingActions.Back -> onBackClick()
-            is GeoSwitchingActions.Repeat -> onRepeatExerciseClick()
+            is NumbersAndLettersActions.Back -> onBackClick()
+            is NumbersAndLettersActions.Repeat -> onRepeatExerciseClick()
             else -> viewModel.submitAction(action)
         }
     }
@@ -75,50 +72,50 @@ internal fun GeoSwitchingExercise(
 @ExperimentalFoundationApi
 @ExperimentalMaterialApi
 @Composable
-internal fun GeoSwitchingExercise(
-    state: GeoSwitchingViewState,
-    actioner: (GeoSwitchingActions) -> Unit,
+internal fun NumbersAndLettersExercise(
+    state: NumbersAndLettersViewState,
+    actioner: (NumbersAndLettersActions) -> Unit,
 ) {
     if (state.isFinished) {
         ExerciseResult(
             exerciseResultUi = ExerciseResultUi(
-                exerciseName = ExerciseName.GEO_SWITCHING,
+                exerciseName = ExerciseName.NUMBERS_AND_LETTERS,
                 correctPoints = state.pointsCorrect,
                 incorrectPoints = state.pointsIncorrect,
-                winRule = ExerciseNameToWinRuleMapper.map(ExerciseName.GEO_SWITCHING)
+                winRule = ExerciseNameToWinRuleMapper.map(ExerciseName.NUMBERS_AND_LETTERS)
             ),
-            onBackClick = { actioner(GeoSwitchingActions.Back) },
-            onRepeatExercise = { actioner(GeoSwitchingActions.Repeat) }
+            onBackClick = { actioner(NumbersAndLettersActions.Back) },
+            onRepeatExercise = { actioner(NumbersAndLettersActions.Repeat) }
         )
     } else {
         Box(Modifier.fillMaxSize()) {
             when (state.timerState) {
                 TimerCountDown.TimerState.Finish -> {
-                    actioner(GeoSwitchingActions.FinishExercise)
+                    actioner(NumbersAndLettersActions.FinishExercise)
                 }
                 is TimerCountDown.TimerState.Tick -> {
                     ExerciseTopBar(
                         modifier = Modifier.align(Alignment.TopCenter),
                         instruction = stringResource(
                             id = ExerciseNameToInstructionResMapper.map(
-                                exerciseName = ExerciseName.GEO_SWITCHING
+                                exerciseName = ExerciseName.NUMBERS_AND_LETTERS
                             )
                         ),
                         timeProgress = state.timerState.timeUntilFinishedProgress,
                         time = state.timerState.timeUtilFinishedString,
-                        onBack = { actioner(GeoSwitchingActions.Back) }
+                        onBack = { actioner(NumbersAndLettersActions.Back) }
                     )
                 }
             }
 
             CroiseVariants(state)
-            YesNoBottomButtons { variant -> actioner(GeoSwitchingActions.Chose(variant)) }
+            YesNoBottomButtons { variant -> actioner(NumbersAndLettersActions.Chose(variant)) }
         }
     }
 }
 
 @Composable
-private fun BoxScope.CroiseVariants(state: GeoSwitchingViewState) {
+private fun BoxScope.CroiseVariants(state: NumbersAndLettersViewState) {
     Row(
         modifier = Modifier.Companion
             .align(Alignment.Center)
@@ -132,17 +129,16 @@ private fun BoxScope.CroiseVariants(state: GeoSwitchingViewState) {
                 .padding(end = 4.dp)
         ) {
             Text(
-                text = stringResource(id = R.string.is_square),
+                text = stringResource(id = R.string.is_even_number),
                 fontSize = 18.sp,
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Center
             )
 
-            if (state.figure.taskVariant == TaskVariant.IS_SQUARE) {
-                Icon(
-                    imageVector = state.figure.figure.icon,
-                    contentDescription = null,
-                    tint = state.figure.color,
+            if (state.numberAndLetter.taskVariant == NumberAndLetterTaskVariant.EVEN_NUMBER) {
+                Text(
+                    text = state.numberAndLetter.toString(),
+                    textAlign = TextAlign.Center,
                     modifier = Modifier
                         .align(CenterHorizontally)
                         .fillMaxWidth()
@@ -159,17 +155,16 @@ private fun BoxScope.CroiseVariants(state: GeoSwitchingViewState) {
                 .padding(start = 4.dp)
         ) {
             Text(
-                text = stringResource(id = R.string.is_blue),
+                text = stringResource(id = R.string.is_letter_vowel),
                 fontSize = 18.sp,
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Center
             )
 
-            if (state.figure.taskVariant == TaskVariant.IS_BLUE) {
-                Icon(
-                    imageVector = state.figure.figure.icon,
-                    contentDescription = null,
-                    tint = state.figure.color,
+            if (state.numberAndLetter.taskVariant == NumberAndLetterTaskVariant.VOWEL_LETTER) {
+                Text(
+                    text = state.numberAndLetter.toString(),
+                    textAlign = TextAlign.Center,
                     modifier = Modifier
                         .align(CenterHorizontally)
                         .fillMaxWidth()
@@ -187,6 +182,6 @@ private fun BoxScope.CroiseVariants(state: GeoSwitchingViewState) {
 @Composable
 fun ExercisesPreview() {
     ReactionTheme {
-        GeoSwitchingExercise(state = GeoSwitchingViewState.Test, actioner = {})
+        NumbersAndLettersExercise(state = NumbersAndLettersViewState.Test, actioner = {})
     }
 }

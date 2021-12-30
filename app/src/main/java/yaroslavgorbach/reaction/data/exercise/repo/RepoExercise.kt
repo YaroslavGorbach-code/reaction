@@ -6,6 +6,7 @@ import yaroslavgorbach.reaction.data.exercise.extraNumber.local.model.NumberPack
 import yaroslavgorbach.reaction.data.exercise.extraWord.model.WordPack
 import yaroslavgorbach.reaction.data.exercise.faceControl.model.FacePack
 import yaroslavgorbach.reaction.data.exercise.geoSwitching.model.GeoFigure
+import yaroslavgorbach.reaction.data.exercise.numbersLetters.model.NumberAndLetter
 import yaroslavgorbach.reaction.data.exercise.stroop.model.StroopWord
 
 interface RepoExercise {
@@ -21,4 +22,6 @@ interface RepoExercise {
     fun observeComplexSort(): Flow<List<ComplexSortItem>>
 
     fun observeGeoFigures(): Flow<List<GeoFigure>>
+
+    fun observeNumbersAnLetters(): Flow<List<NumberAndLetter>>
 }

@@ -27,4 +27,8 @@
     <string name="description_geo_switching">
              Ваша задача - указать свойство обьекта находящегося на поле как можно быстрее
     </string>
+
+    <string name="description_numbers_and_letters">
+             Ваша задача - указать свойство обьекта находящегося на поле как можно быстрее
+    </string>
 </resources>

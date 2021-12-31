@@ -7,4 +7,5 @@
     <string name="instruction_face_control">Найдите грустный смайлик</string>
     <string name="instruction_stroop">Выбирете цвет шрифта слова</string>
     <string name="instruction_geo_switching">Ответьте на вопрос</string>
+    <string name="instruction_numbers_and_letters">Ответьте на вопрос</string>
 </resources>

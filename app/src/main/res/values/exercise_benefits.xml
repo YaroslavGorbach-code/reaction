@@ -29,4 +29,10 @@
         <item>Ускоряет реакцию</item>
         <item>Расширяет угол восприятия</item>
     </string-array>
+
+    <string-array name="benefits_numbers_and_letters">
+        <item>Развивает внимание</item>
+        <item>Ускоряет реакцию</item>
+        <item>Расширяет угол восприятия</item>
+    </string-array>
 </resources>

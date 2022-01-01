@@ -11,4 +11,5 @@ enum class ExerciseName(val res: Int) {
     STROOP(R.string.name_stroop),
     GEO_SWITCHING(R.string.name_geo_switching),
     NUMBERS_AND_LETTERS(R.string.name_numbers_and_letters),
+    AIRPORT(R.string.name_airport),
 }

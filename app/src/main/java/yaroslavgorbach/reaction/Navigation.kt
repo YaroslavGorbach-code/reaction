@@ -11,6 +11,7 @@ import androidx.navigation.compose.navigation
 import kotlinx.coroutines.InternalCoroutinesApi
 import yaroslavgorbach.reaction.data.listExercises.local.model.ExerciseName
 import yaroslavgorbach.reaction.feature.description.ui.Description
+import yaroslavgorbach.reaction.feature.exercise.airport.ui.AirportExercise
 import yaroslavgorbach.reaction.feature.exercise.cpmplexSort.ui.ComplexSort
 import yaroslavgorbach.reaction.feature.exercise.extraNumber.ui.ExtraNumbers
 import yaroslavgorbach.reaction.feature.exercise.extraWord.ui.ExtraWords
@@ -39,6 +40,7 @@ private sealed class LeafScreen(
     object Stroop : LeafScreen("Stroop")
     object GeoSwitching : LeafScreen("GeoSwitching")
     object NumberAndLetter : LeafScreen("NumberAndLetter")
+    object Airport : LeafScreen("Airport")
 
     object ShowDescription : LeafScreen("Description/{${EXERCISE_NAME_ARG}}") {
         fun createRoute(root: Screen, exerciseName: ExerciseName): String {
@@ -83,6 +85,7 @@ private fun NavGraphBuilder.addExercisesTopLevel(
         addStroopExercise(navController, Screen.Exercises)
         addGeoSwitchingExercise(navController, Screen.Exercises)
         addNumberAndLetterExercise(navController, Screen.Exercises)
+        addAirportExercise(navController, Screen.Exercises)
     }
 }
 
@@ -285,6 +288,29 @@ private fun NavGraphBuilder.addNumberAndLetterExercise(
     }
 }
 
+@InternalCoroutinesApi
+@ExperimentalFoundationApi
+@ExperimentalMaterialApi
+private fun NavGraphBuilder.addAirportExercise(
+    navController: NavController,
+    root: Screen,
+) {
+    composable(LeafScreen.Airport.createRoute(root)) {
+        AirportExercise(onBackClick = navController::popBackStack, onRepeatExerciseClick = {
+            navController.navigate(
+                LeafScreen.ShowDescription.createRoute(
+                    root = root,
+                    exerciseName = ExerciseName.AIRPORT
+                )
+            ) {
+                popUpTo(LeafScreen.Exercises.createRoute(root = root)) {
+                    inclusive = false
+                }
+            }
+        })
+    }
+}
+
 private fun mapExerciseNameToLeafScreen(exerciseName: ExerciseName): LeafScreen {
     return when (exerciseName) {
         ExerciseName.EXTRA_NUMBER -> LeafScreen.ExtraNumbers
@@ -294,6 +320,7 @@ private fun mapExerciseNameToLeafScreen(exerciseName: ExerciseName): LeafScreen 
         ExerciseName.STROOP -> LeafScreen.Stroop
         ExerciseName.GEO_SWITCHING -> LeafScreen.GeoSwitching
         ExerciseName.NUMBERS_AND_LETTERS -> LeafScreen.NumberAndLetter
+        ExerciseName.AIRPORT -> LeafScreen.Airport
         ExerciseName.NO_NAME -> error("No name screen")
     }
 }

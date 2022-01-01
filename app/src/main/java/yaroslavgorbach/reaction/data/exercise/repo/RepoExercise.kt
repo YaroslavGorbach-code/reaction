@@ -1,6 +1,7 @@
 package yaroslavgorbach.reaction.data.exercise.repo
 
 import kotlinx.coroutines.flow.Flow
+import yaroslavgorbach.reaction.data.exercise.airport.model.Plane
 import yaroslavgorbach.reaction.data.exercise.complexSort.model.ComplexSortItem
 import yaroslavgorbach.reaction.data.exercise.extraNumber.local.model.NumberPack
 import yaroslavgorbach.reaction.data.exercise.extraWord.model.WordPack
@@ -24,4 +25,6 @@ interface RepoExercise {
     fun observeGeoFigures(): Flow<List<GeoFigure>>
 
     fun observeNumbersAnLetters(): Flow<List<NumberAndLetter>>
+
+    fun observePlanes(): Flow<List<Plane>>
 }

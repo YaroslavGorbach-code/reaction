@@ -3,6 +3,8 @@ package yaroslavgorbach.reaction.data.exercise.repo
 import android.content.Context
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
+import yaroslavgorbach.reaction.data.exercise.airport.factory.AirportPlainsFactory
+import yaroslavgorbach.reaction.data.exercise.airport.model.Plane
 import yaroslavgorbach.reaction.data.exercise.complexSort.factory.ComplexSortItemsFactory
 import yaroslavgorbach.reaction.data.exercise.complexSort.model.ComplexSortItem
 import yaroslavgorbach.reaction.data.exercise.extraNumber.local.factory.NumberPacksFactory
@@ -48,6 +50,10 @@ class RepoExerciseImp(private val context: Context) : RepoExercise {
 
     override fun observeNumbersAnLetters(): Flow<List<NumberAndLetter>> {
         return flowOf(NumbersAndLettersFactory(context).create())
+    }
+
+    override fun observePlanes(): Flow<List<Plane>> {
+        return flowOf(AirportPlainsFactory().create())
     }
 
 }

@@ -1,6 +1,7 @@
 package yaroslavgorbach.reaction.feature.exercise.common.mapper
 
 import yaroslavgorbach.reaction.data.listExercises.local.model.ExerciseName
+import yaroslavgorbach.reaction.feature.exercise.airport.model.AirportWinRule
 import yaroslavgorbach.reaction.feature.exercise.common.model.WinRule
 import yaroslavgorbach.reaction.feature.exercise.cpmplexSort.model.ComplexSortWinRule
 import yaroslavgorbach.reaction.feature.exercise.extraNumber.model.ExtraNumberWinRule
@@ -20,6 +21,7 @@ object ExerciseNameToWinRuleMapper {
             ExerciseName.STROOP -> StroopWinRule
             ExerciseName.GEO_SWITCHING -> GeoSwitchingWinRule
             ExerciseName.NUMBERS_AND_LETTERS -> NumbersAndLettersWinRule
+            ExerciseName.AIRPORT -> AirportWinRule
             ExerciseName.NO_NAME -> WinRule
         }
     }

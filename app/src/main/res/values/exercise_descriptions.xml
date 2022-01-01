@@ -31,4 +31,8 @@
     <string name="description_numbers_and_letters">
              Ваша задача - указать свойство обьекта находящегося на поле как можно быстрее
     </string>
+
+    <string name="description_airport">
+             Ваша задача - указать куда летит синий самолет и откуда летик красный
+    </string>
 </resources>

@@ -8,4 +8,6 @@
     <string name="instruction_stroop">Выбирете цвет шрифта слова</string>
     <string name="instruction_geo_switching">Ответьте на вопрос</string>
     <string name="instruction_numbers_and_letters">Ответьте на вопрос</string>
+    <string name="instruction_airport_forward">Куда летит самолет?</string>
+    <string name="instruction_airport_backward">Откуда летит самолет?</string>
 </resources>

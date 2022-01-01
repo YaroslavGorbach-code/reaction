@@ -7,4 +7,5 @@
     <string name="name_stroop">Задача Струпа</string>
     <string name="name_geo_switching">Геометрические переключения</string>
     <string name="name_numbers_and_letters">Буквы и цифры</string>
+    <string name="name_airport">Аэропорт</string>
 </resources>

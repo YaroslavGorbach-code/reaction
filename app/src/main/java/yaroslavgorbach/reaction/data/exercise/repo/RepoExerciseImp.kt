@@ -17,6 +17,8 @@ import yaroslavgorbach.reaction.data.exercise.geoSwitching.factory.GeoFiguresFac
 import yaroslavgorbach.reaction.data.exercise.geoSwitching.model.GeoFigure
 import yaroslavgorbach.reaction.data.exercise.numbersLetters.factory.NumbersAndLettersFactory
 import yaroslavgorbach.reaction.data.exercise.numbersLetters.model.NumberAndLetter
+import yaroslavgorbach.reaction.data.exercise.rotation.factory.TablesFactory
+import yaroslavgorbach.reaction.data.exercise.rotation.model.Tables
 import yaroslavgorbach.reaction.data.exercise.stroop.factory.StroopWordsFactory
 import yaroslavgorbach.reaction.data.exercise.stroop.model.StroopWord
 
@@ -54,6 +56,10 @@ class RepoExerciseImp(private val context: Context) : RepoExercise {
 
     override fun observePlanes(): Flow<List<Plane>> {
         return flowOf(AirportPlainsFactory().create())
+    }
+
+    override fun observeTables(): Flow<List<Tables>> {
+        return flowOf(TablesFactory().create())
     }
 
 }

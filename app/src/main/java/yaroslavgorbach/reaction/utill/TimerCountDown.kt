@@ -10,6 +10,12 @@ import java.util.concurrent.TimeUnit
 class TimerCountDown(private val coroutineScope: CoroutineScope, private val millisInFuture: Long, countDownInterval: Long) :
     CountDownTimer(millisInFuture, countDownInterval) {
 
+    companion object {
+        const val TEN_MINUTES = 600000L
+        const val ONE_MINUTE = 60000L
+        const val ONE_SECOND = 1000L
+    }
+
     sealed class TimerState {
         class Tick(val millisUntilFinished: Long, val timeUtilFinishedString: String, val timeUntilFinishedProgress: Float) : TimerState()
         object Finish : TimerState()
@@ -34,11 +40,5 @@ class TimerCountDown(private val coroutineScope: CoroutineScope, private val mil
         coroutineScope.launch {
             _state.emit(TimerState.Finish)
         }
-    }
-
-    companion object {
-        const val TEN_MINUTES = 600000L
-        const val ONE_MINUTE = 60000L
-        const val ONE_SECOND = 1000L
     }
 }

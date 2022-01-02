@@ -65,6 +65,13 @@ class RepoExercisesImp : RepoExercises {
                 instructionRes = R.string.empty,
                 levelComplexity = 6,
                 benefitsArrayRes = R.array.benefits_geo_switching
+            ),
+            Exercise(
+                name = ExerciseName.ROTATION,
+                descriptionRes = R.string.description_rotation,
+                instructionRes = R.string.empty,
+                levelComplexity = 6,
+                benefitsArrayRes = R.array.benefits_geo_switching
             )
         )
 

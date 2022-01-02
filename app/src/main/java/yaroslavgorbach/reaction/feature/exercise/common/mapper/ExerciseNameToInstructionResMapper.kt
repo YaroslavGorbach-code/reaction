@@ -31,6 +31,7 @@ object ExerciseNameToInstructionResMapper {
                     AirportTaskVariant.FLIES_BACKWARD -> R.string.instruction_airport_backward
                 }
             }
+            ExerciseName.ROTATION -> R.string.instruction_rotation
         }
     }
 }

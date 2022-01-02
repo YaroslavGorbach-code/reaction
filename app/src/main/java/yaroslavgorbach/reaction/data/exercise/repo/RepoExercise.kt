@@ -8,6 +8,7 @@ import yaroslavgorbach.reaction.data.exercise.extraWord.model.WordPack
 import yaroslavgorbach.reaction.data.exercise.faceControl.model.FacePack
 import yaroslavgorbach.reaction.data.exercise.geoSwitching.model.GeoFigure
 import yaroslavgorbach.reaction.data.exercise.numbersLetters.model.NumberAndLetter
+import yaroslavgorbach.reaction.data.exercise.rotation.model.Tables
 import yaroslavgorbach.reaction.data.exercise.stroop.model.StroopWord
 
 interface RepoExercise {
@@ -27,4 +28,6 @@ interface RepoExercise {
     fun observeNumbersAnLetters(): Flow<List<NumberAndLetter>>
 
     fun observePlanes(): Flow<List<Plane>>
+
+    fun observeTables(): Flow<List<Tables>>
 }

@@ -14,8 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import yaroslavgorbach.reaction.common.ui.theme.ReactionTheme
-import yaroslavgorbach.reaction.data.exercise.extraNumber.local.model.Number
+import yaroslavgorbach.reaction.feature.common.ui.theme.ReactionTheme
 import yaroslavgorbach.reaction.data.exercise.extraWord.model.Word
 
 @Composable

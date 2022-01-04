@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.InternalCoroutinesApi
 import yaroslavgorbach.reaction.R
-import yaroslavgorbach.reaction.common.ui.theme.ReactionTheme
+import yaroslavgorbach.reaction.feature.common.ui.theme.ReactionTheme
 import yaroslavgorbach.reaction.data.exercise.stroop.model.WordColorVariant
 import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
 import yaroslavgorbach.reaction.feature.exercise.common.mapper.ExerciseNameToInstructionResMapper

@@ -21,22 +21,21 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import yaroslavgorbach.reaction.common.ui.theme.ReactionTheme
-import yaroslavgorbach.reaction.common.ui.theme.SuperLightGray
 import yaroslavgorbach.reaction.data.exercises.local.model.Exercise
 import yaroslavgorbach.reaction.feature.common.ui.CircularProgressIndicatorWithContent
+import yaroslavgorbach.reaction.feature.common.ui.theme.ReactionTheme
 
 @ExperimentalMaterialApi
 @Composable
 fun ExerciseItem(exercise: Exercise, onExerciseClick: () -> Unit) {
+
     Column(modifier = Modifier
         .padding(8.dp)
         .fillMaxWidth()
         .height(110.dp)
-        .background(color = SuperLightGray, shape = MaterialTheme.shapes.medium)
+        .background(color = MaterialTheme.colors.onSurface, shape = MaterialTheme.shapes.medium)
         .clickable(enabled = exercise.isAvailable) { onExerciseClick() }
         .padding(8.dp)
-
     )
     {
         Text(
@@ -64,6 +63,7 @@ fun ExerciseItem(exercise: Exercise, onExerciseClick: () -> Unit) {
 
             CircularProgressIndicatorWithContent(
                 progress = exercise.nextAvailabilityProgress,
+                isVisible = exercise.isAvailable && exercise.isNextExerciseAvailable.not(),
                 modifier = Modifier
                     .wrapContentSize()
                     .align(Alignment.CenterEnd)
@@ -72,9 +72,8 @@ fun ExerciseItem(exercise: Exercise, onExerciseClick: () -> Unit) {
                     IconWithBeget(exercise.numberOfWins.toString())
                 } else {
                     Icon(
-                        Icons.Default.Lock, contentDescription = "",
+                        Icons.Default.Lock, contentDescription = null,
                         modifier = Modifier.align(Alignment.Center),
-                        tint = Color.Gray
                     )
                 }
             }
@@ -95,7 +94,6 @@ private fun BoxScope.IconWithBeget(budgetText: String) {
             modifier = Modifier
                 .size(24.dp)
                 .align(Alignment.Center),
-            tint = Color.Gray
         )
         Box(
             modifier = Modifier
@@ -121,9 +119,9 @@ private fun BoxScope.IconWithBeget(budgetText: String) {
 @Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
 @Composable
 fun ExerciseItemPreview(exercise: Exercise = Exercise.Test) {
-    Surface {
         ReactionTheme {
-            ExerciseItem(exercise = exercise) {}
+            Surface {
+                ExerciseItem(exercise = exercise) {}
+            }
         }
-    }
 }

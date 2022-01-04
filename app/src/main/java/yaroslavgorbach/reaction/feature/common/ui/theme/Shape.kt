@@ -1,4 +1,4 @@
-package yaroslavgorbach.reaction.common.ui.theme
+package yaroslavgorbach.reaction.feature.common.ui.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

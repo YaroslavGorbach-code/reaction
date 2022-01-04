@@ -19,21 +19,24 @@ fun CircularProgressIndicatorWithContent(
     backgroundStrokeColor: Color = Color.LightGray,
     strokeWidth: Dp = 1.dp,
     backgroundStrokeWidth: Dp = 1.dp,
+    isVisible: Boolean = true,
     content: @Composable BoxScope.() -> Unit,
 ) {
     Box(modifier = modifier) {
-        CircularProgressIndicator(
-            progress = progress,
-            color = strokeColor,
-            strokeWidth = strokeWidth,
-            modifier = Modifier.drawBehind {
-                drawCircle(
-                    color = backgroundStrokeColor,
-                    radius = (size.maxDimension / 2.0f) - (strokeWidth.value),
-                    style = Stroke(width = backgroundStrokeWidth.toPx())
-                )
-            }
-        )
+        if (isVisible) {
+            CircularProgressIndicator(
+                progress = progress,
+                color = strokeColor,
+                strokeWidth = strokeWidth,
+                modifier = Modifier.drawBehind {
+                    drawCircle(
+                        color = backgroundStrokeColor,
+                        radius = (size.maxDimension / 2.0f) - (strokeWidth.value),
+                        style = Stroke(width = backgroundStrokeWidth.toPx())
+                    )
+                }
+            )
+        }
         content()
     }
 }

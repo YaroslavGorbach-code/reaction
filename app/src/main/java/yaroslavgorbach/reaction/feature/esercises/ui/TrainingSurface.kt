@@ -20,8 +20,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import yaroslavgorbach.reaction.R
-import yaroslavgorbach.reaction.common.ui.theme.ReactionTheme
-import yaroslavgorbach.reaction.common.ui.theme.Shapes
+import yaroslavgorbach.reaction.feature.common.ui.theme.ReactionTheme
+import yaroslavgorbach.reaction.feature.common.ui.theme.Shapes
 import yaroslavgorbach.reaction.data.training.model.Training
 
 @ExperimentalMaterialApi

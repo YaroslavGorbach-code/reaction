@@ -1,6 +1,6 @@
-package yaroslavgorbach.reaction.feature.listexercises.model
+package yaroslavgorbach.reaction.feature.esercises.model
 
-import yaroslavgorbach.reaction.data.listExercises.local.model.Exercise
+import yaroslavgorbach.reaction.data.exercises.local.model.Exercise
 import yaroslavgorbach.reaction.data.training.model.Training
 
 data class ExercisesViewState(

@@ -21,6 +21,15 @@ android {
         vectorDrawables {
             useSupportLibrary true
         }
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += [
+                        "room.schemaLocation":"$projectDir/schemas".toString(),
+                        "room.incremental":"true",
+                        "room.expandProjection":"true"]
+            }
+        }
     }
 
     buildTypes {
@@ -83,4 +92,7 @@ dependencies {
     kapt "com.google.dagger:hilt-compiler:2.40"
 
     implementation "androidx.hilt:hilt-navigation-compose:1.0.0-rc01"
+
+    implementation "androidx.room:room-ktx:2.4.0"
+    kapt "androidx.room:room-compiler:2.4.0"
 }

@@ -17,10 +17,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import yaroslavgorbach.reaction.common.ui.theme.ReactionTheme
 import yaroslavgorbach.reaction.data.exercise.extraWord.model.WordPack
-import yaroslavgorbach.reaction.data.listExercises.local.model.ExerciseName
+import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
 import yaroslavgorbach.reaction.feature.exercise.common.mapper.ExerciseNameToInstructionResMapper
-import yaroslavgorbach.reaction.feature.exercise.common.mapper.ExerciseNameToWinRuleMapper
-import yaroslavgorbach.reaction.feature.exercise.common.model.ExerciseResultUi
 import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseResult
 import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseTopBar
 import yaroslavgorbach.reaction.feature.exercise.extraWord.model.ExtraWordActions
@@ -70,14 +68,9 @@ internal fun ExtraWords(
     state: ExtraWordViewState,
     actioner: (ExtraWordActions) -> Unit,
 ) {
-    if (state.isFinished) {
+    if (state.finishExerciseState.isFinished) {
         ExerciseResult(
-            exerciseResultUi = ExerciseResultUi(
-                exerciseName = ExerciseName.EXTRA_WORD,
-                correctPoints = state.pointsCorrect,
-                incorrectPoints = state.pointsIncorrect,
-                winRule = ExerciseNameToWinRuleMapper.map(ExerciseName.EXTRA_WORD)
-            ),
+            finishExerciseState = state.finishExerciseState,
             onBackClick = { actioner(ExtraWordActions.Back) },
             onRepeatExercise = { actioner(ExtraWordActions.Repeat) }
         )

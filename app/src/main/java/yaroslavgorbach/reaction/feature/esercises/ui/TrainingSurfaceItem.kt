@@ -1,4 +1,4 @@
-package yaroslavgorbach.reaction.feature.listexercises.ui
+package yaroslavgorbach.reaction.feature.esercises.ui
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.CircularProgressIndicator

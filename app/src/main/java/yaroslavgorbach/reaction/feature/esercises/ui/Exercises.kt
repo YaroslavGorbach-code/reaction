@@ -1,4 +1,4 @@
-package yaroslavgorbach.reaction.feature.listexercises.ui
+package yaroslavgorbach.reaction.feature.esercises.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -20,11 +20,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import yaroslavgorbach.reaction.common.ui.theme.ReactionTheme
-import yaroslavgorbach.reaction.data.listExercises.local.model.Exercise
-import yaroslavgorbach.reaction.data.listExercises.local.model.ExerciseName
-import yaroslavgorbach.reaction.feature.listexercises.model.ExercisesActions
-import yaroslavgorbach.reaction.feature.listexercises.model.ExercisesViewState
-import yaroslavgorbach.reaction.feature.listexercises.presentation.ExercisesViewModel
+import yaroslavgorbach.reaction.data.exercises.local.model.Exercise
+import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
+import yaroslavgorbach.reaction.feature.esercises.model.ExercisesActions
+import yaroslavgorbach.reaction.feature.esercises.model.ExercisesViewState
+import yaroslavgorbach.reaction.feature.esercises.presentation.ExercisesViewModel
 
 @ExperimentalMaterialApi
 @Composable

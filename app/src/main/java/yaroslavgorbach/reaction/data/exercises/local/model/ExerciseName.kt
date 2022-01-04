@@ -1,4 +1,4 @@
-package yaroslavgorbach.reaction.data.listExercises.local.model
+package yaroslavgorbach.reaction.data.exercises.local.model
 
 import yaroslavgorbach.reaction.R
 

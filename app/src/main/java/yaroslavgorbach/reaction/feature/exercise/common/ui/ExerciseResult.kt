@@ -16,12 +16,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import yaroslavgorbach.reaction.R
 import yaroslavgorbach.reaction.common.ui.theme.ReactionTheme
+import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
 import yaroslavgorbach.reaction.feature.common.ui.Toolbar
-import yaroslavgorbach.reaction.feature.exercise.common.model.ExerciseResultUi
+import yaroslavgorbach.reaction.feature.exercise.common.model.FinishExerciseState
 
 
 @Composable
-fun ExerciseResult(exerciseResultUi: ExerciseResultUi, onBackClick: () -> Unit, onRepeatExercise: () -> Unit) {
+fun ExerciseResult(
+    finishExerciseState: FinishExerciseState,
+    onBackClick: () -> Unit,
+    onRepeatExercise: () -> Unit
+) {
 
     Column(Modifier.fillMaxSize()) {
         Toolbar { onBackClick() }
@@ -36,7 +41,7 @@ fun ExerciseResult(exerciseResultUi: ExerciseResultUi, onBackClick: () -> Unit, 
 
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = stringResource(exerciseResultUi.exerciseName.res),
+            text = stringResource(finishExerciseState.name.res),
             style = MaterialTheme.typography.body1,
             fontSize = 24.sp,
             textAlign = TextAlign.Center
@@ -51,7 +56,7 @@ fun ExerciseResult(exerciseResultUi: ExerciseResultUi, onBackClick: () -> Unit, 
 
             Box {
                 Text(
-                    text = exerciseResultUi.progressString,
+                    text = finishExerciseState.progressString,
                     modifier = Modifier.align(Center),
                     textAlign = TextAlign.Center,
                     fontSize = 16.sp
@@ -65,7 +70,7 @@ fun ExerciseResult(exerciseResultUi: ExerciseResultUi, onBackClick: () -> Unit, 
                 )
 
                 CircularProgressIndicator(
-                    progress = exerciseResultUi.correctPresent,
+                    progress = finishExerciseState.correctPresent,
                     color = Color.Green,
                     modifier = Modifier.size(60.dp),
                     strokeWidth = 4.dp
@@ -79,19 +84,19 @@ fun ExerciseResult(exerciseResultUi: ExerciseResultUi, onBackClick: () -> Unit, 
             ) {
 
                 Text(
-                    text = stringResource(id = R.string.number_of_rounds) + " ${exerciseResultUi.summaryPints}",
+                    text = stringResource(id = R.string.number_of_rounds) + " ${finishExerciseState.summaryPoints}",
                     style = MaterialTheme.typography.caption,
                     fontSize = 18.sp
                 )
 
                 Text(
-                    text = stringResource(id = R.string.correct) + " ${exerciseResultUi.correctPoints}",
+                    text = stringResource(id = R.string.correct) + " ${finishExerciseState.pointsCorrect}",
                     style = MaterialTheme.typography.body1,
                     fontSize = 12.sp
                 )
 
                 Text(
-                    text = stringResource(id = R.string.incorrect) + " ${exerciseResultUi.incorrectPoints}",
+                    text = stringResource(id = R.string.incorrect) + " ${finishExerciseState.pointsIncorrect}",
                     style = MaterialTheme.typography.body1,
                     fontSize = 12.sp
                 )
@@ -108,7 +113,7 @@ fun ExerciseResult(exerciseResultUi: ExerciseResultUi, onBackClick: () -> Unit, 
                     modifier = Modifier
                         .size(100.dp)
                         .align(CenterHorizontally),
-                    imageVector = exerciseResultUi.icon,
+                    imageVector = finishExerciseState.icon,
                     contentDescription = null
                 )
 
@@ -116,12 +121,12 @@ fun ExerciseResult(exerciseResultUi: ExerciseResultUi, onBackClick: () -> Unit, 
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 8.dp),
-                    text = if (exerciseResultUi.isWin)
+                    text = if (finishExerciseState.isWin)
                         stringResource(id = R.string.result_good)
                     else stringResource(
                         id = R.string.result_bad,
-                        exerciseResultUi.winRule.minRounds,
-                        exerciseResultUi.winRule.minCorrectPresent
+                        finishExerciseState.winRule.minRounds,
+                        finishExerciseState.winRule.minCorrectPresent
                     ),
                     style = MaterialTheme.typography.body1,
                     fontSize = 16.sp,
@@ -168,8 +173,8 @@ fun ExerciseResult(exerciseResultUi: ExerciseResultUi, onBackClick: () -> Unit, 
 @Preview(showSystemUi = true)
 @Composable
 fun ExerciseResultPreview() {
-
     ReactionTheme {
-        ExerciseResult(exerciseResultUi = ExerciseResultUi.Test, onBackClick = {}, onRepeatExercise = {})
+        ExerciseResult(finishExerciseState = FinishExerciseState(name = ExerciseName.NO_NAME),
+            onBackClick = {}, onRepeatExercise = {})
     }
 }

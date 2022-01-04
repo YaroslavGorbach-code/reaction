@@ -7,18 +7,24 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.launch
 import yaroslavgorbach.reaction.business.exercise.ObservePlainsInteractor
+import yaroslavgorbach.reaction.business.exercises.GetExerciseInteractor
+import yaroslavgorbach.reaction.business.exercises.UpdateExerciseInteractor
 import yaroslavgorbach.reaction.data.exercise.airport.model.Direction
 import yaroslavgorbach.reaction.data.exercise.airport.model.Plane
+import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
 import yaroslavgorbach.reaction.feature.exercise.airport.model.AirportActions
 import yaroslavgorbach.reaction.feature.exercise.airport.model.AirportViewState
 import yaroslavgorbach.reaction.feature.exercise.base.BaseExerciseViewModel
+import yaroslavgorbach.reaction.feature.exercise.common.model.FinishExerciseState
 import yaroslavgorbach.reaction.utill.firstOr
 import javax.inject.Inject
 
 @HiltViewModel
 class AirportViewModel @Inject constructor(
-    observePlainsInteractor: ObservePlainsInteractor
-) : BaseExerciseViewModel() {
+    observePlainsInteractor: ObservePlainsInteractor,
+    private val updateExerciseInteractor: UpdateExerciseInteractor,
+    getExerciseInteractor: GetExerciseInteractor
+) : BaseExerciseViewModel(exerciseName = ExerciseName.AIRPORT, getExerciseInteractor) {
 
     private val pendingActions = MutableSharedFlow<AirportActions>()
 
@@ -34,9 +40,12 @@ class AirportViewModel @Inject constructor(
         AirportViewState(
             plane = itemPacks.firstOr(Plane.Test),
             timerState = timerState,
-            pointsCorrect = pointsCorrect,
-            pointsIncorrect = pointsIncorrect,
-            isFinished = isExerciseFinished
+            finishExerciseState = FinishExerciseState(
+                name = exerciseName,
+                isFinished = isExerciseFinished,
+                pointsCorrect = pointsCorrect,
+                pointsIncorrect = pointsIncorrect
+            )
         )
     }.stateIn(
         scope = viewModelScope,
@@ -57,6 +66,17 @@ class AirportViewModel @Inject constructor(
                     else -> error("$action is not handled")
                 }
             }
+        }
+    }
+
+    override suspend fun finishExercise() {
+        super.finishExercise()
+        updateExercise()
+    }
+
+    private suspend fun updateExercise() {
+        if (state.value.finishExerciseState.isWin) {
+            exercise?.let { updateExerciseInteractor(exercise = it.copy(numberOfWins = it.numberOfWins + 1)) }
         }
     }
 

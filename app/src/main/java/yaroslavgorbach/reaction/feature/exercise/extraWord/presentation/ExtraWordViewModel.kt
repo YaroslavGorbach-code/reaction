@@ -7,17 +7,26 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.launch
 import yaroslavgorbach.reaction.business.exercise.ObserveExtraWordsInteractor
+import yaroslavgorbach.reaction.business.exercises.GetExerciseInteractor
+import yaroslavgorbach.reaction.business.exercises.UpdateExerciseInteractor
 import yaroslavgorbach.reaction.data.exercise.extraWord.model.Word
 import yaroslavgorbach.reaction.data.exercise.extraWord.model.WordPack
+import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
 import yaroslavgorbach.reaction.feature.exercise.base.BaseExerciseViewModel
+import yaroslavgorbach.reaction.feature.exercise.common.model.FinishExerciseState
 import yaroslavgorbach.reaction.feature.exercise.extraWord.model.ExtraWordActions
 import yaroslavgorbach.reaction.feature.exercise.extraWord.model.ExtraWordViewState
 import javax.inject.Inject
 
 @HiltViewModel
 class ExtraWordViewModel @Inject constructor(
-    observeExtraWordsInteractor: ObserveExtraWordsInteractor
-) : BaseExerciseViewModel() {
+    observeExtraWordsInteractor: ObserveExtraWordsInteractor,
+    getExerciseInteractor: GetExerciseInteractor,
+    private val updateExerciseInteractor: UpdateExerciseInteractor,
+) : BaseExerciseViewModel(
+    exerciseName = ExerciseName.EXTRA_WORD,
+    getExerciseInteractor = getExerciseInteractor
+) {
 
     private val pendingActions = MutableSharedFlow<ExtraWordActions>()
 
@@ -33,9 +42,12 @@ class ExtraWordViewModel @Inject constructor(
         ExtraWordViewState(
             wordPacks = wordPacks,
             timerState = timerState,
-            pointsCorrect = pointsCorrect,
-            pointsIncorrect = pointsIncorrect,
-            isFinished = isExerciseFinished
+            finishExerciseState = FinishExerciseState(
+                name = exerciseName,
+                isFinished = isExerciseFinished,
+                pointsCorrect = pointsCorrect,
+                pointsIncorrect = pointsIncorrect
+            )
         )
     }.stateIn(
         scope = viewModelScope,
@@ -56,6 +68,17 @@ class ExtraWordViewModel @Inject constructor(
                     else -> error("$action is not handled")
                 }
             }
+        }
+    }
+
+    override suspend fun finishExercise() {
+        super.finishExercise()
+        updateExercise()
+    }
+
+    private suspend fun updateExercise() {
+        if (state.value.finishExerciseState.isWin) {
+            exercise?.let { updateExerciseInteractor(exercise = it.copy(numberOfWins = it.numberOfWins + 1)) }
         }
     }
 

@@ -1,4 +1,4 @@
-package yaroslavgorbach.reaction.feature.listexercises.presentation
+package yaroslavgorbach.reaction.feature.esercises.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -6,9 +6,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.launch
-import yaroslavgorbach.reaction.business.listExercises.ObserveExercisesInteractor
-import yaroslavgorbach.reaction.feature.listexercises.model.ExercisesActions
-import yaroslavgorbach.reaction.feature.listexercises.model.ExercisesViewState
+import yaroslavgorbach.reaction.business.exercises.ObserveExercisesInteractor
+import yaroslavgorbach.reaction.feature.esercises.model.ExercisesActions
+import yaroslavgorbach.reaction.feature.esercises.model.ExercisesViewState
 import javax.inject.Inject
 
 @HiltViewModel

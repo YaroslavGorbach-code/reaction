@@ -1,5 +1,6 @@
 package yaroslavgorbach.reaction.feature.exercise.common.mapper
 
+import yaroslavgorbach.reaction.BuildConfig
 import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
 import yaroslavgorbach.reaction.feature.exercise.airport.model.AirportWinRule
 import yaroslavgorbach.reaction.feature.exercise.common.model.WinRule
@@ -14,6 +15,11 @@ import yaroslavgorbach.reaction.feature.exercise.stroop.model.StroopWinRule
 
 object ExerciseNameToWinRuleMapper {
     fun map(exerciseName: ExerciseName): WinRule {
+
+        if (BuildConfig.IS_PROD.not()) {
+            return WinRule
+        }
+
         return when (exerciseName) {
             ExerciseName.EXTRA_NUMBER -> ExtraNumberWinRule
             ExerciseName.EXTRA_WORD -> ExtraWordWinRule

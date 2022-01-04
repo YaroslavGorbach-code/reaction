@@ -38,6 +38,24 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    flavorDimensions "version"
+    productFlavors {
+        def IS_PROD = "IS_PROD"
+
+        internalTest {
+            dimension "version"
+            versionNameSuffix "-test"
+            buildConfigField "Boolean", IS_PROD, "false"
+        }
+
+        prod {
+            dimension "version"
+            versionNameSuffix "-prod"
+            buildConfigField "Boolean", IS_PROD, "true"
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8

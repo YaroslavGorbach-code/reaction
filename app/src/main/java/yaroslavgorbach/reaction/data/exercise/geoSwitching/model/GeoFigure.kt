@@ -9,7 +9,6 @@ data class GeoFigure(val figure: FigureVariant, val color: Color, val taskVarian
         val Test = GeoFigure(FigureVariant.SQUARE, Color.Red, TaskVariant.IS_BLUE)
     }
 
-
     inline fun checkAnswer(answer: YesNoChoseVariations, onResult: (isCorrect: Boolean) -> Unit) {
         when (answer) {
             YesNoChoseVariations.NO -> {

@@ -9,7 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import kotlinx.coroutines.InternalCoroutinesApi
-import yaroslavgorbach.reaction.data.listExercises.local.model.ExerciseName
+import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
 import yaroslavgorbach.reaction.feature.description.ui.Description
 import yaroslavgorbach.reaction.feature.exercise.airport.ui.AirportExercise
 import yaroslavgorbach.reaction.feature.exercise.cpmplexSort.ui.ComplexSort
@@ -20,7 +20,7 @@ import yaroslavgorbach.reaction.feature.exercise.geoSwitching.ui.GeoSwitchingExe
 import yaroslavgorbach.reaction.feature.exercise.numbersAndLetters.ui.NumbersAndLettersExercise
 import yaroslavgorbach.reaction.feature.exercise.rotation.ui.RotationExercise
 import yaroslavgorbach.reaction.feature.exercise.stroop.ui.StroopExercise
-import yaroslavgorbach.reaction.feature.listexercises.ui.Exercises
+import yaroslavgorbach.reaction.feature.esercises.ui.Exercises
 
 const val EXERCISE_NAME_ARG = "EXERCISE_NAME_ARG"
 

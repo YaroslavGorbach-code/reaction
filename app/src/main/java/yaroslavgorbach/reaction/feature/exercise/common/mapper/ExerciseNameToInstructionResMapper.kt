@@ -2,7 +2,7 @@ package yaroslavgorbach.reaction.feature.exercise.common.mapper
 
 import yaroslavgorbach.reaction.R
 import yaroslavgorbach.reaction.data.exercise.airport.model.AirportTaskVariant
-import yaroslavgorbach.reaction.data.listExercises.local.model.ExerciseName
+import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
 
 object ExerciseNameToInstructionResMapper {
     fun map(

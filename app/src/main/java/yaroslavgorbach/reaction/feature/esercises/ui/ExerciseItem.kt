@@ -1,4 +1,4 @@
-package yaroslavgorbach.reaction.feature.listexercises.ui
+package yaroslavgorbach.reaction.feature.esercises.ui
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
@@ -23,9 +23,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import yaroslavgorbach.reaction.common.ui.theme.ReactionTheme
 import yaroslavgorbach.reaction.common.ui.theme.SuperLightGray
-import yaroslavgorbach.reaction.data.listExercises.local.model.Exercise
+import yaroslavgorbach.reaction.data.exercises.local.model.Exercise
 import yaroslavgorbach.reaction.feature.common.ui.CircularProgressIndicatorWithContent
-import kotlin.random.Random
 
 @ExperimentalMaterialApi
 @Composable
@@ -35,7 +34,7 @@ fun ExerciseItem(exercise: Exercise, onExerciseClick: () -> Unit) {
         .fillMaxWidth()
         .height(110.dp)
         .background(color = SuperLightGray, shape = MaterialTheme.shapes.medium)
-        .clickable { onExerciseClick() }
+        .clickable(enabled = exercise.isAvailable) { onExerciseClick() }
         .padding(8.dp)
 
     )
@@ -64,13 +63,13 @@ fun ExerciseItem(exercise: Exercise, onExerciseClick: () -> Unit) {
             )
 
             CircularProgressIndicatorWithContent(
-                progress = 0.5f,
+                progress = exercise.nextAvailabilityProgress,
                 modifier = Modifier
                     .wrapContentSize()
                     .align(Alignment.CenterEnd)
             ) {
-                if (Random.nextBoolean()) {
-                    IconWithBeget()
+                if (exercise.isAvailable) {
+                    IconWithBeget(exercise.numberOfWins.toString())
                 } else {
                     Icon(
                         Icons.Default.Lock, contentDescription = "",
@@ -84,17 +83,17 @@ fun ExerciseItem(exercise: Exercise, onExerciseClick: () -> Unit) {
 }
 
 @Composable
-private fun BoxScope.IconWithBeget() {
+private fun BoxScope.IconWithBeget(budgetText: String) {
     Box(
         modifier = Modifier.Companion
             .align(Alignment.Center)
-            .size(23.dp)
+            .size(24.dp)
     ) {
         Icon(
             Icons.Default.Star,
-            contentDescription = "",
+            contentDescription = null,
             modifier = Modifier
-                .size(23.dp)
+                .size(24.dp)
                 .align(Alignment.Center),
             tint = Color.Gray
         )
@@ -105,10 +104,10 @@ private fun BoxScope.IconWithBeget() {
                     color = MaterialTheme.colors.primary,
                     shape = CircleShape
                 )
-                .size(10.dp)
+                .size(11.dp)
         ) {
             Text(
-                text = "39",
+                text = budgetText,
                 fontSize = 5.sp,
                 modifier = Modifier.align(Alignment.Center),
                 color = Color.White,

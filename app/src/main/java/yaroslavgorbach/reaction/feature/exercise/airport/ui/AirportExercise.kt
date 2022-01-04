@@ -21,13 +21,11 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import yaroslavgorbach.reaction.common.ui.theme.ReactionTheme
 import yaroslavgorbach.reaction.data.exercise.airport.model.Direction
-import yaroslavgorbach.reaction.data.listExercises.local.model.ExerciseName
+import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
 import yaroslavgorbach.reaction.feature.exercise.airport.model.AirportActions
 import yaroslavgorbach.reaction.feature.exercise.airport.model.AirportViewState
 import yaroslavgorbach.reaction.feature.exercise.airport.presentation.AirportViewModel
 import yaroslavgorbach.reaction.feature.exercise.common.mapper.ExerciseNameToInstructionResMapper
-import yaroslavgorbach.reaction.feature.exercise.common.mapper.ExerciseNameToWinRuleMapper
-import yaroslavgorbach.reaction.feature.exercise.common.model.ExerciseResultUi
 import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseResult
 import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseTopBar
 import yaroslavgorbach.reaction.utill.TimerCountDown
@@ -74,14 +72,9 @@ internal fun AirportExercise(
     state: AirportViewState,
     actioner: (AirportActions) -> Unit,
 ) {
-    if (state.isFinished) {
+    if (state.finishExerciseState.isFinished) {
         ExerciseResult(
-            exerciseResultUi = ExerciseResultUi(
-                exerciseName = ExerciseName.AIRPORT,
-                correctPoints = state.pointsCorrect,
-                incorrectPoints = state.pointsIncorrect,
-                winRule = ExerciseNameToWinRuleMapper.map(ExerciseName.AIRPORT)
-            ),
+            finishExerciseState = state.finishExerciseState,
             onBackClick = { actioner(AirportActions.Back) },
             onRepeatExercise = { actioner(AirportActions.Repeat) }
         )

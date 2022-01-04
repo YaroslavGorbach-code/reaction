@@ -19,10 +19,8 @@ import kotlinx.coroutines.InternalCoroutinesApi
 import yaroslavgorbach.reaction.R
 import yaroslavgorbach.reaction.common.ui.theme.ReactionTheme
 import yaroslavgorbach.reaction.data.exercise.numbersLetters.model.NumberAndLetterTaskVariant
-import yaroslavgorbach.reaction.data.listExercises.local.model.ExerciseName
+import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
 import yaroslavgorbach.reaction.feature.exercise.common.mapper.ExerciseNameToInstructionResMapper
-import yaroslavgorbach.reaction.feature.exercise.common.mapper.ExerciseNameToWinRuleMapper
-import yaroslavgorbach.reaction.feature.exercise.common.model.ExerciseResultUi
 import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseResult
 import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseTopBar
 import yaroslavgorbach.reaction.feature.exercise.common.ui.YesNoBottomButtons
@@ -76,14 +74,9 @@ internal fun NumbersAndLettersExercise(
     state: NumbersAndLettersViewState,
     actioner: (NumbersAndLettersActions) -> Unit,
 ) {
-    if (state.isFinished) {
+    if (state.finishExerciseState.isFinished) {
         ExerciseResult(
-            exerciseResultUi = ExerciseResultUi(
-                exerciseName = ExerciseName.NUMBERS_AND_LETTERS,
-                correctPoints = state.pointsCorrect,
-                incorrectPoints = state.pointsIncorrect,
-                winRule = ExerciseNameToWinRuleMapper.map(ExerciseName.NUMBERS_AND_LETTERS)
-            ),
+            finishExerciseState = state.finishExerciseState,
             onBackClick = { actioner(NumbersAndLettersActions.Back) },
             onRepeatExercise = { actioner(NumbersAndLettersActions.Repeat) }
         )

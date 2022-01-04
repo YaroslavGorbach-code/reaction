@@ -12,7 +12,7 @@ import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.InternalCoroutinesApi
 import yaroslavgorbach.reaction.common.ui.theme.ReactionTheme
-import yaroslavgorbach.reaction.feature.listexercises.ui.ExercisesPreview
+import yaroslavgorbach.reaction.feature.esercises.ui.ExercisesPreview
 
 @InternalCoroutinesApi
 @ExperimentalFoundationApi

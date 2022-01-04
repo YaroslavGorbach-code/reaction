@@ -17,13 +17,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.InternalCoroutinesApi
 import yaroslavgorbach.reaction.R
 import yaroslavgorbach.reaction.common.ui.theme.ReactionTheme
-import yaroslavgorbach.reaction.data.listExercises.local.model.ExerciseName
+import yaroslavgorbach.reaction.data.exercise.stroop.model.WordColorVariant
+import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
 import yaroslavgorbach.reaction.feature.exercise.common.mapper.ExerciseNameToInstructionResMapper
-import yaroslavgorbach.reaction.feature.exercise.common.mapper.ExerciseNameToWinRuleMapper
-import yaroslavgorbach.reaction.feature.exercise.common.model.ExerciseResultUi
 import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseResult
 import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseTopBar
-import yaroslavgorbach.reaction.data.exercise.stroop.model.WordColorVariant
 import yaroslavgorbach.reaction.feature.exercise.stroop.model.StroopActions
 import yaroslavgorbach.reaction.feature.exercise.stroop.model.StroopViewState
 import yaroslavgorbach.reaction.feature.exercise.stroop.presentation.StroopViewModel
@@ -74,14 +72,9 @@ internal fun StroopExercise(
     state: StroopViewState,
     actioner: (StroopActions) -> Unit,
 ) {
-    if (state.isFinished) {
+    if (state.finishExerciseState.isFinished) {
         ExerciseResult(
-            exerciseResultUi = ExerciseResultUi(
-                exerciseName = ExerciseName.STROOP,
-                correctPoints = state.pointsCorrect,
-                incorrectPoints = state.pointsIncorrect,
-                winRule = ExerciseNameToWinRuleMapper.map(ExerciseName.STROOP)
-            ),
+            finishExerciseState = state.finishExerciseState,
             onBackClick = { actioner(StroopActions.Back) },
             onRepeatExercise = { actioner(StroopActions.Repeat) }
         )

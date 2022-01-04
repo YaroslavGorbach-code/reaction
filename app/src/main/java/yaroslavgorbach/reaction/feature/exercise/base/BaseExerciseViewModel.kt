@@ -2,15 +2,19 @@ package yaroslavgorbach.reaction.feature.exercise.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import yaroslavgorbach.reaction.feature.exercise.faceControl.model.FaceControlActions
+import yaroslavgorbach.reaction.business.exercises.GetExerciseInteractor
+import yaroslavgorbach.reaction.data.exercises.local.model.Exercise
+import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
 import yaroslavgorbach.reaction.utill.TimerCountDown
-import javax.inject.Inject
 
-abstract class BaseExerciseViewModel : ViewModel() {
+abstract class BaseExerciseViewModel(
+    val exerciseName: ExerciseName,
+    getExerciseInteractor: GetExerciseInteractor
+) : ViewModel() {
+
+    protected var exercise: Exercise? = null
 
     protected val timerCountDown: TimerCountDown =
         TimerCountDown(
@@ -25,14 +29,14 @@ abstract class BaseExerciseViewModel : ViewModel() {
 
     protected val isExerciseFinished: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
-    protected fun finishExercise() {
-        viewModelScope.launch {
-            isExerciseFinished.emit(true)
-        }
-    }
-
     init {
+        viewModelScope.launch {
+            exercise = getExerciseInteractor(exerciseName = exerciseName)
+        }
+
         timerCountDown.start()
     }
+
+    protected open suspend fun finishExercise() = isExerciseFinished.emit(true)
 
 }

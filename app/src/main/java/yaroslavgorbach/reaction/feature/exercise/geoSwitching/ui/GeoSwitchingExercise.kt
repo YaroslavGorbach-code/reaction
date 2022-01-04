@@ -2,7 +2,6 @@ package yaroslavgorbach.reaction.feature.exercise.geoSwitching.ui
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -21,13 +20,10 @@ import kotlinx.coroutines.InternalCoroutinesApi
 import yaroslavgorbach.reaction.R
 import yaroslavgorbach.reaction.common.ui.theme.ReactionTheme
 import yaroslavgorbach.reaction.data.exercise.geoSwitching.model.TaskVariant
-import yaroslavgorbach.reaction.data.listExercises.local.model.ExerciseName
+import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
 import yaroslavgorbach.reaction.feature.exercise.common.mapper.ExerciseNameToInstructionResMapper
-import yaroslavgorbach.reaction.feature.exercise.common.mapper.ExerciseNameToWinRuleMapper
-import yaroslavgorbach.reaction.feature.exercise.common.model.ExerciseResultUi
 import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseResult
 import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseTopBar
-import yaroslavgorbach.reaction.feature.exercise.common.model.YesNoChoseVariations
 import yaroslavgorbach.reaction.feature.exercise.common.ui.YesNoBottomButtons
 import yaroslavgorbach.reaction.feature.exercise.geoSwitching.model.GeoSwitchingActions
 import yaroslavgorbach.reaction.feature.exercise.geoSwitching.model.GeoSwitchingViewState
@@ -79,14 +75,9 @@ internal fun GeoSwitchingExercise(
     state: GeoSwitchingViewState,
     actioner: (GeoSwitchingActions) -> Unit,
 ) {
-    if (state.isFinished) {
+    if (state.finishExerciseState.isFinished) {
         ExerciseResult(
-            exerciseResultUi = ExerciseResultUi(
-                exerciseName = ExerciseName.GEO_SWITCHING,
-                correctPoints = state.pointsCorrect,
-                incorrectPoints = state.pointsIncorrect,
-                winRule = ExerciseNameToWinRuleMapper.map(ExerciseName.GEO_SWITCHING)
-            ),
+            finishExerciseState = state.finishExerciseState,
             onBackClick = { actioner(GeoSwitchingActions.Back) },
             onRepeatExercise = { actioner(GeoSwitchingActions.Repeat) }
         )

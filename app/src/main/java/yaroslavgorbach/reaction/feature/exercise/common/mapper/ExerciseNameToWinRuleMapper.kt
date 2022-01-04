@@ -1,6 +1,6 @@
 package yaroslavgorbach.reaction.feature.exercise.common.mapper
 
-import yaroslavgorbach.reaction.data.listExercises.local.model.ExerciseName
+import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
 import yaroslavgorbach.reaction.feature.exercise.airport.model.AirportWinRule
 import yaroslavgorbach.reaction.feature.exercise.common.model.WinRule
 import yaroslavgorbach.reaction.feature.exercise.cpmplexSort.model.ComplexSortWinRule

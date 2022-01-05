@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import yaroslavgorbach.reaction.BuildConfig
 import yaroslavgorbach.reaction.business.exercises.GetExerciseInteractor
 import yaroslavgorbach.reaction.data.exercises.local.model.Exercise
 import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
@@ -19,7 +20,7 @@ abstract class BaseExerciseViewModel(
     protected val timerCountDown: TimerCountDown =
         TimerCountDown(
             coroutineScope = viewModelScope,
-            millisInFuture = TimerCountDown.ONE_MINUTE,
+            millisInFuture = if (BuildConfig.IS_PROD) TimerCountDown.ONE_MINUTE else TimerCountDown.TEN_SECONDS,
             countDownInterval = 100
         )
 

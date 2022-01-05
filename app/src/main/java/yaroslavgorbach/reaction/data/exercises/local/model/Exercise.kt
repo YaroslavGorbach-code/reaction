@@ -2,8 +2,8 @@ package yaroslavgorbach.reaction.data.exercises.local.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import yaroslavgorbach.reaction.R
 import yaroslavgorbach.reaction.feature.exercise.common.mapper.ExerciseNameToDescriptionResMapper
+import yaroslavgorbach.reaction.feature.exercise.common.mapper.ExerciseNameToIconResMapper
 import yaroslavgorbach.reaction.feature.exercise.common.mapper.ExerciseNameToInstructionResMapper
 
 @Entity
@@ -33,6 +33,9 @@ data class Exercise(
 
     val instructionRes: Int
         get() = ExerciseNameToInstructionResMapper.map(name)
+
+    val iconRes: Int
+        get() = ExerciseNameToIconResMapper.map(name)
 
     val isNextExerciseAvailable
         get() = numberOfWins >= NEED_WINS_TO_OPEN_NEXT_EXERCISE

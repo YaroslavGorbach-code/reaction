@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -52,12 +53,11 @@ fun ExerciseItem(exercise: Exercise, onExerciseClick: () -> Unit) {
                 .padding(8.dp)
         ) {
             Icon(
-                imageVector = Icons.Default.AddRoad,
+                painter = painterResource(id = exercise.iconRes),
                 contentDescription = null,
                 modifier = Modifier
-                    .clip(shape = CircleShape)
-                    .border(width = 0.5.dp, MaterialTheme.colors.primary, shape = CircleShape)
                     .padding(8.dp)
+                    .size(30.dp)
                     .align(Alignment.CenterStart)
             )
 

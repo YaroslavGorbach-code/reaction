@@ -14,6 +14,7 @@ class TimerCountDown(private val coroutineScope: CoroutineScope, private val mil
         const val TEN_MINUTES = 600000L
         const val ONE_MINUTE = 60000L
         const val ONE_SECOND = 1000L
+        const val TEN_SECONDS = 10000L
     }
 
     sealed class TimerState {

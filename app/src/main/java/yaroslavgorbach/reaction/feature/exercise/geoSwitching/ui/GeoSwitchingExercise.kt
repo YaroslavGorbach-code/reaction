@@ -104,7 +104,12 @@ internal fun GeoSwitchingExercise(
             }
 
             CroiseVariants(state)
-            YesNoBottomButtons { variant -> actioner(GeoSwitchingActions.Chose(variant)) }
+            YesNoBottomButtons(
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(16.dp)
+                    .wrapContentSize()
+            ) { variant -> actioner(GeoSwitchingActions.Chose(variant)) }
         }
     }
 }

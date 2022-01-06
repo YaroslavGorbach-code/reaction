@@ -1,11 +1,12 @@
 package yaroslavgorbach.reaction.feature.exercise.common.ui
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -14,12 +15,9 @@ import yaroslavgorbach.reaction.R
 import yaroslavgorbach.reaction.feature.exercise.common.model.YesNoChoseVariations
 
 @Composable
-fun BoxScope.YesNoBottomButtons(onClick: (variant: YesNoChoseVariations) -> Unit) {
+fun YesNoBottomButtons(modifier: Modifier = Modifier, onClick: (variant: YesNoChoseVariations) -> Unit) {
     Row(
-        modifier = Modifier
-            .align(Alignment.BottomCenter)
-            .padding(16.dp)
-            .wrapContentSize()
+        modifier = modifier
     ) {
         Button(
             shape = RoundedCornerShape(30),

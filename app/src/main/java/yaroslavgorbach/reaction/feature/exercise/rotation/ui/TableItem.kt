@@ -16,8 +16,7 @@ import yaroslavgorbach.reaction.feature.common.ui.theme.ReactionTheme
 fun TableCell(color: Color) {
     Box(
         modifier = Modifier
-            .width(30.dp)
-            .height(30.dp)
+            .size(35.dp)
             .padding(2.dp)
             .background(color = color, shape = MaterialTheme.shapes.small)
     )

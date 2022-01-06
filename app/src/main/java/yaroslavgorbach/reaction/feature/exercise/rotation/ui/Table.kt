@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
@@ -21,7 +22,7 @@ fun Table(table: Table) {
     LazyVerticalGrid(
         cells = GridCells.Fixed(table.width),
         modifier = Modifier
-            .width(200.dp)
+            .width(250.dp)
             .padding(16.dp)
             .rotate(table.rotationDegree.degree)
     ) {
@@ -31,7 +32,7 @@ fun Table(table: Table) {
                 if (table.filledCellsIndexes.any { it == index }) {
                     TableCell(color = Color.Red)
                 } else {
-                    TableCell(color = Color.Gray)
+                    TableCell(color = MaterialTheme.colors.onSurface)
                 }
             }
         }

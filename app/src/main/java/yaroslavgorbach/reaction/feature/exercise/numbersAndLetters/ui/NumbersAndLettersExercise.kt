@@ -103,7 +103,12 @@ internal fun NumbersAndLettersExercise(
             }
 
             CroiseVariants(state)
-            YesNoBottomButtons { variant -> actioner(NumbersAndLettersActions.Chose(variant)) }
+            YesNoBottomButtons(
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(16.dp)
+                    .wrapContentSize()
+            ) { variant -> actioner(NumbersAndLettersActions.Chose(variant)) }
         }
     }
 }

@@ -6,12 +6,16 @@ import kotlin.random.Random
 
 @ExperimentalStdlibApi
 class NumberPacksFactory {
+    companion object{
+        private const val NUMBERS_IN_A_PACK = 30
+    }
+
     fun create(maxValue: Int = 100): List<NumberPack> {
         return buildList {
             repeat(1000) {
                 this.add(
                     NumberPack(buildList {
-                        val extraIndex = Random.nextInt(15)
+                        val extraIndex = Random.nextInt(NUMBERS_IN_A_PACK)
                         val number = Random.nextInt(maxValue)
                         var extraNumber = Random.nextInt(maxValue)
 
@@ -19,7 +23,7 @@ class NumberPacksFactory {
                             extraNumber = Random.nextInt(maxValue)
                         }
 
-                        repeat(15) { index ->
+                        repeat(NUMBERS_IN_A_PACK) { index ->
                             if (index == extraIndex) {
                                 this.add(Number(extraNumber, true))
                             } else {

@@ -23,8 +23,6 @@ data class NumberPack(val numbers: List<Number>) {
                 Number.Test,
                 Number.Test,
                 Number.Test,
-                Number.Test,
-                Number.Test
             )
         )
     }

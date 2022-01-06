@@ -2,6 +2,7 @@ package yaroslavgorbach.reaction.feature.exercise.extraNumber.ui
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
@@ -68,6 +69,9 @@ internal fun ExtraNumbers(
     state: ExtraNumberViewState,
     actioner: (ExtraNumberActions) -> Unit,
 ) {
+    Column() {
+
+    }
     if (state.finishExerciseState.isFinished) {
         ExerciseResult(
             finishExerciseState = state.finishExerciseState,
@@ -89,7 +93,6 @@ internal fun ExtraNumbers(
                             )
                         ),
                         timeProgress = state.timerState.timeUntilFinishedProgress,
-                        time = state.timerState.timeUtilFinishedString,
                         onBack = { actioner(ExtraNumberActions.Back) }
                     )
                 }
@@ -117,6 +120,6 @@ internal fun ExtraNumbers(
 @Composable
 fun ExercisesPreview() {
     ReactionTheme {
-        ExtraNumbers(state = ExtraNumberViewState(numberPacks = listOf(NumberPack.Empty)), actioner = {})
+        ExtraNumbers(state = ExtraNumberViewState(numberPacks = listOf(NumberPack.Test)), actioner = {})
     }
 }

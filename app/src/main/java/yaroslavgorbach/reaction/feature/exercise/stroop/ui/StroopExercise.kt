@@ -93,7 +93,6 @@ internal fun StroopExercise(
                             )
                         ),
                         timeProgress = state.timerState.timeUntilFinishedProgress,
-                        time = state.timerState.timeUtilFinishedString,
                         onBack = { actioner(StroopActions.Back) }
                     )
                 }

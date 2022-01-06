@@ -89,7 +89,6 @@ internal fun FaceControl(
                             )
                         ),
                         timeProgress = state.timerState.timeUntilFinishedProgress,
-                        time = state.timerState.timeUtilFinishedString,
                         onBack = { actioner(FaceControlActions.Back) }
                     )
                 }

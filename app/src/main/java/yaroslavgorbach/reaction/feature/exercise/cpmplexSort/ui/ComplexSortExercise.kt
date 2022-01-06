@@ -91,7 +91,6 @@ internal fun ComplexSort(
                             )
                         ),
                         timeProgress = state.timerState.timeUntilFinishedProgress,
-                        time = state.timerState.timeUtilFinishedString,
                         onBack = { actioner(ComplexSortActions.Back) }
                     )
                 }

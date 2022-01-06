@@ -23,11 +23,19 @@ fun ExerciseTopBar(
     modifier: Modifier = Modifier,
     instruction: String,
     timeProgress: Float,
-    time: String,
     onBack: () -> Unit
 ) {
     Column(modifier = modifier) {
         Toolbar { onBack() }
+
+        Text(
+            text = instruction,
+            style = MaterialTheme.typography.caption,
+            modifier = Modifier
+                .padding(start = 8.dp, end = 8.dp, top = 16.dp, bottom = 8.dp)
+                .fillMaxWidth(),
+            textAlign = TextAlign.Center,
+        )
 
         LinearProgressIndicator(
             progress = timeProgress,
@@ -35,39 +43,20 @@ fun ExerciseTopBar(
                 .fillMaxWidth()
                 .padding(top = 4.dp)
         )
-
-        Text(
-            textAlign = TextAlign.Center,
-            text = time,
-            fontSize = 30.sp,
-            style = MaterialTheme.typography.caption,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 8.dp)
-        )
-
-        Text(
-            text = instruction,
-            style = MaterialTheme.typography.body1,
-            modifier = Modifier
-                .padding(start = 8.dp, end = 8.dp, top = 16.dp)
-                .fillMaxWidth(),
-            textAlign = TextAlign.Center,
-        )
     }
 }
 
 @Composable
-@Preview(showSystemUi = true)
+@Preview(showSystemUi = false)
 fun ExerciseTopBarPreview() {
-    Surface {
+    Surface() {
         ReactionTheme {
             ExerciseTopBar(
                 instruction = stringResource(id = R.string.test_instruction),
                 timeProgress = 0.5f,
-                time = "00:59",
                 onBack = {}
             )
         }
     }
+
 }

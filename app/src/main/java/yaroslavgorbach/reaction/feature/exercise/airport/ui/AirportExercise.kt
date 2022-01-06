@@ -94,7 +94,6 @@ internal fun AirportExercise(
                             )
                         ),
                         timeProgress = state.timerState.timeUntilFinishedProgress,
-                        time = state.timerState.timeUtilFinishedString,
                         onBack = { actioner(AirportActions.Back) }
                     )
                 }

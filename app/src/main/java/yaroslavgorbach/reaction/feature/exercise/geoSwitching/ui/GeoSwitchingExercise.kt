@@ -96,7 +96,6 @@ internal fun GeoSwitchingExercise(
                             )
                         ),
                         timeProgress = state.timerState.timeUntilFinishedProgress,
-                        time = state.timerState.timeUtilFinishedString,
                         onBack = { actioner(GeoSwitchingActions.Back) }
                     )
                 }

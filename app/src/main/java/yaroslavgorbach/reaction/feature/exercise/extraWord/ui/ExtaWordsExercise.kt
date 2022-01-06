@@ -89,7 +89,6 @@ internal fun ExtraWords(
                             )
                         ),
                         timeProgress = state.timerState.timeUntilFinishedProgress,
-                        time = state.timerState.timeUtilFinishedString,
                         onBack = { actioner(ExtraWordActions.Back) }
                     )
                 }

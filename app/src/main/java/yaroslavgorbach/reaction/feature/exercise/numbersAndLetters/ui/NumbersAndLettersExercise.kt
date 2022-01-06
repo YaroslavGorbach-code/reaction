@@ -95,7 +95,6 @@ internal fun NumbersAndLettersExercise(
                             )
                         ),
                         timeProgress = state.timerState.timeUntilFinishedProgress,
-                        time = state.timerState.timeUtilFinishedString,
                         onBack = { actioner(NumbersAndLettersActions.Back) }
                     )
                 }

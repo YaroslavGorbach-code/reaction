@@ -2,6 +2,8 @@ package yaroslavgorbach.reaction.feature.exercise.faceControl.ui
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
@@ -15,9 +17,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import yaroslavgorbach.reaction.feature.common.ui.theme.ReactionTheme
 import yaroslavgorbach.reaction.data.exercise.faceControl.model.FacePack
 import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
+import yaroslavgorbach.reaction.feature.common.ui.theme.ReactionTheme
 import yaroslavgorbach.reaction.feature.exercise.common.mapper.ExerciseNameToInstructionResMapper
 import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseResult
 import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseTopBar
@@ -75,14 +77,13 @@ internal fun FaceControl(
             onRepeatExercise = { actioner(FaceControlActions.Repeat) }
         )
     } else {
-        Box(Modifier.fillMaxSize()) {
+        Column {
             when (state.timerState) {
                 TimerCountDown.TimerState.Finish -> {
                     actioner(FaceControlActions.FinishExercise)
                 }
                 is TimerCountDown.TimerState.Tick -> {
                     ExerciseTopBar(
-                        modifier = Modifier.align(Alignment.TopCenter),
                         instruction = stringResource(
                             id = ExerciseNameToInstructionResMapper.map(
                                 exerciseName = ExerciseName.FACE_CONTROL
@@ -93,8 +94,12 @@ internal fun FaceControl(
                     )
                 }
             }
+
+            Box(Modifier.fillMaxSize()) {
+
                 LazyVerticalGrid(
-                    cells = GridCells.Adaptive(100.dp),
+                    contentPadding = PaddingValues(8.dp),
+                    cells = GridCells.Adaptive(60.dp),
                     modifier = Modifier.align(Alignment.Center)
                 ) {
                     state.facePacks.firstOrNull()?.faces?.let { faces ->
@@ -107,7 +112,9 @@ internal fun FaceControl(
                 }
             }
         }
+
     }
+}
 
 
 @ExperimentalFoundationApi
@@ -116,6 +123,6 @@ internal fun FaceControl(
 @Composable
 fun ExercisesPreview() {
     ReactionTheme {
-        FaceControl(state = FaceControlViewState(facePacks = listOf(FacePack.Empty)), actioner = {})
+        FaceControl(state = FaceControlViewState(facePacks = listOf(FacePack.Test)), actioner = {})
     }
 }

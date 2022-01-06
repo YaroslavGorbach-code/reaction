@@ -1,6 +1,7 @@
 package yaroslavgorbach.reaction.feature.exercise.cpmplexSort.ui
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
@@ -16,9 +18,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import yaroslavgorbach.reaction.feature.common.ui.theme.ReactionTheme
 import yaroslavgorbach.reaction.data.exercise.complexSort.model.ComplexSortItem
 import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
+import yaroslavgorbach.reaction.feature.common.ui.theme.ReactionTheme
 import yaroslavgorbach.reaction.feature.exercise.common.mapper.ExerciseNameToInstructionResMapper
 import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseResult
 import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseTopBar
@@ -96,13 +98,20 @@ internal fun ComplexSort(
                 }
             }
 
-            ComplexSortItemUi(
+            Box(
                 modifier = Modifier
-                    .padding(end = 8.dp)
-                    .align(Alignment.Center),
-                item = state.items.firstOrNull() ?: ComplexSortItem.Test,
-                isClickable = false
-            ) {}
+                    .align(Alignment.Center)
+                    .background(
+                        color = MaterialTheme.colors.onSurface,
+                        shape = MaterialTheme.shapes.medium
+                    )
+                    .padding(16.dp)
+            ){
+                ComplexSortItemUi(
+                    item = state.items.firstOrNull() ?: ComplexSortItem.Test,
+                    isClickable = false
+                ) {}
+            }
 
             LazyVerticalGrid(
                 cells = GridCells.Adaptive(100.dp),

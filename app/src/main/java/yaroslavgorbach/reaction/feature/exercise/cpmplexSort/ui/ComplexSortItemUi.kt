@@ -19,9 +19,10 @@ fun ComplexSortItemUi(modifier: Modifier = Modifier, item: ComplexSortItem, isCl
 
     Box(
         modifier = modifier
-            .size(100.dp)
             .background(color = item.color, shape = Shapes.medium)
             .clickable(enabled = isClickable, onClick = onItemClick)
+            .size(100.dp)
+
     ) {
         Icon(imageVector = item.icon, contentDescription = null, Modifier.fillMaxSize(), tint = Color.White)
     }

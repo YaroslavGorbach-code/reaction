@@ -1,9 +1,11 @@
 package yaroslavgorbach.reaction.feature.exercise.geoSwitching.ui
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -18,9 +20,9 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.InternalCoroutinesApi
 import yaroslavgorbach.reaction.R
-import yaroslavgorbach.reaction.feature.common.ui.theme.ReactionTheme
 import yaroslavgorbach.reaction.data.exercise.geoSwitching.model.TaskVariant
 import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
+import yaroslavgorbach.reaction.feature.common.ui.theme.ReactionTheme
 import yaroslavgorbach.reaction.feature.exercise.common.mapper.ExerciseNameToInstructionResMapper
 import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseResult
 import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseTopBar
@@ -119,11 +121,17 @@ private fun BoxScope.CroiseVariants(state: GeoSwitchingViewState) {
                 .height(120.dp)
                 .fillMaxWidth()
                 .weight(0.5f)
-                .padding(end = 4.dp)
+                .padding(end = 8.dp)
+                .background(
+                    color = MaterialTheme.colors.onSurface,
+                    shape = MaterialTheme.shapes.large
+                )
+                .padding(4.dp)
         ) {
             Text(
                 text = stringResource(id = R.string.is_square),
-                fontSize = 18.sp,
+                fontSize = 20.sp,
+                style = MaterialTheme.typography.caption,
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Center
             )
@@ -135,8 +143,7 @@ private fun BoxScope.CroiseVariants(state: GeoSwitchingViewState) {
                     tint = state.figure.color,
                     modifier = Modifier
                         .align(CenterHorizontally)
-                        .fillMaxWidth()
-                        .fillMaxHeight()
+                        .fillMaxSize()
                 )
             }
         }
@@ -147,10 +154,16 @@ private fun BoxScope.CroiseVariants(state: GeoSwitchingViewState) {
                 .fillMaxWidth()
                 .weight(0.5f)
                 .padding(start = 4.dp)
+                .background(
+                    color = MaterialTheme.colors.onSurface,
+                    shape = MaterialTheme.shapes.large
+                )
+                .padding(4.dp)
         ) {
             Text(
                 text = stringResource(id = R.string.is_blue),
-                fontSize = 18.sp,
+                fontSize = 20.sp,
+                style = MaterialTheme.typography.caption,
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Center
             )
@@ -162,8 +175,7 @@ private fun BoxScope.CroiseVariants(state: GeoSwitchingViewState) {
                     tint = state.figure.color,
                     modifier = Modifier
                         .align(CenterHorizontally)
-                        .fillMaxWidth()
-                        .fillMaxHeight()
+                        .fillMaxSize()
                 )
             }
 

@@ -1,9 +1,12 @@
 package yaroslavgorbach.reaction.feature.exercise.stroop.ui
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -16,9 +19,9 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.InternalCoroutinesApi
 import yaroslavgorbach.reaction.R
-import yaroslavgorbach.reaction.feature.common.ui.theme.ReactionTheme
 import yaroslavgorbach.reaction.data.exercise.stroop.model.WordColorVariant
 import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
+import yaroslavgorbach.reaction.feature.common.ui.theme.ReactionTheme
 import yaroslavgorbach.reaction.feature.exercise.common.mapper.ExerciseNameToInstructionResMapper
 import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseResult
 import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseTopBar
@@ -97,11 +100,24 @@ internal fun StroopExercise(
                     )
                 }
             }
-            Text(
-                text = state.word.text, color = state.word.color.color,
-                fontSize = 34.sp,
-                modifier = Modifier.align(Alignment.Center)
-            )
+
+            Box(
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .background(
+                        color = MaterialTheme.colors.onSurface,
+                        shape = MaterialTheme.shapes.large
+                    )
+                    .padding(16.dp)
+            ) {
+                Text(
+                    text = state.word.text,
+                    color = state.word.color.color,
+                    fontSize = 40.sp,
+                    style = MaterialTheme.typography.caption
+                )
+            }
+
 
             Row(
                 modifier = Modifier
@@ -110,6 +126,7 @@ internal fun StroopExercise(
                     .wrapContentSize()
             ) {
                 Button(
+                    shape = RoundedCornerShape(30),
                     onClick = { actioner(StroopActions.OnChose(WordColorVariant.RED)) },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -122,6 +139,7 @@ internal fun StroopExercise(
                     .padding(start = 16.dp)
                     .fillMaxWidth()
                     .weight(0.5f),
+                    shape = RoundedCornerShape(30),
                     onClick = { actioner(StroopActions.OnChose(WordColorVariant.GREEN)) }) {
                     Text(text = stringResource(id = R.string.green), fontSize = 24.sp)
                 }

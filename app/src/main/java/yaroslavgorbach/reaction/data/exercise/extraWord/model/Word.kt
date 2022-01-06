@@ -5,6 +5,6 @@ import kotlin.random.Random
 data class Word(val word: String, val isExtra: Boolean) {
     companion object {
         val Test
-            get() = Word("", Random.nextBoolean())
+            get() = Word("АБВ", Random.nextBoolean())
     }
 }

@@ -71,7 +71,6 @@ internal fun ExtraNumbers(
     actioner: (ExtraNumberActions) -> Unit,
 ) {
 
-
     if (state.finishExerciseState.isFinished) {
         ExerciseResult(
             finishExerciseState = state.finishExerciseState,

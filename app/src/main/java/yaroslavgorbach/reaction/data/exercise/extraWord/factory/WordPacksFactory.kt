@@ -8,6 +8,10 @@ import kotlin.random.Random
 
 @ExperimentalStdlibApi
 class WordPacksFactory(context: Context) {
+    companion object{
+        private const val WORDS_IN_A_PACK = 25
+    }
+
     private val words = context.resources.getStringArray(R.array.extra_words)
 
     fun create(): List<WordPack> {
@@ -17,13 +21,13 @@ class WordPacksFactory(context: Context) {
                     WordPack(buildList {
                         var extraWord = words.random()
                         val word = words.random()
-                        val extraIndex = Random.nextInt(15)
+                        val extraIndex = Random.nextInt(WORDS_IN_A_PACK)
 
                         while (extraWord == word) {
                             extraWord = words.random()
                         }
 
-                        repeat(15) { index ->
+                        repeat(WORDS_IN_A_PACK) { index ->
                             if (index == extraIndex) {
                                 this.add(Word(extraWord, true))
                             } else {

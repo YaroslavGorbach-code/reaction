@@ -1,13 +1,15 @@
 package yaroslavgorbach.reaction.feature.exercise.numbersAndLetters.ui
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
+import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -17,9 +19,9 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.InternalCoroutinesApi
 import yaroslavgorbach.reaction.R
-import yaroslavgorbach.reaction.feature.common.ui.theme.ReactionTheme
 import yaroslavgorbach.reaction.data.exercise.numbersLetters.model.NumberAndLetterTaskVariant
 import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
+import yaroslavgorbach.reaction.feature.common.ui.theme.ReactionTheme
 import yaroslavgorbach.reaction.feature.exercise.common.mapper.ExerciseNameToInstructionResMapper
 import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseResult
 import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseTopBar
@@ -119,23 +121,29 @@ private fun BoxScope.CroiseVariants(state: NumbersAndLettersViewState) {
                 .fillMaxWidth()
                 .weight(0.5f)
                 .padding(end = 4.dp)
+                .background(
+                    color = MaterialTheme.colors.onSurface,
+                    shape = MaterialTheme.shapes.large
+                )
+                .padding(4.dp)
         ) {
             Text(
                 text = stringResource(id = R.string.is_even_number),
-                fontSize = 18.sp,
+                fontSize = 20.sp,
+                style = MaterialTheme.typography.caption,
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Center
             )
 
             if (state.numberAndLetter.taskVariant == NumberAndLetterTaskVariant.EVEN_NUMBER) {
-                Text(
-                    text = state.numberAndLetter.toString(),
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .align(CenterHorizontally)
-                        .fillMaxWidth()
-                        .fillMaxHeight()
-                )
+                Box(modifier = Modifier.fillMaxSize()) {
+                    Text(
+                        text = state.numberAndLetter.toString(),
+                        textAlign = TextAlign.Center,
+                        fontSize = 30.sp,
+                        modifier = Modifier.align(Center)
+                    )
+                }
             }
         }
 
@@ -145,25 +153,30 @@ private fun BoxScope.CroiseVariants(state: NumbersAndLettersViewState) {
                 .fillMaxWidth()
                 .weight(0.5f)
                 .padding(start = 4.dp)
+                .background(
+                    color = MaterialTheme.colors.onSurface,
+                    shape = MaterialTheme.shapes.large
+                )
+                .padding(4.dp)
         ) {
             Text(
                 text = stringResource(id = R.string.is_letter_vowel),
-                fontSize = 18.sp,
+                fontSize = 20.sp,
+                style = MaterialTheme.typography.caption,
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Center
             )
 
             if (state.numberAndLetter.taskVariant == NumberAndLetterTaskVariant.VOWEL_LETTER) {
-                Text(
-                    text = state.numberAndLetter.toString(),
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .align(CenterHorizontally)
-                        .fillMaxWidth()
-                        .fillMaxHeight()
-                )
+                Box(modifier = Modifier.fillMaxSize()) {
+                    Text(
+                        text = state.numberAndLetter.toString(),
+                        textAlign = TextAlign.Center,
+                        fontSize = 30.sp,
+                        modifier = Modifier.align(Center)
+                    )
+                }
             }
-
         }
     }
 }

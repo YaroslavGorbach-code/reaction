@@ -86,13 +86,13 @@ private fun BoxScope.IconWithBeget(budgetText: String) {
     Box(
         modifier = Modifier.Companion
             .align(Alignment.Center)
-            .size(24.dp)
+            .size(32.dp)
     ) {
         Icon(
             Icons.Default.Star,
             contentDescription = null,
             modifier = Modifier
-                .size(24.dp)
+                .size(32.dp)
                 .align(Alignment.Center),
         )
         Box(
@@ -102,11 +102,11 @@ private fun BoxScope.IconWithBeget(budgetText: String) {
                     color = MaterialTheme.colors.primary,
                     shape = CircleShape
                 )
-                .size(11.dp)
+                .size(16.dp)
         ) {
             Text(
                 text = budgetText,
-                fontSize = 5.sp,
+                fontSize = 7.sp,
                 modifier = Modifier.align(Alignment.Center),
                 color = Color.White,
                 textAlign = TextAlign.Center

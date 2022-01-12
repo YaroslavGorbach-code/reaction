@@ -16,6 +16,7 @@ import yaroslavgorbach.reaction.feature.exercise.common.model.FinishExerciseStat
 import yaroslavgorbach.reaction.feature.exercise.common.model.YesNoChoseVariations
 import yaroslavgorbach.reaction.feature.exercise.geoSwitching.model.GeoSwitchingActions
 import yaroslavgorbach.reaction.feature.exercise.geoSwitching.model.GeoSwitchingViewState
+import yaroslavgorbach.reaction.utill.UiMessageManager
 import yaroslavgorbach.reaction.utill.firstOr
 import javax.inject.Inject
 
@@ -29,6 +30,8 @@ class GeoSwitchingViewModel @Inject constructor(
     private val pendingActions = MutableSharedFlow<GeoSwitchingActions>()
 
     private val items: MutableStateFlow<List<GeoFigure>> = MutableStateFlow(emptyList())
+
+    override val uiMessageManager: UiMessageManager<Any> = UiMessageManager()
 
     val state: StateFlow<GeoSwitchingViewState> = combine(
         items,

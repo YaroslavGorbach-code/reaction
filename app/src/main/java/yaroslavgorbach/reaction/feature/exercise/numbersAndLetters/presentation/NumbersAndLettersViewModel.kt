@@ -16,6 +16,7 @@ import yaroslavgorbach.reaction.feature.exercise.common.model.FinishExerciseStat
 import yaroslavgorbach.reaction.feature.exercise.common.model.YesNoChoseVariations
 import yaroslavgorbach.reaction.feature.exercise.numbersAndLetters.model.NumbersAndLettersActions
 import yaroslavgorbach.reaction.feature.exercise.numbersAndLetters.model.NumbersAndLettersViewState
+import yaroslavgorbach.reaction.utill.UiMessageManager
 import yaroslavgorbach.reaction.utill.firstOr
 import javax.inject.Inject
 
@@ -29,6 +30,8 @@ class NumbersAndLettersViewModel @Inject constructor(
     private val pendingActions = MutableSharedFlow<NumbersAndLettersActions>()
 
     private val items: MutableStateFlow<List<NumberAndLetter>> = MutableStateFlow(emptyList())
+
+    override val uiMessageManager: UiMessageManager<Any> = UiMessageManager()
 
     val state: StateFlow<NumbersAndLettersViewState> = combine(
         items,

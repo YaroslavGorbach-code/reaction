@@ -1,6 +1,7 @@
 package yaroslavgorbach.reaction.feature.exercise.common.ui
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.LinearProgressIndicator
@@ -13,17 +14,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import yaroslavgorbach.reaction.R
-import yaroslavgorbach.reaction.feature.common.ui.theme.ReactionTheme
 import yaroslavgorbach.reaction.feature.common.ui.Toolbar
+import yaroslavgorbach.reaction.feature.common.ui.theme.ReactionTheme
 
 @Composable
 fun ExerciseTopBar(
     modifier: Modifier = Modifier,
     instruction: String,
     timeProgress: Float,
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    content: @Composable ColumnScope.() -> Unit = {}
 ) {
     Column(modifier = modifier) {
         Toolbar { onBack() }
@@ -43,6 +44,8 @@ fun ExerciseTopBar(
                 .fillMaxWidth()
                 .padding(top = 4.dp)
         )
+
+        content()
     }
 }
 

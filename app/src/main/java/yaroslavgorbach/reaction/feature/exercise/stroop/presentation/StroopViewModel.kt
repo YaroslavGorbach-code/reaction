@@ -17,6 +17,7 @@ import yaroslavgorbach.reaction.feature.exercise.base.BaseExerciseViewModel
 import yaroslavgorbach.reaction.feature.exercise.common.model.FinishExerciseState
 import yaroslavgorbach.reaction.feature.exercise.stroop.model.StroopActions
 import yaroslavgorbach.reaction.feature.exercise.stroop.model.StroopViewState
+import yaroslavgorbach.reaction.utill.UiMessageManager
 import javax.inject.Inject
 
 @InternalCoroutinesApi
@@ -30,6 +31,8 @@ class StroopViewModel @Inject constructor(
     private val pendingActions = MutableSharedFlow<StroopActions>()
 
     private val words: MutableStateFlow<List<StroopWord>> = MutableStateFlow(emptyList())
+
+    override val uiMessageManager: UiMessageManager<Any> = UiMessageManager()
 
     val state: StateFlow<StroopViewState> = combine(
         words,

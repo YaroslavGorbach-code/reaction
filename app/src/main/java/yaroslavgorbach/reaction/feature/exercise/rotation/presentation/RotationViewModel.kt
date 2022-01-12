@@ -17,6 +17,7 @@ import yaroslavgorbach.reaction.feature.exercise.common.model.FinishExerciseStat
 import yaroslavgorbach.reaction.feature.exercise.common.model.YesNoChoseVariations
 import yaroslavgorbach.reaction.feature.exercise.rotation.model.RotationActions
 import yaroslavgorbach.reaction.feature.exercise.rotation.model.RotationViewState
+import yaroslavgorbach.reaction.utill.UiMessageManager
 import yaroslavgorbach.reaction.utill.firstOr
 import javax.inject.Inject
 
@@ -31,6 +32,8 @@ class RotationViewModel @Inject constructor(
     private val pendingActions = MutableSharedFlow<RotationActions>()
 
     private val tables: MutableStateFlow<List<Tables>> = MutableStateFlow(emptyList())
+
+    override val uiMessageManager: UiMessageManager<Any> = UiMessageManager()
 
     val state: StateFlow<RotationViewState> = combine(
         tables,

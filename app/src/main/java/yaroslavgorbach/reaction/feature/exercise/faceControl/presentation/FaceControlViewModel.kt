@@ -16,6 +16,7 @@ import yaroslavgorbach.reaction.feature.exercise.base.BaseExerciseViewModel
 import yaroslavgorbach.reaction.feature.exercise.common.model.FinishExerciseState
 import yaroslavgorbach.reaction.feature.exercise.faceControl.model.FaceControlActions
 import yaroslavgorbach.reaction.feature.exercise.faceControl.model.FaceControlViewState
+import yaroslavgorbach.reaction.utill.UiMessageManager
 import javax.inject.Inject
 
 @HiltViewModel
@@ -28,6 +29,8 @@ class FaceControlViewModel @Inject constructor(
     private val pendingActions = MutableSharedFlow<FaceControlActions>()
 
     private val facePacks: MutableStateFlow<List<FacePack>> = MutableStateFlow(emptyList())
+
+    override val uiMessageManager: UiMessageManager<Any> = UiMessageManager()
 
     var state: StateFlow<FaceControlViewState> = combine(
         facePacks,

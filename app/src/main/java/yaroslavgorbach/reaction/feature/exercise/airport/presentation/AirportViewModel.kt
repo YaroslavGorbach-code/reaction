@@ -16,6 +16,8 @@ import yaroslavgorbach.reaction.feature.exercise.airport.model.AirportActions
 import yaroslavgorbach.reaction.feature.exercise.airport.model.AirportViewState
 import yaroslavgorbach.reaction.feature.exercise.base.BaseExerciseViewModel
 import yaroslavgorbach.reaction.feature.exercise.common.model.FinishExerciseState
+import yaroslavgorbach.reaction.feature.exercise.cpmplexSort.model.ComplexSortUiMessage
+import yaroslavgorbach.reaction.utill.UiMessageManager
 import yaroslavgorbach.reaction.utill.firstOr
 import javax.inject.Inject
 
@@ -29,6 +31,8 @@ class AirportViewModel @Inject constructor(
     private val pendingActions = MutableSharedFlow<AirportActions>()
 
     private val items: MutableStateFlow<List<Plane>> = MutableStateFlow(emptyList())
+
+    override val uiMessageManager: UiMessageManager<Any> = UiMessageManager()
 
     val state: StateFlow<AirportViewState> = combine(
         items,

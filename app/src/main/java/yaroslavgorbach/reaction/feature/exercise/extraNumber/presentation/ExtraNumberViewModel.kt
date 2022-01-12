@@ -1,6 +1,7 @@
 package yaroslavgorbach.reaction.feature.exercise.extraNumber.presentation
 
 import androidx.lifecycle.viewModelScope
+import app.tivi.extensions.combine
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -14,8 +15,12 @@ import yaroslavgorbach.reaction.data.exercise.extraNumber.local.model.NumberPack
 import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
 import yaroslavgorbach.reaction.feature.exercise.base.BaseExerciseViewModel
 import yaroslavgorbach.reaction.feature.exercise.common.model.FinishExerciseState
+import yaroslavgorbach.reaction.feature.exercise.cpmplexSort.model.ComplexSortUiMessage
 import yaroslavgorbach.reaction.feature.exercise.extraNumber.model.ExtraNumberActions
+import yaroslavgorbach.reaction.feature.exercise.extraNumber.model.ExtraNumberUiMessage
 import yaroslavgorbach.reaction.feature.exercise.extraNumber.model.ExtraNumberViewState
+import yaroslavgorbach.reaction.utill.UiMessage
+import yaroslavgorbach.reaction.utill.UiMessageManager
 import javax.inject.Inject
 
 @HiltViewModel
@@ -32,13 +37,16 @@ class ExtraNumberViewModel @Inject constructor(
 
     private val numberPacks: MutableStateFlow<List<NumberPack>> = MutableStateFlow(emptyList())
 
+    override val uiMessageManager: UiMessageManager<ExtraNumberUiMessage> = UiMessageManager()
+
     var state: StateFlow<ExtraNumberViewState> = combine(
         numberPacks,
         timerCountDown.state,
         pointsCorrect,
         pointsInCorrect,
         isExerciseFinished,
-    ) { numberPacks, timerState, pointsCorrect, pointsIncorrect, isFinish ->
+        uiMessageManager.message,
+    ) { numberPacks, timerState, pointsCorrect, pointsIncorrect, isFinish, message ->
         ExtraNumberViewState(
             numberPacks = numberPacks,
             timerState = timerState,
@@ -47,7 +55,8 @@ class ExtraNumberViewModel @Inject constructor(
                 isFinished = isFinish,
                 pointsCorrect = pointsCorrect,
                 pointsIncorrect = pointsIncorrect
-            )
+            ),
+            message = message
         )
     }.stateIn(
         scope = viewModelScope,
@@ -88,8 +97,10 @@ class ExtraNumberViewModel @Inject constructor(
         viewModelScope.launch {
             if (number.isExtra) {
                 pointsCorrect.emit(pointsCorrect.value + 1)
+                uiMessageManager.emitMessage(UiMessage(ExtraNumberUiMessage.AnswerIsCorrect))
             } else {
                 pointsInCorrect.emit(pointsInCorrect.value + 1)
+                uiMessageManager.emitMessage(UiMessage(ExtraNumberUiMessage.AnswerIsNotCorrect))
             }
 
             numberPacks.emit(numberPacks.value.drop(1))

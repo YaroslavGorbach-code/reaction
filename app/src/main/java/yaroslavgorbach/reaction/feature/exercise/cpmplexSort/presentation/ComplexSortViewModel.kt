@@ -1,8 +1,10 @@
 package yaroslavgorbach.reaction.feature.exercise.cpmplexSort.presentation
 
 import androidx.lifecycle.viewModelScope
+import app.tivi.extensions.combine
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.launch
@@ -12,9 +14,12 @@ import yaroslavgorbach.reaction.business.exercises.UpdateExerciseInteractor
 import yaroslavgorbach.reaction.data.exercise.complexSort.model.ComplexSortItem
 import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
 import yaroslavgorbach.reaction.feature.exercise.base.BaseExerciseViewModel
+import yaroslavgorbach.reaction.feature.exercise.cpmplexSort.model.ComplexSortUiMessage
 import yaroslavgorbach.reaction.feature.exercise.common.model.FinishExerciseState
 import yaroslavgorbach.reaction.feature.exercise.cpmplexSort.model.ComplexSortActions
 import yaroslavgorbach.reaction.feature.exercise.cpmplexSort.model.ComplexSortViewState
+import yaroslavgorbach.reaction.utill.UiMessage
+import yaroslavgorbach.reaction.utill.UiMessageManager
 import javax.inject.Inject
 
 @HiltViewModel
@@ -30,13 +35,16 @@ class ComplexSortViewModel @Inject constructor(
 
     private val items: MutableStateFlow<List<ComplexSortItem>> = MutableStateFlow(emptyList())
 
+    override val uiMessageManager = UiMessageManager<ComplexSortUiMessage>()
+
     val state: StateFlow<ComplexSortViewState> = combine(
         items,
         timerCountDown.state,
         pointsCorrect,
         pointsInCorrect,
-        isExerciseFinished
-    ) { itemPacks, timerState, pointsCorrect, pointsIncorrect, isExerciseFinished ->
+        isExerciseFinished,
+        uiMessageManager.message,
+    ) { itemPacks, timerState, pointsCorrect, pointsIncorrect, isExerciseFinished, message ->
         ComplexSortViewState(
             items = itemPacks,
             timerState = timerState,
@@ -45,8 +53,10 @@ class ComplexSortViewModel @Inject constructor(
                 isFinished = isExerciseFinished,
                 pointsCorrect = pointsCorrect,
                 pointsIncorrect = pointsIncorrect
-            )
+            ),
+            uiMessage = message
         )
+
     }.stateIn(
         scope = viewModelScope,
         started = WhileSubscribed(5000),
@@ -83,25 +93,15 @@ class ComplexSortViewModel @Inject constructor(
     private fun onItemClick(item: ComplexSortItem) {
         viewModelScope.launch {
             val currentItem = items.first().first()
-
-            when (currentItem.isSimilar) {
-                true -> {
-                    if (currentItem.color == item.color && currentItem.icon == item.icon) {
-                        pointsCorrect.emit(pointsCorrect.value + 1)
-                    } else {
-                        pointsInCorrect.emit(pointsInCorrect.value + 1)
-                    }
-                }
-
-                false -> {
-                    if (currentItem.color != item.color && currentItem.icon != item.icon) {
-                        pointsCorrect.emit(pointsCorrect.value + 1)
-                    } else {
-                        pointsInCorrect.emit(pointsInCorrect.value + 1)
-                    }
+            currentItem.checkAnswer(item) { isCorrect ->
+                if (isCorrect) {
+                    pointsCorrect.emit(pointsCorrect.value + 1)
+                    uiMessageManager.emitMessage(UiMessage(ComplexSortUiMessage.AnswerIsCorrect))
+                } else {
+                    pointsInCorrect.emit(pointsInCorrect.value + 1)
+                    uiMessageManager.emitMessage(UiMessage(ComplexSortUiMessage.AnswerIsNotCorrect))
                 }
             }
-
             items.emit(items.value.drop(1))
         }
     }

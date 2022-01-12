@@ -16,6 +16,7 @@ import yaroslavgorbach.reaction.feature.exercise.base.BaseExerciseViewModel
 import yaroslavgorbach.reaction.feature.exercise.common.model.FinishExerciseState
 import yaroslavgorbach.reaction.feature.exercise.extraWord.model.ExtraWordActions
 import yaroslavgorbach.reaction.feature.exercise.extraWord.model.ExtraWordViewState
+import yaroslavgorbach.reaction.utill.UiMessageManager
 import javax.inject.Inject
 
 @HiltViewModel
@@ -31,6 +32,8 @@ class ExtraWordViewModel @Inject constructor(
     private val pendingActions = MutableSharedFlow<ExtraWordActions>()
 
     private val wordPacks: MutableStateFlow<List<WordPack>> = MutableStateFlow(emptyList())
+
+    override val uiMessageManager: UiMessageManager<Any> = UiMessageManager()
 
     val state: StateFlow<ExtraWordViewState> = combine(
         wordPacks,

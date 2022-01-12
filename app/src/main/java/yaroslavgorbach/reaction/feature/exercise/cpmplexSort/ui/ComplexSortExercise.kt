@@ -1,19 +1,22 @@
 package yaroslavgorbach.reaction.feature.exercise.cpmplexSort.ui
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Circle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -25,6 +28,7 @@ import yaroslavgorbach.reaction.feature.exercise.common.mapper.ExerciseNameToIns
 import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseResult
 import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseTopBar
 import yaroslavgorbach.reaction.feature.exercise.cpmplexSort.model.ComplexSortActions
+import yaroslavgorbach.reaction.feature.exercise.cpmplexSort.model.ComplexSortUiMessage
 import yaroslavgorbach.reaction.feature.exercise.cpmplexSort.model.ComplexSortViewState
 import yaroslavgorbach.reaction.feature.exercise.cpmplexSort.presentation.ComplexSortViewModel
 import yaroslavgorbach.reaction.utill.TimerCountDown
@@ -55,21 +59,25 @@ internal fun ComplexSort(
 
     ComplexSort(
         state = viewState.value,
-    ) { action ->
-        when (action) {
-            is ComplexSortActions.Back -> onBackClick()
-            is ComplexSortActions.Repeat -> onRepeatExerciseClick()
-            else -> viewModel.submitAction(action)
+        onMessageShown = viewModel::clearMessage,
+        actioner = { action ->
+            when (action) {
+                is ComplexSortActions.Back -> onBackClick()
+                is ComplexSortActions.Repeat -> onRepeatExerciseClick()
+                else -> viewModel.submitAction(action)
+            }
         }
-    }
+    )
 }
 
+@OptIn(ExperimentalAnimationApi::class)
 @ExperimentalFoundationApi
 @ExperimentalMaterialApi
 @Composable
 internal fun ComplexSort(
     state: ComplexSortViewState,
     actioner: (ComplexSortActions) -> Unit,
+    onMessageShown: (id: Long) -> Unit,
 ) {
     if (state.finishExerciseState.isFinished) {
         ExerciseResult(
@@ -93,7 +101,37 @@ internal fun ComplexSort(
                             )
                         ),
                         timeProgress = state.timerState.timeUntilFinishedProgress,
-                        onBack = { actioner(ComplexSortActions.Back) }
+                        onBack = { actioner(ComplexSortActions.Back) },
+                        content = {
+                            state.uiMessage?.let { message ->
+                                when (message.message) {
+                                    ComplexSortUiMessage.AnswerIsCorrect -> {
+                                        Icon(
+                                            Icons.Default.Circle,
+                                            contentDescription = "",
+                                            tint = Color.Green,
+                                            modifier = Modifier
+                                                .align(CenterHorizontally)
+                                                .padding(top = 4.dp)
+                                                .fillMaxWidth()
+                                        )
+                                    }
+
+                                    ComplexSortUiMessage.AnswerIsNotCorrect -> {
+                                        Icon(
+                                            Icons.Default.Circle,
+                                            contentDescription = "",
+                                            tint = Color.Red,
+                                            modifier = Modifier
+                                                .align(CenterHorizontally)
+                                                .padding(top = 4.dp)
+                                                .fillMaxWidth()
+                                        )
+                                    }
+                                }
+                                onMessageShown(message.id)
+                            }
+                        }
                     )
                 }
             }
@@ -106,7 +144,7 @@ internal fun ComplexSort(
                         shape = MaterialTheme.shapes.medium
                     )
                     .padding(16.dp)
-            ){
+            ) {
                 ComplexSortItemUi(
                     item = state.items.firstOrNull() ?: ComplexSortItem.Test,
                     isClickable = false
@@ -154,6 +192,6 @@ internal fun ComplexSort(
 @Composable
 fun ExercisesPreview() {
     ReactionTheme {
-        ComplexSort(state = ComplexSortViewState.Test, actioner = {})
+        ComplexSort(state = ComplexSortViewState.Test, actioner = {}, onMessageShown = {})
     }
 }

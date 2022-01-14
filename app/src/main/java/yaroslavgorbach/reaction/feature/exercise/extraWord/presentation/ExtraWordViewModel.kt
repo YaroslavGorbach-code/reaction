@@ -1,6 +1,7 @@
 package yaroslavgorbach.reaction.feature.exercise.extraWord.presentation
 
 import androidx.lifecycle.viewModelScope
+import app.tivi.extensions.combine
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -15,7 +16,9 @@ import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
 import yaroslavgorbach.reaction.feature.exercise.base.BaseExerciseViewModel
 import yaroslavgorbach.reaction.feature.exercise.common.model.FinishExerciseState
 import yaroslavgorbach.reaction.feature.exercise.extraWord.model.ExtraWordActions
+import yaroslavgorbach.reaction.feature.exercise.extraWord.model.ExtraWordUiMessage
 import yaroslavgorbach.reaction.feature.exercise.extraWord.model.ExtraWordViewState
+import yaroslavgorbach.reaction.utill.UiMessage
 import yaroslavgorbach.reaction.utill.UiMessageManager
 import javax.inject.Inject
 
@@ -33,15 +36,16 @@ class ExtraWordViewModel @Inject constructor(
 
     private val wordPacks: MutableStateFlow<List<WordPack>> = MutableStateFlow(emptyList())
 
-    override val uiMessageManager: UiMessageManager<Any> = UiMessageManager()
+    override val uiMessageManager: UiMessageManager<ExtraWordUiMessage> = UiMessageManager()
 
     val state: StateFlow<ExtraWordViewState> = combine(
         wordPacks,
         timerCountDown.state,
         pointsCorrect,
         pointsInCorrect,
-        isExerciseFinished
-    ) { wordPacks, timerState, pointsCorrect, pointsIncorrect, isExerciseFinished ->
+        isExerciseFinished,
+        uiMessageManager.message
+    ) { wordPacks, timerState, pointsCorrect, pointsIncorrect, isExerciseFinished, message ->
         ExtraWordViewState(
             wordPacks = wordPacks,
             timerState = timerState,
@@ -50,7 +54,8 @@ class ExtraWordViewModel @Inject constructor(
                 isFinished = isExerciseFinished,
                 pointsCorrect = pointsCorrect,
                 pointsIncorrect = pointsIncorrect
-            )
+            ),
+            message = message
         )
     }.stateIn(
         scope = viewModelScope,
@@ -89,8 +94,10 @@ class ExtraWordViewModel @Inject constructor(
         viewModelScope.launch {
             if (word.isExtra) {
                 pointsCorrect.emit(pointsCorrect.value + 1)
+                uiMessageManager.emitMessage(UiMessage(ExtraWordUiMessage.AnswerIsCorrect))
             } else {
                 pointsInCorrect.emit(pointsInCorrect.value + 1)
+                uiMessageManager.emitMessage(UiMessage(ExtraWordUiMessage.AnswerIsNotCorrect))
             }
 
             wordPacks.emit(wordPacks.value.drop(1))

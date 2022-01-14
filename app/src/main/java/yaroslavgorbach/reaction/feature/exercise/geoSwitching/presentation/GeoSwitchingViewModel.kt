@@ -1,6 +1,7 @@
 package yaroslavgorbach.reaction.feature.exercise.geoSwitching.presentation
 
 import androidx.lifecycle.viewModelScope
+import app.tivi.extensions.combine
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -15,7 +16,9 @@ import yaroslavgorbach.reaction.feature.exercise.base.BaseExerciseViewModel
 import yaroslavgorbach.reaction.feature.exercise.common.model.FinishExerciseState
 import yaroslavgorbach.reaction.feature.exercise.common.model.YesNoChoseVariations
 import yaroslavgorbach.reaction.feature.exercise.geoSwitching.model.GeoSwitchingActions
+import yaroslavgorbach.reaction.feature.exercise.geoSwitching.model.GeoSwitchingUiMessage
 import yaroslavgorbach.reaction.feature.exercise.geoSwitching.model.GeoSwitchingViewState
+import yaroslavgorbach.reaction.utill.UiMessage
 import yaroslavgorbach.reaction.utill.UiMessageManager
 import yaroslavgorbach.reaction.utill.firstOr
 import javax.inject.Inject
@@ -31,15 +34,16 @@ class GeoSwitchingViewModel @Inject constructor(
 
     private val items: MutableStateFlow<List<GeoFigure>> = MutableStateFlow(emptyList())
 
-    override val uiMessageManager: UiMessageManager<Any> = UiMessageManager()
+    override val uiMessageManager: UiMessageManager<GeoSwitchingUiMessage> = UiMessageManager()
 
     val state: StateFlow<GeoSwitchingViewState> = combine(
         items,
         timerCountDown.state,
         pointsCorrect,
         pointsInCorrect,
-        isExerciseFinished
-    ) { figures, timerState, pointsCorrect, pointsIncorrect, isExerciseFinished ->
+        isExerciseFinished,
+        uiMessageManager.message
+    ) { figures, timerState, pointsCorrect, pointsIncorrect, isExerciseFinished, message ->
         GeoSwitchingViewState(
             figure = figures.firstOr(GeoFigure.Test),
             timerState = timerState,
@@ -48,7 +52,8 @@ class GeoSwitchingViewModel @Inject constructor(
                 isFinished = isExerciseFinished,
                 pointsCorrect = pointsCorrect,
                 pointsIncorrect = pointsIncorrect
-            )
+            ),
+            message = message
         )
     }.stateIn(
         scope = viewModelScope,
@@ -88,11 +93,12 @@ class GeoSwitchingViewModel @Inject constructor(
             val currentItem = items.first().first()
 
             currentItem.checkAnswer(variant) { isCorrect ->
-                if (isCorrect){
+                if (isCorrect) {
                     pointsCorrect.emit(pointsCorrect.value + 1)
-                }else{
+                    uiMessageManager.emitMessage(UiMessage(GeoSwitchingUiMessage.AnswerIsCorrect))
+                } else {
                     pointsInCorrect.emit(pointsInCorrect.value + 1)
-
+                    uiMessageManager.emitMessage(UiMessage(GeoSwitchingUiMessage.AnswerIsNotCorrect))
                 }
             }
             items.emit(items.value.drop(1))

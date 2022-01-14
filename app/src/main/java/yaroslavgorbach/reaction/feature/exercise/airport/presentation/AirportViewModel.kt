@@ -1,6 +1,7 @@
 package yaroslavgorbach.reaction.feature.exercise.airport.presentation
 
 import androidx.lifecycle.viewModelScope
+import app.tivi.extensions.combine
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -13,10 +14,12 @@ import yaroslavgorbach.reaction.data.exercise.airport.model.Direction
 import yaroslavgorbach.reaction.data.exercise.airport.model.Plane
 import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
 import yaroslavgorbach.reaction.feature.exercise.airport.model.AirportActions
+import yaroslavgorbach.reaction.feature.exercise.airport.model.AirportUiMessage
 import yaroslavgorbach.reaction.feature.exercise.airport.model.AirportViewState
 import yaroslavgorbach.reaction.feature.exercise.base.BaseExerciseViewModel
 import yaroslavgorbach.reaction.feature.exercise.common.model.FinishExerciseState
 import yaroslavgorbach.reaction.feature.exercise.cpmplexSort.model.ComplexSortUiMessage
+import yaroslavgorbach.reaction.utill.UiMessage
 import yaroslavgorbach.reaction.utill.UiMessageManager
 import yaroslavgorbach.reaction.utill.firstOr
 import javax.inject.Inject
@@ -32,15 +35,16 @@ class AirportViewModel @Inject constructor(
 
     private val items: MutableStateFlow<List<Plane>> = MutableStateFlow(emptyList())
 
-    override val uiMessageManager: UiMessageManager<Any> = UiMessageManager()
+    override val uiMessageManager: UiMessageManager<AirportUiMessage> = UiMessageManager()
 
     val state: StateFlow<AirportViewState> = combine(
         items,
         timerCountDown.state,
         pointsCorrect,
         pointsInCorrect,
-        isExerciseFinished
-    ) { itemPacks, timerState, pointsCorrect, pointsIncorrect, isExerciseFinished ->
+        isExerciseFinished,
+        uiMessageManager.message
+    ) { itemPacks, timerState, pointsCorrect, pointsIncorrect, isExerciseFinished, message ->
         AirportViewState(
             plane = itemPacks.firstOr(Plane.Test),
             timerState = timerState,
@@ -49,7 +53,8 @@ class AirportViewModel @Inject constructor(
                 isFinished = isExerciseFinished,
                 pointsCorrect = pointsCorrect,
                 pointsIncorrect = pointsIncorrect
-            )
+            ),
+            message = message
         )
     }.stateIn(
         scope = viewModelScope,
@@ -90,8 +95,10 @@ class AirportViewModel @Inject constructor(
 
             if (currentItem.checkIsResultCorrect(item)){
                 pointsCorrect.emit(pointsCorrect.value + 1)
+                uiMessageManager.emitMessage(UiMessage(AirportUiMessage.AnswerIsCorrect))
             }else{
                 pointsInCorrect.emit(pointsInCorrect.value + 1)
+                uiMessageManager.emitMessage(UiMessage(AirportUiMessage.AnswerIsNotCorrect))
             }
 
             items.emit(items.value.drop(1))

@@ -4,14 +4,15 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Circle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -25,7 +26,9 @@ import yaroslavgorbach.reaction.feature.common.ui.theme.ReactionTheme
 import yaroslavgorbach.reaction.feature.exercise.common.mapper.ExerciseNameToInstructionResMapper
 import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseResult
 import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseTopBar
+import yaroslavgorbach.reaction.feature.exercise.rotation.model.RotationUiMessage
 import yaroslavgorbach.reaction.feature.exercise.stroop.model.StroopActions
+import yaroslavgorbach.reaction.feature.exercise.stroop.model.StroopUiMessage
 import yaroslavgorbach.reaction.feature.exercise.stroop.model.StroopViewState
 import yaroslavgorbach.reaction.feature.exercise.stroop.presentation.StroopViewModel
 import yaroslavgorbach.reaction.utill.TimerCountDown
@@ -59,13 +62,15 @@ internal fun StroopExercise(
 
     StroopExercise(
         state = viewState.value,
-    ) { action ->
-        when (action) {
-            is StroopActions.Back -> onBackClick()
-            is StroopActions.Repeat -> onRepeatExerciseClick()
-            else -> viewModel.submitAction(action)
+        onMessageShown = viewModel::clearMessage,
+        actioner = { action ->
+            when (action) {
+                is StroopActions.Back -> onBackClick()
+                is StroopActions.Repeat -> onRepeatExerciseClick()
+                else -> viewModel.submitAction(action)
+            }
         }
-    }
+    )
 }
 
 @ExperimentalFoundationApi
@@ -74,7 +79,8 @@ internal fun StroopExercise(
 internal fun StroopExercise(
     state: StroopViewState,
     actioner: (StroopActions) -> Unit,
-) {
+    onMessageShown: (id: Long) -> Unit,
+    ) {
     if (state.finishExerciseState.isFinished) {
         ExerciseResult(
             finishExerciseState = state.finishExerciseState,
@@ -96,7 +102,37 @@ internal fun StroopExercise(
                             )
                         ),
                         timeProgress = state.timerState.timeUntilFinishedProgress,
-                        onBack = { actioner(StroopActions.Back) }
+                        onBack = { actioner(StroopActions.Back) },
+                        content = {
+                            state.message?.let { message ->
+                                when (message.message) {
+                                    StroopUiMessage.AnswerIsCorrect -> {
+                                        Icon(
+                                            Icons.Default.Circle,
+                                            contentDescription = "",
+                                            tint = Color.Green,
+                                            modifier = Modifier
+                                                .align(CenterHorizontally)
+                                                .padding(top = 4.dp)
+                                                .fillMaxWidth()
+                                        )
+                                    }
+
+                                    StroopUiMessage.AnswerIsNotCorrect -> {
+                                        Icon(
+                                            Icons.Default.Circle,
+                                            contentDescription = "",
+                                            tint = Color.Red,
+                                            modifier = Modifier
+                                                .align(CenterHorizontally)
+                                                .padding(top = 4.dp)
+                                                .fillMaxWidth()
+                                        )
+                                    }
+                                }
+                                onMessageShown(message.id)
+                            }
+                        }
                     )
                 }
             }
@@ -155,6 +191,6 @@ internal fun StroopExercise(
 @Composable
 fun ExercisesPreview() {
     ReactionTheme {
-        StroopExercise(state = StroopViewState.Test, actioner = {})
+        StroopExercise(state = StroopViewState.Test, actioner = {}, onMessageShown = {})
     }
 }

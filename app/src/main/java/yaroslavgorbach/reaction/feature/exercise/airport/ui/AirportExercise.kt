@@ -9,15 +9,13 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.East
-import androidx.compose.material.icons.filled.North
-import androidx.compose.material.icons.filled.South
-import androidx.compose.material.icons.filled.West
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -26,11 +24,13 @@ import yaroslavgorbach.reaction.data.exercise.airport.model.Direction
 import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
 import yaroslavgorbach.reaction.feature.common.ui.theme.ReactionTheme
 import yaroslavgorbach.reaction.feature.exercise.airport.model.AirportActions
+import yaroslavgorbach.reaction.feature.exercise.airport.model.AirportUiMessage
 import yaroslavgorbach.reaction.feature.exercise.airport.model.AirportViewState
 import yaroslavgorbach.reaction.feature.exercise.airport.presentation.AirportViewModel
 import yaroslavgorbach.reaction.feature.exercise.common.mapper.ExerciseNameToInstructionResMapper
 import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseResult
 import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseTopBar
+import yaroslavgorbach.reaction.feature.exercise.cpmplexSort.model.ComplexSortUiMessage
 import yaroslavgorbach.reaction.utill.TimerCountDown
 
 @ExperimentalFoundationApi
@@ -59,13 +59,15 @@ internal fun AirportExercise(
 
     AirportExercise(
         state = viewState.value,
-    ) { action ->
-        when (action) {
-            is AirportActions.Back -> onBackClick()
-            is AirportActions.Repeat -> onRepeatExerciseClick()
-            else -> viewModel.submitAction(action)
+        onMessageShown = viewModel::clearMessage,
+        actioner = { action ->
+            when (action) {
+                is AirportActions.Back -> onBackClick()
+                is AirportActions.Repeat -> onRepeatExerciseClick()
+                else -> viewModel.submitAction(action)
+            }
         }
-    }
+    )
 }
 
 @ExperimentalFoundationApi
@@ -74,6 +76,7 @@ internal fun AirportExercise(
 internal fun AirportExercise(
     state: AirportViewState,
     actioner: (AirportActions) -> Unit,
+    onMessageShown: (id: Long) -> Unit,
 ) {
     if (state.finishExerciseState.isFinished) {
         ExerciseResult(
@@ -97,7 +100,37 @@ internal fun AirportExercise(
                             )
                         ),
                         timeProgress = state.timerState.timeUntilFinishedProgress,
-                        onBack = { actioner(AirportActions.Back) }
+                        onBack = { actioner(AirportActions.Back) },
+                        content = {
+                            state.message?.let { message ->
+                                when (message.message) {
+                                    AirportUiMessage.AnswerIsCorrect -> {
+                                        Icon(
+                                            Icons.Default.Circle,
+                                            contentDescription = "",
+                                            tint = Color.Green,
+                                            modifier = Modifier
+                                                .align(Alignment.CenterHorizontally)
+                                                .padding(top = 4.dp)
+                                                .fillMaxWidth()
+                                        )
+                                    }
+
+                                    AirportUiMessage.AnswerIsNotCorrect -> {
+                                        Icon(
+                                            Icons.Default.Circle,
+                                            contentDescription = "",
+                                            tint = Color.Red,
+                                            modifier = Modifier
+                                                .align(Alignment.CenterHorizontally)
+                                                .padding(top = 4.dp)
+                                                .fillMaxWidth()
+                                        )
+                                    }
+                                }
+                                onMessageShown(message.id)
+                            }
+                        }
                     )
                 }
             }
@@ -110,8 +143,7 @@ internal fun AirportExercise(
                     .rotate(state.plane.direction.degree)
                     .background(color = MaterialTheme.colors.onSurface, shape = MaterialTheme.shapes.large)
                     .padding(16.dp)
-                    .size(120.dp)
-                ,
+                    .size(120.dp),
                 tint = state.plane.color,
             )
 
@@ -128,19 +160,19 @@ private fun BoxScope.BottomButtons(onClick: (Direction) -> Unit) {
             .size(180.dp)
             .padding(bottom = 16.dp)
     ) {
-            Icon(
-                imageVector = Icons.Default.North,
-                contentDescription = null,
-                modifier = Modifier
-                    .align(Alignment.TopCenter)
-                    .background(
-                        color = MaterialTheme.colors.onSurface,
-                        shape = MaterialTheme.shapes.medium
-                    )
-                    .clickable { onClick(Direction.NORTH) }
-                    .padding(8.dp)
-                    .size(40.dp)
-            )
+        Icon(
+            imageVector = Icons.Default.North,
+            contentDescription = null,
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .background(
+                    color = MaterialTheme.colors.onSurface,
+                    shape = MaterialTheme.shapes.medium
+                )
+                .clickable { onClick(Direction.NORTH) }
+                .padding(8.dp)
+                .size(40.dp)
+        )
 
         Icon(
             imageVector = Icons.Default.South,
@@ -192,6 +224,6 @@ private fun BoxScope.BottomButtons(onClick: (Direction) -> Unit) {
 @Composable
 fun ExercisesPreview() {
     ReactionTheme {
-        AirportExercise(state = AirportViewState.Test, actioner = {})
+        AirportExercise(state = AirportViewState.Test, actioner = {}, onMessageShown = {})
     }
 }

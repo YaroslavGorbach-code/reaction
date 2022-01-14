@@ -1,6 +1,7 @@
 package yaroslavgorbach.reaction.feature.exercise.rotation.presentation
 
 import androidx.lifecycle.viewModelScope
+import app.tivi.extensions.combine
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.InternalCoroutinesApi
@@ -16,7 +17,9 @@ import yaroslavgorbach.reaction.feature.exercise.base.BaseExerciseViewModel
 import yaroslavgorbach.reaction.feature.exercise.common.model.FinishExerciseState
 import yaroslavgorbach.reaction.feature.exercise.common.model.YesNoChoseVariations
 import yaroslavgorbach.reaction.feature.exercise.rotation.model.RotationActions
+import yaroslavgorbach.reaction.feature.exercise.rotation.model.RotationUiMessage
 import yaroslavgorbach.reaction.feature.exercise.rotation.model.RotationViewState
+import yaroslavgorbach.reaction.utill.UiMessage
 import yaroslavgorbach.reaction.utill.UiMessageManager
 import yaroslavgorbach.reaction.utill.firstOr
 import javax.inject.Inject
@@ -33,15 +36,16 @@ class RotationViewModel @Inject constructor(
 
     private val tables: MutableStateFlow<List<Tables>> = MutableStateFlow(emptyList())
 
-    override val uiMessageManager: UiMessageManager<Any> = UiMessageManager()
+    override val uiMessageManager: UiMessageManager<RotationUiMessage> = UiMessageManager()
 
     val state: StateFlow<RotationViewState> = combine(
         tables,
         timerCountDown.state,
         pointsCorrect,
         pointsInCorrect,
-        isExerciseFinished
-    ) { tables, timerState, pointsCorrect, pointsIncorrect, isExerciseFinished ->
+        isExerciseFinished,
+        uiMessageManager.message
+    ) { tables, timerState, pointsCorrect, pointsIncorrect, isExerciseFinished, message ->
         RotationViewState(
             tables = tables.firstOr(Tables.Test),
             timerState = timerState,
@@ -50,7 +54,8 @@ class RotationViewModel @Inject constructor(
                 isFinished = isExerciseFinished,
                 pointsCorrect = pointsCorrect,
                 pointsIncorrect = pointsIncorrect
-            )
+            ),
+            message = message
         )
     }.stateIn(
         scope = viewModelScope,
@@ -91,17 +96,13 @@ class RotationViewModel @Inject constructor(
         viewModelScope.launch {
             val currentTables = state.value.tables
 
-            when (choseVariant) {
-                YesNoChoseVariations.YES -> if (currentTables.areTheSame) {
+            currentTables.checkAnswer(choseVariant) { isCorrect ->
+                if (isCorrect) {
                     pointsCorrect.emit(pointsCorrect.value + 1)
+                    uiMessageManager.emitMessage(UiMessage(message = RotationUiMessage.AnswerIsCorrect))
                 } else {
                     pointsInCorrect.emit(pointsInCorrect.value + 1)
-                }
-
-                YesNoChoseVariations.NO -> if (currentTables.areTheSame) {
-                    pointsInCorrect.emit(pointsInCorrect.value + 1)
-                } else {
-                    pointsCorrect.emit(pointsCorrect.value + 1)
+                    uiMessageManager.emitMessage(UiMessage(message = RotationUiMessage.AnswerIsNotCorrect))
                 }
             }
 
@@ -115,6 +116,5 @@ class RotationViewModel @Inject constructor(
         }
     }
 }
-
 
 

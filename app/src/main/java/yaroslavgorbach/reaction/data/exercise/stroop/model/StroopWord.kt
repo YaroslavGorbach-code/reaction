@@ -7,4 +7,8 @@ data class StroopWord(val text: String, val color: WordColorVariant) {
         val Test = StroopWord("Красный", WordColorVariant.GREEN)
         val Empty = StroopWord("", WordColorVariant.GREEN)
     }
+
+    suspend fun checkAnswer(wordColorVariant: WordColorVariant, onResult: suspend (isCorrect: Boolean) -> Unit) {
+        onResult(wordColorVariant == color)
+    }
 }

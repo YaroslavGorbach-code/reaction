@@ -7,11 +7,14 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Circle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -27,7 +30,9 @@ import yaroslavgorbach.reaction.feature.exercise.common.mapper.ExerciseNameToIns
 import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseResult
 import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseTopBar
 import yaroslavgorbach.reaction.feature.exercise.common.ui.YesNoBottomButtons
+import yaroslavgorbach.reaction.feature.exercise.faceControl.model.FaceControlUiMessage
 import yaroslavgorbach.reaction.feature.exercise.geoSwitching.model.GeoSwitchingActions
+import yaroslavgorbach.reaction.feature.exercise.geoSwitching.model.GeoSwitchingUiMessage
 import yaroslavgorbach.reaction.feature.exercise.geoSwitching.model.GeoSwitchingViewState
 import yaroslavgorbach.reaction.feature.exercise.geoSwitching.presentation.GeoSwitchingViewModel
 import yaroslavgorbach.reaction.utill.TimerCountDown
@@ -61,13 +66,15 @@ internal fun GeoSwitchingExercise(
 
     GeoSwitchingExercise(
         state = viewState.value,
-    ) { action ->
-        when (action) {
-            is GeoSwitchingActions.Back -> onBackClick()
-            is GeoSwitchingActions.Repeat -> onRepeatExerciseClick()
-            else -> viewModel.submitAction(action)
+        onMessageShown = viewModel::clearMessage,
+        actioner = { action ->
+            when (action) {
+                is GeoSwitchingActions.Back -> onBackClick()
+                is GeoSwitchingActions.Repeat -> onRepeatExerciseClick()
+                else -> viewModel.submitAction(action)
+            }
         }
-    }
+    )
 }
 
 @ExperimentalFoundationApi
@@ -76,6 +83,7 @@ internal fun GeoSwitchingExercise(
 internal fun GeoSwitchingExercise(
     state: GeoSwitchingViewState,
     actioner: (GeoSwitchingActions) -> Unit,
+    onMessageShown: (id: Long) -> Unit,
 ) {
     if (state.finishExerciseState.isFinished) {
         ExerciseResult(
@@ -98,7 +106,37 @@ internal fun GeoSwitchingExercise(
                             )
                         ),
                         timeProgress = state.timerState.timeUntilFinishedProgress,
-                        onBack = { actioner(GeoSwitchingActions.Back) }
+                        onBack = { actioner(GeoSwitchingActions.Back) },
+                        content = {
+                            state.message?.let { message ->
+                                when (message.message) {
+                                    GeoSwitchingUiMessage.AnswerIsCorrect -> {
+                                        Icon(
+                                            Icons.Default.Circle,
+                                            contentDescription = "",
+                                            tint = Color.Green,
+                                            modifier = Modifier
+                                                .align(CenterHorizontally)
+                                                .padding(top = 4.dp)
+                                                .fillMaxWidth()
+                                        )
+                                    }
+
+                                    GeoSwitchingUiMessage.AnswerIsNotCorrect -> {
+                                        Icon(
+                                            Icons.Default.Circle,
+                                            contentDescription = "",
+                                            tint = Color.Red,
+                                            modifier = Modifier
+                                                .align(CenterHorizontally)
+                                                .padding(top = 4.dp)
+                                                .fillMaxWidth()
+                                        )
+                                    }
+                                }
+                                onMessageShown(message.id)
+                            }
+                        }
                     )
                 }
             }
@@ -194,6 +232,6 @@ private fun BoxScope.CroiseVariants(state: GeoSwitchingViewState) {
 @Composable
 fun ExercisesPreview() {
     ReactionTheme {
-        GeoSwitchingExercise(state = GeoSwitchingViewState.Test, actioner = {})
+        GeoSwitchingExercise(state = GeoSwitchingViewState.Test, actioner = {}, onMessageShown = {})
     }
 }

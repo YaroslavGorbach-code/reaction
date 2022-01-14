@@ -1,6 +1,7 @@
 package yaroslavgorbach.reaction.feature.exercise.numbersAndLetters.presentation
 
 import androidx.lifecycle.viewModelScope
+import app.tivi.extensions.combine
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -15,7 +16,9 @@ import yaroslavgorbach.reaction.feature.exercise.base.BaseExerciseViewModel
 import yaroslavgorbach.reaction.feature.exercise.common.model.FinishExerciseState
 import yaroslavgorbach.reaction.feature.exercise.common.model.YesNoChoseVariations
 import yaroslavgorbach.reaction.feature.exercise.numbersAndLetters.model.NumbersAndLettersActions
+import yaroslavgorbach.reaction.feature.exercise.numbersAndLetters.model.NumbersAndLettersUiMessage
 import yaroslavgorbach.reaction.feature.exercise.numbersAndLetters.model.NumbersAndLettersViewState
+import yaroslavgorbach.reaction.utill.UiMessage
 import yaroslavgorbach.reaction.utill.UiMessageManager
 import yaroslavgorbach.reaction.utill.firstOr
 import javax.inject.Inject
@@ -31,15 +34,16 @@ class NumbersAndLettersViewModel @Inject constructor(
 
     private val items: MutableStateFlow<List<NumberAndLetter>> = MutableStateFlow(emptyList())
 
-    override val uiMessageManager: UiMessageManager<Any> = UiMessageManager()
+    override val uiMessageManager: UiMessageManager<NumbersAndLettersUiMessage> = UiMessageManager()
 
     val state: StateFlow<NumbersAndLettersViewState> = combine(
         items,
         timerCountDown.state,
         pointsCorrect,
         pointsInCorrect,
-        isExerciseFinished
-    ) { numbersAndLetters, timerState, pointsCorrect, pointsIncorrect, isExerciseFinished ->
+        isExerciseFinished,
+        uiMessageManager.message
+    ) { numbersAndLetters, timerState, pointsCorrect, pointsIncorrect, isExerciseFinished, message ->
         NumbersAndLettersViewState(
             numberAndLetter = numbersAndLetters.firstOr(NumberAndLetter.Test),
             timerState = timerState,
@@ -48,7 +52,8 @@ class NumbersAndLettersViewModel @Inject constructor(
                 isFinished = isExerciseFinished,
                 pointsCorrect = pointsCorrect,
                 pointsIncorrect = pointsIncorrect
-            )
+            ),
+            message = message
         )
     }.stateIn(
         scope = viewModelScope,
@@ -90,8 +95,10 @@ class NumbersAndLettersViewModel @Inject constructor(
             currentItem.checkAnswer(variant) { isCorrect ->
                 if (isCorrect) {
                     pointsCorrect.emit(pointsCorrect.value + 1)
+                    uiMessageManager.emitMessage(UiMessage(NumbersAndLettersUiMessage.AnswerIsCorrect))
                 } else {
                     pointsInCorrect.emit(pointsInCorrect.value + 1)
+                    uiMessageManager.emitMessage(UiMessage(NumbersAndLettersUiMessage.AnswerIsNotCorrect))
                 }
             }
 

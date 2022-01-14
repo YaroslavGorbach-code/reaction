@@ -1,6 +1,7 @@
 package yaroslavgorbach.reaction.feature.exercise.stroop.presentation
 
 import androidx.lifecycle.viewModelScope
+import app.tivi.extensions.combine
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.InternalCoroutinesApi
@@ -16,7 +17,9 @@ import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
 import yaroslavgorbach.reaction.feature.exercise.base.BaseExerciseViewModel
 import yaroslavgorbach.reaction.feature.exercise.common.model.FinishExerciseState
 import yaroslavgorbach.reaction.feature.exercise.stroop.model.StroopActions
+import yaroslavgorbach.reaction.feature.exercise.stroop.model.StroopUiMessage
 import yaroslavgorbach.reaction.feature.exercise.stroop.model.StroopViewState
+import yaroslavgorbach.reaction.utill.UiMessage
 import yaroslavgorbach.reaction.utill.UiMessageManager
 import javax.inject.Inject
 
@@ -32,15 +35,16 @@ class StroopViewModel @Inject constructor(
 
     private val words: MutableStateFlow<List<StroopWord>> = MutableStateFlow(emptyList())
 
-    override val uiMessageManager: UiMessageManager<Any> = UiMessageManager()
+    override val uiMessageManager: UiMessageManager<StroopUiMessage> = UiMessageManager()
 
     val state: StateFlow<StroopViewState> = combine(
         words,
         timerCountDown.state,
         pointsCorrect,
         pointsInCorrect,
-        isExerciseFinished
-    ) { words, timerState, pointsCorrect, pointsIncorrect, isExerciseFinished ->
+        isExerciseFinished,
+        uiMessageManager.message
+    ) { words, timerState, pointsCorrect, pointsIncorrect, isExerciseFinished, message ->
         StroopViewState(
             word = words.firstOrNull() ?: StroopWord.Empty,
             timerState = timerState,
@@ -49,7 +53,8 @@ class StroopViewModel @Inject constructor(
                 isFinished = isExerciseFinished,
                 pointsCorrect = pointsCorrect,
                 pointsIncorrect = pointsIncorrect
-            )
+            ),
+            message = message
         )
     }.stateIn(
         scope = viewModelScope,
@@ -90,21 +95,15 @@ class StroopViewModel @Inject constructor(
         viewModelScope.launch {
             val currentWord = state.value.word
 
-            when (wordColorVariant) {
-                WordColorVariant.RED -> {
-                    when (currentWord.color) {
-                        WordColorVariant.RED -> pointsCorrect.emit(pointsCorrect.value + 1)
-                        WordColorVariant.GREEN -> pointsInCorrect.emit(pointsInCorrect.value + 1)
-                    }
-                }
-                WordColorVariant.GREEN -> {
-                    when (currentWord.color) {
-                        WordColorVariant.RED -> pointsInCorrect.emit(pointsInCorrect.value + 1)
-                        WordColorVariant.GREEN -> pointsCorrect.emit(pointsCorrect.value + 1)
-                    }
+            currentWord.checkAnswer(wordColorVariant) { isCorrect ->
+                if (isCorrect) {
+                    pointsCorrect.emit(pointsCorrect.value + 1)
+                    uiMessageManager.emitMessage(UiMessage(StroopUiMessage.AnswerIsCorrect))
+                } else {
+                    pointsInCorrect.emit(pointsInCorrect.value + 1)
+                    uiMessageManager.emitMessage(UiMessage(StroopUiMessage.AnswerIsNotCorrect))
                 }
             }
-
             words.emit(words.value.drop(1))
         }
     }

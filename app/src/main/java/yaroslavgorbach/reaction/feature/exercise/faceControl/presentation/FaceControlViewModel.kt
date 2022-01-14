@@ -1,6 +1,7 @@
 package yaroslavgorbach.reaction.feature.exercise.faceControl.presentation
 
 import androidx.lifecycle.viewModelScope
+import app.tivi.extensions.combine
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -15,7 +16,9 @@ import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
 import yaroslavgorbach.reaction.feature.exercise.base.BaseExerciseViewModel
 import yaroslavgorbach.reaction.feature.exercise.common.model.FinishExerciseState
 import yaroslavgorbach.reaction.feature.exercise.faceControl.model.FaceControlActions
+import yaroslavgorbach.reaction.feature.exercise.faceControl.model.FaceControlUiMessage
 import yaroslavgorbach.reaction.feature.exercise.faceControl.model.FaceControlViewState
+import yaroslavgorbach.reaction.utill.UiMessage
 import yaroslavgorbach.reaction.utill.UiMessageManager
 import javax.inject.Inject
 
@@ -30,15 +33,16 @@ class FaceControlViewModel @Inject constructor(
 
     private val facePacks: MutableStateFlow<List<FacePack>> = MutableStateFlow(emptyList())
 
-    override val uiMessageManager: UiMessageManager<Any> = UiMessageManager()
+    override val uiMessageManager: UiMessageManager<FaceControlUiMessage> = UiMessageManager()
 
     var state: StateFlow<FaceControlViewState> = combine(
         facePacks,
         timerCountDown.state,
         pointsCorrect,
         pointsInCorrect,
-        isExerciseFinished
-    ) { facePacks, timerState, pointsCorrect, pointsIncorrect, isExerciseFinished ->
+        isExerciseFinished,
+        uiMessageManager.message
+    ) { facePacks, timerState, pointsCorrect, pointsIncorrect, isExerciseFinished, message ->
         FaceControlViewState(
             facePacks = facePacks,
             timerState = timerState,
@@ -47,7 +51,8 @@ class FaceControlViewModel @Inject constructor(
                 isFinished = isExerciseFinished,
                 pointsCorrect = pointsCorrect,
                 pointsIncorrect = pointsIncorrect
-            )
+            ),
+            message = message
         )
     }.stateIn(
         scope = viewModelScope,
@@ -86,8 +91,10 @@ class FaceControlViewModel @Inject constructor(
         viewModelScope.launch {
             if (face.isDissatisfied) {
                 pointsCorrect.emit(pointsCorrect.value + 1)
+                uiMessageManager.emitMessage(UiMessage(FaceControlUiMessage.AnswerIsCorrect))
             } else {
                 pointsInCorrect.emit(pointsInCorrect.value + 1)
+                uiMessageManager.emitMessage(UiMessage(FaceControlUiMessage.AnswerIsNotCorrect))
             }
 
             facePacks.emit(facePacks.value.drop(1))

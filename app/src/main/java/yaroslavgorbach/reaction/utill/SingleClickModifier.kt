@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 
 object DebounceClick {
     private val debounceState = MutableStateFlow {}
-    private var timeout: Long = 300
+    private var timeout: Long = 250
 
     init {
         GlobalScope.launch(Dispatchers.Main) {
@@ -36,7 +36,7 @@ object DebounceClick {
 }
 
 fun Modifier.singleClickable(
-    timeout: Long = 300,
+    timeout: Long = 250,
     enabled: Boolean = true,
     onClickLabel: String? = null,
     role: Role? = null,

@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.sp
 import yaroslavgorbach.reaction.data.exercises.local.model.Exercise
 import yaroslavgorbach.reaction.feature.common.ui.CircularProgressIndicatorWithContent
 import yaroslavgorbach.reaction.feature.common.ui.theme.ReactionTheme
+import yaroslavgorbach.reaction.utill.singleClickable
 
 @ExperimentalMaterialApi
 @Composable
@@ -35,7 +36,7 @@ fun ExerciseItem(exercise: Exercise, onExerciseClick: () -> Unit) {
         .fillMaxWidth()
         .height(110.dp)
         .background(color = MaterialTheme.colors.onSurface, shape = MaterialTheme.shapes.medium)
-        .clickable(enabled = exercise.isAvailable) { onExerciseClick() }
+        .singleClickable(enabled = exercise.isAvailable) { onExerciseClick() }
         .padding(8.dp)
     )
     {

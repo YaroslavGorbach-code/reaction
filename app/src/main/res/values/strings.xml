@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Reaction</string>
+    <string name="app_name">Концентрация внимания</string>
 
     <string name="level_complexity">Уровень сложности</string>
     <string name="training">Ежедневная тренировка</string>

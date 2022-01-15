@@ -105,7 +105,7 @@ private fun NavGraphBuilder.addExercises(
                     exerciseName = exerciseName
                 )
             )
-        }, openTraining = { }, openSettings = {})
+        })
     }
 }
 

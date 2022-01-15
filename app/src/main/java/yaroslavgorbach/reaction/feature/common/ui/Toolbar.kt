@@ -3,6 +3,7 @@ package yaroslavgorbach.reaction.feature.common.ui
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
@@ -23,6 +24,7 @@ fun Toolbar(onBack: () -> Unit) {
                 "Close",
                 modifier = Modifier
                     .clickable { onBack() }
+                    .padding(4.dp)
                     .size(30.dp)
                     .align(Alignment.CenterEnd))
         }

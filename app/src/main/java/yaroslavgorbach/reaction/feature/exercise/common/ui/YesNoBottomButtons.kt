@@ -21,17 +21,19 @@ fun YesNoBottomButtons(modifier: Modifier = Modifier, onClick: (variant: YesNoCh
     ) {
         Button(
             shape = RoundedCornerShape(30),
-            onClick = { onClick(YesNoChoseVariations.NO) }, modifier = Modifier
+            onClick = { onClick(YesNoChoseVariations.NO) },
+            modifier = Modifier
                 .fillMaxWidth()
                 .weight(0.5f)
         ) {
             Text(text = stringResource(id = R.string.no), fontSize = 24.sp)
         }
 
-        Button(modifier = Modifier
-            .padding(start = 16.dp)
-            .fillMaxWidth()
-            .weight(0.5f),
+        Button(
+            modifier = Modifier
+                .padding(start = 16.dp)
+                .fillMaxWidth()
+                .weight(0.5f),
             shape = RoundedCornerShape(30),
             onClick = { onClick(YesNoChoseVariations.YES) }
         ) {

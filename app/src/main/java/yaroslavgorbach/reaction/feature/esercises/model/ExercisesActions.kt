@@ -4,6 +4,6 @@ import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
 
 sealed class ExercisesActions {
     data class OpenDetails(val exerciseName: ExerciseName) : ExercisesActions()
-    object OpenTraining : ExercisesActions()
-    object OpenSettings : ExercisesActions()
+    data class ShowExerciseIsNotAvailableDialog(val exerciseName: ExerciseName) : ExercisesActions()
+    object HideExerciseIsNotAvailableDialog : ExercisesActions()
 }

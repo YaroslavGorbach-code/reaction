@@ -17,11 +17,13 @@ class ExercisesViewModel @Inject constructor(
 ) : ViewModel() {
     private val pendingActions = MutableSharedFlow<ExercisesActions>()
 
+    private val isExerciseAvailableDialogShown = MutableStateFlow(false)
+
     val state: StateFlow<ExercisesViewState> = combine(
-        observeExercisesInteractor()
-    ) { exercises ->
-        ExercisesViewState(exercises = exercises[0])
-    }.stateIn(
+        observeExercisesInteractor(),
+        isExerciseAvailableDialogShown,
+        ::ExercisesViewState
+    ).stateIn(
         scope = viewModelScope,
         started = WhileSubscribed(5000),
         initialValue = ExercisesViewState.Empty
@@ -31,6 +33,12 @@ class ExercisesViewModel @Inject constructor(
         viewModelScope.launch {
             pendingActions.collect { action ->
                 when (action) {
+                    is ExercisesActions.HideExerciseIsNotAvailableDialog -> {
+                        isExerciseAvailableDialogShown.emit(false)
+                    }
+                    is ExercisesActions.ShowExerciseIsNotAvailableDialog -> {
+                        isExerciseAvailableDialogShown.emit(true)
+                    }
                     else -> error("$action is not handled")
                 }
             }

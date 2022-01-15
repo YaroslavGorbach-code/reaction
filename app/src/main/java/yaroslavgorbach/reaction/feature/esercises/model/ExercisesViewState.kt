@@ -5,7 +5,7 @@ import yaroslavgorbach.reaction.data.training.model.Training
 
 data class ExercisesViewState(
     val exercises: List<Exercise> = emptyList(),
-    val trainings: List<Training> = emptyList()
+    val isExerciseAvailableDialogShown: Boolean = false
 ) {
     companion object {
         val Empty = ExercisesViewState()

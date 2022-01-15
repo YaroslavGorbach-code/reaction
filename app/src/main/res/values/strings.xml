@@ -4,7 +4,7 @@
     <string name="level_complexity">Уровень сложности</string>
     <string name="training">Ежедневная тренировка</string>
     <string name="exercises">Упражнения</string>
-    <string name="motivation_text">Практикуйтесь ежидневно и результат не заставит себя долго ждать</string>
+    <string name="motivation_text">Практикуйтесь ежедневно и результат не заставит себя долго ждать</string>
     <string name="start">Начать</string>
     <string name="result">Результат</string>
     <string name="correct">Правильных ответов:</string>
@@ -12,13 +12,13 @@
     <string name="incorrect">Не правильных ответов:</string>
     <string name="to_menu">На главную</string>
     <string name="one_more_time">Ещё раз</string>
-    <string name="result_good">Отличный резульат! \n Повторим?</string>
+    <string name="result_good">Отличный результат! \n Повторим?</string>
     <string name="result_bad">Не плохо, но для прохождения данного уровня необходимо выполнить минимум %1$d раундов
         и получить больше %2$d процентов правильных ответов. \n Попробуете еще раз?</string>
     <string name="empty" />
     <string name="good">Хорошо</string>
     <string name="exercise_is_unavailable">Упражнение не доступно</string>
-    <string name="exercise_is_unavailable_explanation">Выполните предедущее упражнение успешно не мение пяти раз, чтобы получить доступ к этому</string>
+    <string name="exercise_is_unavailable_explanation">Выполните предыдущее упражнение успешно не менее пяти раз, чтобы получить доступ к этому</string>
     <string name="onboarding_text">
         Внимание — это психофизиологический процесс,
         при котором познавательная деятельность человека

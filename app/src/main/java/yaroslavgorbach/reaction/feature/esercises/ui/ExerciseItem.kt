@@ -26,7 +26,6 @@ import yaroslavgorbach.reaction.utill.singleClickable
 @ExperimentalMaterialApi
 @Composable
 fun ExerciseItem(exercise: Exercise, onExerciseClick: (isAvailable: Boolean) -> Unit) {
-
     Column(modifier = Modifier
         .padding(8.dp)
         .fillMaxWidth()

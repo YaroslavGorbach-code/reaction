@@ -6,4 +6,5 @@ sealed class ExercisesActions {
     data class OpenDetails(val exerciseName: ExerciseName) : ExercisesActions()
     data class ShowExerciseIsNotAvailableDialog(val exerciseName: ExerciseName) : ExercisesActions()
     object HideExerciseIsNotAvailableDialog : ExercisesActions()
+    object HideOnboardingDialog : ExercisesActions()
 }

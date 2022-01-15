@@ -65,6 +65,12 @@ internal fun Exercises(
         }
     }
 
+    if (state.isOnboardingDialogShown) {
+        ShowOnboardingDialog {
+            actioner(ExercisesActions.HideOnboardingDialog)
+        }
+    }
+
     LazyColumn {
         item {
             Text(
@@ -114,6 +120,34 @@ private fun ShowExerciseAvailableDialog(onDismiss: () -> Unit) {
                     onClick = onDismiss
                 ) {
                     Text(stringResource(id = R.string.good))
+                }
+            }
+        }
+    )
+}
+
+@Composable
+private fun ShowOnboardingDialog(onDismiss: () -> Unit) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(stringResource(id = R.string.about_app)) },
+        text = { Text(stringResource(id = R.string.onboarding_text)) },
+        buttons = {
+            Row(
+                modifier = Modifier.padding(all = 8.dp),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Button(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp)
+                        .background(
+                            color = MaterialTheme.colors.primary,
+                            shape = MaterialTheme.shapes.medium
+                        ),
+                    onClick = onDismiss
+                ) {
+                    Text(stringResource(id = R.string.start))
                 }
             }
         }

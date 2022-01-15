@@ -108,6 +108,6 @@ internal fun Description(
 @Composable
 fun ExercisesPreview() {
     ReactionTheme {
-        Description(state = DescriptionViewState(R.string.test_description), actioner = {})
+        Description(state = DescriptionViewState(R.string.description_rotation), actioner = {})
     }
 }

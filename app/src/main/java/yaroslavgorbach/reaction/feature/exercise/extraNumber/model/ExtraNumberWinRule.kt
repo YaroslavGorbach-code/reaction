@@ -4,8 +4,8 @@ import yaroslavgorbach.reaction.feature.exercise.common.model.WinRule
 
 object ExtraNumberWinRule : WinRule {
     override val minRounds: Int
-        get() = 45
+        get() = 40
 
     override val minCorrectPresent: Int
-        get() = 90
+        get() = 95
 }

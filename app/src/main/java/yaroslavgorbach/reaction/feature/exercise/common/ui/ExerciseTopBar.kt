@@ -55,7 +55,7 @@ fun ExerciseTopBarPreview() {
     Surface() {
         ReactionTheme {
             ExerciseTopBar(
-                instruction = stringResource(id = R.string.test_instruction),
+                instruction = stringResource(id = R.string.description_rotation),
                 timeProgress = 0.5f,
                 onBack = {}
             )

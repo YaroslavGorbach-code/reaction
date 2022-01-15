@@ -4,7 +4,7 @@ import yaroslavgorbach.reaction.feature.exercise.common.model.WinRule
 
 object GeoSwitchingWinRule : WinRule {
     override val minRounds: Int
-        get() = 45
+        get() = 50
 
     override val minCorrectPresent: Int
         get() = 95

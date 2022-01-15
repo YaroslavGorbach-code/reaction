@@ -32,7 +32,7 @@ data class Plane(
             AirportTaskVariant.FLIES_BACKWARD -> {
                 when (direction) {
                     Direction.NORTH -> directionChosen == Direction.SOUTH
-                    Direction.SOUTH -> directionChosen == Direction.WEST
+                    Direction.SOUTH -> directionChosen == Direction.NORTH
                     Direction.WEST -> directionChosen == Direction.EAST
                     Direction.EAST -> directionChosen == Direction.WEST
                 }

@@ -1,16 +1,14 @@
 package yaroslavgorbach.reaction.feature.esercises.ui
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -21,8 +19,10 @@ import yaroslavgorbach.reaction.data.exercises.local.model.Exercise
 import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
 import yaroslavgorbach.reaction.feature.common.ui.theme.ReactionTheme
 import yaroslavgorbach.reaction.feature.esercises.model.ExercisesActions
+import yaroslavgorbach.reaction.feature.esercises.model.ExercisesUiMassage
 import yaroslavgorbach.reaction.feature.esercises.model.ExercisesViewState
 import yaroslavgorbach.reaction.feature.esercises.presentation.ExercisesViewModel
+import yaroslavgorbach.reaction.utill.findActivity
 
 @ExperimentalMaterialApi
 @Composable
@@ -45,12 +45,14 @@ internal fun Exercises(
 
     Exercises(
         state = viewState.value,
-    ) { action ->
-        when (action) {
-            is ExercisesActions.OpenDetails -> openDescription(action.exerciseName)
-            else -> viewModel.submitAction(action)
+        onMessageShown = viewModel::clearMessage,
+        actioner = { action ->
+            when (action) {
+                is ExercisesActions.OpenDetails -> openDescription(action.exerciseName)
+                else -> viewModel.submitAction(action)
+            }
         }
-    }
+    )
 }
 
 @ExperimentalMaterialApi
@@ -58,17 +60,42 @@ internal fun Exercises(
 internal fun Exercises(
     state: ExercisesViewState,
     actioner: (ExercisesActions) -> Unit,
+    onMessageShown: (id: Long) -> Unit,
 ) {
-    if (state.isExerciseAvailableDialogShown) {
-        ShowExerciseAvailableDialog {
-            actioner(ExercisesActions.HideExerciseIsNotAvailableDialog)
-        }
+    if (state.exerciseAvailabilityDialogState.isVisible) {
+        ShowExerciseAvailableDialog(
+            onDismiss = {
+                actioner(ExercisesActions.HideExerciseIsNotAvailableDialog)
+            },
+            onShowAd = {
+                actioner(
+                    ExercisesActions.RequestShowRewordAd(
+                        state.exerciseAvailabilityDialogState.exerciseName
+                    )
+                )
+                actioner(ExercisesActions.HideExerciseIsNotAvailableDialog)
+            })
     }
 
-    if (state.isOnboardingDialogShown) {
-        ShowOnboardingDialog {
+    if (state.isOnboardingDialogVisible) {
+        ShowOnboardingDialog(onDismiss = {
             actioner(ExercisesActions.HideOnboardingDialog)
+        })
+    }
+
+    state.message?.let { uiMessage ->
+        when (uiMessage.message) {
+            is ExercisesUiMassage.ShowRewardAd -> {
+                actioner(
+                    ExercisesActions.ShowRewordAd(
+                        activity = requireNotNull(LocalContext.current.findActivity()),
+                        exerciseName = uiMessage.message.exerciseName
+                    )
+                )
+            }
         }
+
+        onMessageShown(uiMessage.id)
     }
 
     LazyColumn {
@@ -99,20 +126,20 @@ internal fun Exercises(
 }
 
 @Composable
-private fun ShowExerciseAvailableDialog(onDismiss: () -> Unit) {
+private fun ShowExerciseAvailableDialog(onDismiss: () -> Unit, onShowAd: () -> Unit) {
     AlertDialog(
         onDismissRequest = onDismiss,
         title = { Text(stringResource(id = R.string.exercise_is_unavailable)) },
         text = { Text(stringResource(id = R.string.exercise_is_unavailable_explanation)) },
         buttons = {
-            Row(
+            Column(
                 modifier = Modifier.padding(all = 8.dp),
-                horizontalArrangement = Arrangement.Center
+                verticalArrangement = Arrangement.Center
             ) {
                 Button(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(8.dp)
+                        .padding(4.dp)
                         .background(
                             color = MaterialTheme.colors.primary,
                             shape = MaterialTheme.shapes.medium
@@ -120,6 +147,18 @@ private fun ShowExerciseAvailableDialog(onDismiss: () -> Unit) {
                     onClick = onDismiss
                 ) {
                     Text(stringResource(id = R.string.good))
+                }
+                Button(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(4.dp)
+                        .background(
+                            color = MaterialTheme.colors.primary,
+                            shape = MaterialTheme.shapes.medium
+                        ),
+                    onClick = onShowAd
+                ) {
+                    Text(stringResource(id = R.string.open_by_ad))
                 }
             }
         }
@@ -162,9 +201,9 @@ fun ExercisesPreview() {
         Exercises(
             state = ExercisesViewState(
                 exercises = listOf(Exercise.Empty),
-            )
-        ) {
-
-        }
+            ),
+            onMessageShown = {},
+            actioner = {}
+        )
     }
 }

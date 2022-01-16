@@ -1,10 +1,8 @@
 package yaroslavgorbach.reaction.feature.exercise.cpmplexSort.presentation
 
 import androidx.lifecycle.viewModelScope
-import app.tivi.extensions.combine
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.launch
@@ -20,6 +18,7 @@ import yaroslavgorbach.reaction.feature.exercise.cpmplexSort.model.ComplexSortAc
 import yaroslavgorbach.reaction.feature.exercise.cpmplexSort.model.ComplexSortViewState
 import yaroslavgorbach.reaction.utill.UiMessage
 import yaroslavgorbach.reaction.utill.UiMessageManager
+import yaroslavgorbach.reaction.utill.combine
 import javax.inject.Inject
 
 @HiltViewModel

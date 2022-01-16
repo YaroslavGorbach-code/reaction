@@ -1,7 +1,6 @@
 package yaroslavgorbach.reaction.feature.exercise.numbersAndLetters.presentation
 
 import androidx.lifecycle.viewModelScope
-import app.tivi.extensions.combine
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -20,6 +19,7 @@ import yaroslavgorbach.reaction.feature.exercise.numbersAndLetters.model.Numbers
 import yaroslavgorbach.reaction.feature.exercise.numbersAndLetters.model.NumbersAndLettersViewState
 import yaroslavgorbach.reaction.utill.UiMessage
 import yaroslavgorbach.reaction.utill.UiMessageManager
+import yaroslavgorbach.reaction.utill.combine
 import yaroslavgorbach.reaction.utill.firstOr
 import javax.inject.Inject
 

@@ -1,7 +1,6 @@
 package yaroslavgorbach.reaction.feature.exercise.rotation.presentation
 
 import androidx.lifecycle.viewModelScope
-import app.tivi.extensions.combine
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.InternalCoroutinesApi
@@ -21,6 +20,7 @@ import yaroslavgorbach.reaction.feature.exercise.rotation.model.RotationUiMessag
 import yaroslavgorbach.reaction.feature.exercise.rotation.model.RotationViewState
 import yaroslavgorbach.reaction.utill.UiMessage
 import yaroslavgorbach.reaction.utill.UiMessageManager
+import yaroslavgorbach.reaction.utill.combine
 import yaroslavgorbach.reaction.utill.firstOr
 import javax.inject.Inject
 

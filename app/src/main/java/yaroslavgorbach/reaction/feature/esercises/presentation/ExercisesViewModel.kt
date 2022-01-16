@@ -6,28 +6,38 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.launch
+import yaroslavgorbach.reaction.business.exercises.MakeExerciseAvailableInteractor
 import yaroslavgorbach.reaction.business.exercises.ObserveExercisesInteractor
 import yaroslavgorbach.reaction.business.settings.ChangeIsFirstAppOpenToFalseInteractor
 import yaroslavgorbach.reaction.business.settings.ObserveIsFirstAppOpenInteractor
 import yaroslavgorbach.reaction.feature.esercises.model.ExercisesActions
+import yaroslavgorbach.reaction.feature.esercises.model.ExercisesUiMassage
 import yaroslavgorbach.reaction.feature.esercises.model.ExercisesViewState
+import yaroslavgorbach.reaction.utill.AdManager
+import yaroslavgorbach.reaction.utill.UiMessage
+import yaroslavgorbach.reaction.utill.UiMessageManager
 import javax.inject.Inject
 
 @HiltViewModel
 class ExercisesViewModel @Inject constructor(
     observeExercisesInteractor: ObserveExercisesInteractor,
     observeIsFirstAppOpenInteractor: ObserveIsFirstAppOpenInteractor,
-    changeIsFirstAppOpenToFalseInteractor: ChangeIsFirstAppOpenToFalseInteractor
+    changeIsFirstAppOpenToFalseInteractor: ChangeIsFirstAppOpenToFalseInteractor,
+    makeExerciseAvailableInteractor: MakeExerciseAvailableInteractor,
+    adManager: AdManager
 ) : ViewModel() {
     private val pendingActions = MutableSharedFlow<ExercisesActions>()
 
-    private val isExerciseAvailableDialogShown = MutableStateFlow(false)
+    private val exerciseAvailabilityDialogState =
+        MutableStateFlow(ExercisesViewState.ExerciseAvailabilityDialogState())
 
+    private val uiMessageManager: UiMessageManager<ExercisesUiMassage> = UiMessageManager()
 
     val state: StateFlow<ExercisesViewState> = combine(
         observeExercisesInteractor(),
-        isExerciseAvailableDialogShown,
+        exerciseAvailabilityDialogState,
         observeIsFirstAppOpenInteractor(),
+        uiMessageManager.message,
         ::ExercisesViewState
     ).stateIn(
         scope = viewModelScope,
@@ -36,17 +46,42 @@ class ExercisesViewModel @Inject constructor(
     )
 
     init {
+        adManager.loadRewordAd()
+
         viewModelScope.launch {
             pendingActions.collect { action ->
                 when (action) {
                     is ExercisesActions.HideExerciseIsNotAvailableDialog -> {
-                        isExerciseAvailableDialogShown.emit(false)
+                        exerciseAvailabilityDialogState.emit(ExercisesViewState.ExerciseAvailabilityDialogState())
                     }
                     is ExercisesActions.ShowExerciseIsNotAvailableDialog -> {
-                        isExerciseAvailableDialogShown.emit(true)
+                        exerciseAvailabilityDialogState.emit(
+                            ExercisesViewState.ExerciseAvailabilityDialogState(
+                                isVisible = true,
+                                exerciseName = action.exerciseName
+                            )
+                        )
                     }
                     is ExercisesActions.HideOnboardingDialog -> {
                         changeIsFirstAppOpenToFalseInteractor.invoke()
+                    }
+                    is ExercisesActions.RequestShowRewordAd -> {
+                        uiMessageManager.emitMessage(
+                            UiMessage(
+                                ExercisesUiMassage.ShowRewardAd(
+                                    action.exerciseName
+                                )
+                            )
+                        )
+                    }
+                    is ExercisesActions.ShowRewordAd -> {
+                        adManager.showRewardAd(
+                            activity = action.activity,
+                        ) {
+                            viewModelScope.launch {
+                                makeExerciseAvailableInteractor.invoke(exerciseName = action.exerciseName)
+                            }
+                        }
                     }
                     else -> error("$action is not handled")
                 }
@@ -57,6 +92,12 @@ class ExercisesViewModel @Inject constructor(
     fun submitAction(action: ExercisesActions) {
         viewModelScope.launch {
             pendingActions.emit(action)
+        }
+    }
+
+    fun clearMessage(id: Long) {
+        viewModelScope.launch {
+            uiMessageManager.clearMessage(id)
         }
     }
 

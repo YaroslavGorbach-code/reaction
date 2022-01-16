@@ -12,11 +12,11 @@ class RepoExercisesImp(private val local: ExerciseDao) : RepoExercises {
     private val exercises: List<Exercise>
         get() = listOf(
             Exercise(name = ExerciseName.EXTRA_NUMBER, isAvailable = true),
-            Exercise(name = ExerciseName.EXTRA_WORD),
-            Exercise(name = ExerciseName.FACE_CONTROL),
             Exercise(name = ExerciseName.COMPLEX_SORT),
             Exercise(name = ExerciseName.STROOP),
+            Exercise(name = ExerciseName.EXTRA_WORD),
             Exercise(name = ExerciseName.GEO_SWITCHING),
+            Exercise(name = ExerciseName.FACE_CONTROL),
             Exercise(name = ExerciseName.NUMBERS_AND_LETTERS),
             Exercise(name = ExerciseName.AIRPORT),
             Exercise(name = ExerciseName.ROTATION)

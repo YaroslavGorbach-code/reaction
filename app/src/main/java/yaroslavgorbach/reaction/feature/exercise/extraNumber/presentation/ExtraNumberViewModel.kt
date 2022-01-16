@@ -1,7 +1,6 @@
 package yaroslavgorbach.reaction.feature.exercise.extraNumber.presentation
 
 import androidx.lifecycle.viewModelScope
-import app.tivi.extensions.combine
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -15,12 +14,12 @@ import yaroslavgorbach.reaction.data.exercise.extraNumber.local.model.NumberPack
 import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
 import yaroslavgorbach.reaction.feature.exercise.base.BaseExerciseViewModel
 import yaroslavgorbach.reaction.feature.exercise.common.model.FinishExerciseState
-import yaroslavgorbach.reaction.feature.exercise.cpmplexSort.model.ComplexSortUiMessage
 import yaroslavgorbach.reaction.feature.exercise.extraNumber.model.ExtraNumberActions
 import yaroslavgorbach.reaction.feature.exercise.extraNumber.model.ExtraNumberUiMessage
 import yaroslavgorbach.reaction.feature.exercise.extraNumber.model.ExtraNumberViewState
 import yaroslavgorbach.reaction.utill.UiMessage
 import yaroslavgorbach.reaction.utill.UiMessageManager
+import yaroslavgorbach.reaction.utill.combine
 import javax.inject.Inject
 
 @HiltViewModel

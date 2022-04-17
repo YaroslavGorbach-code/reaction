@@ -51,5 +51,4 @@ class DescriptionViewModel @Inject constructor(
             pendingActions.emit(action)
         }
     }
-
 }

@@ -173,11 +173,7 @@ private fun ShowOnboardingDialog(onDismiss: () -> Unit) {
                 Button(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(8.dp)
-                        .background(
-                            color = MaterialTheme.colors.primary,
-                            shape = MaterialTheme.shapes.medium
-                        ),
+                        .padding(8.dp),
                     onClick = onDismiss
                 ) {
                     Text(stringResource(id = R.string.start))

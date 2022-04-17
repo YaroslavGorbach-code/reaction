@@ -1,43 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="description_extra_number">
-             Ваша задача - как можно скорее определить несоответствие
-        одного числа по сравнению с другими и нажать на данную ячейку.
+        Your task is to identify the number that is different
+        from all the others as quickly as possible.
     </string>
 
     <string name="description_extra_word">
-             Ваша задача - как можно скорее определить несоответствие
-        одного слова по сравнению с другими и нажать на данную ячейку.
+        Your task is to identify the word that is different
+        from all the others as quickly as possible.
     </string>
 
     <string name="description_face_control">
-             Ваша задача - как можно скорее найти грустный смайлик,
-    который находится в окружении веселых представителей его рода, и нажать на данную ячейку.
+        Your task is to identify the sad emoji as quickly as possible.
     </string>
 
     <string name="description_complex_sort">
-             Ваша задача - выбрать фигуру, которая точно совпадает
-        или полностью не совпадает по цвету и по форме с предложенным вариантом.
+        Your task is to choose a shape that exactly matches
+        or completely does not match in color and shape with the proposed option.
     </string>
 
     <string name="description_stroop">
-             Ваша задача - выбрать правильный цвет слова не обращая внимание на его название
+        Your task is to choose the correct color of the word without paying attention to its name.
     </string>
 
     <string name="description_geo_switching">
-             Ваша задача - указать свойство объекта находящегося на поле как можно быстрее
+        Your task is to specify the property of the object located on the screen as quickly as possible
     </string>
 
     <string name="description_numbers_and_letters">
-             Ваша задача - указать свойство объекта находящегося на поле как можно быстрее
+        Your task is to specify the property of the object located on the screen as quickly as possible
     </string>
 
     <string name="description_airport">
-             Ваша задача - указать куда летит синий самолет и откуда летит красный
+        Your task is to indicate where the blue plane is flying and where the red one is flying from.
     </string>
 
     <string name="description_rotation">
-             Ваша задача - сравнить две таблицы и указать одинаковые они или нет. Таблицы могут быть перевернутыми.
-    </string>
+        Your task is to compare two tables and indicate whether they are the same or not. Tables may be upside down.    </string>
 
 </resources>

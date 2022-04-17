@@ -157,7 +157,7 @@ private fun BoxScope.BottomButtons(onClick: (Direction) -> Unit) {
     Box(
         modifier = Modifier.Companion
             .align(Alignment.BottomCenter)
-            .size(200.dp)
+            .size(210.dp)
             .padding(bottom = 16.dp)
     ) {
         Icon(

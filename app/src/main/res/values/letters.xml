@@ -1,48 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string-array name="letters">
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string-array name="letters" tools:ignore="InconsistentArrays">
         <item>A</item>
-        <item>Б</item>
-        <item>В</item>
-        <item>Г</item>
-        <item>Д</item>
-        <item>Е</item>
-        <item>Ё</item>
-        <item>Ж</item>
-        <item>З</item>
-        <item>И</item>
-        <item>Й</item>
-        <item>К</item>
-        <item>Л</item>
-        <item>М</item>
-        <item>Н</item>
-        <item>О</item>
-        <item>П</item>
-        <item>Р</item>
-        <item>С</item>
-        <item>Т</item>
-        <item>У</item>
-        <item>Ф</item>
-        <item>Х</item>
-        <item>Ц</item>
-        <item>Ч</item>
-        <item>Ш</item>
-        <item>Щ</item>
-        <item>Э</item>
-        <item>Ю</item>
-        <item>Я</item>
+        <item>B</item>
+        <item>C</item>
+        <item>D</item>
+        <item>E</item>
+        <item>F</item>
+        <item>G</item>
+        <item>H</item>
+        <item>I</item>
+        <item>J</item>
+        <item>K</item>
+        <item>L</item>
+        <item>M</item>
+        <item>N</item>
+        <item>O</item>
+        <item>P</item>
+        <item>Q</item>
+        <item>R</item>
+        <item>S</item>
+        <item>T</item>
+        <item>U</item>
+        <item>V</item>
+        <item>X</item>
+        <item>Z</item>
     </string-array>
 
-    <string-array name="letters_vowels">
+    <string-array name="letters_vowels" tools:ignore="InconsistentArrays">
         <item>A</item>
-        <item>О</item>
-        <item>У</item>
-        <item>Ы</item>
-        <item>Э</item>
-        <item>Я</item>
-        <item>Ю</item>
-        <item>Ё</item>
-        <item>И</item>
-        <item>Е</item>
+        <item>E</item>
+        <item>I</item>
+        <item>O</item>
+        <item>U</item>
     </string-array>
 </resources>

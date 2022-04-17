@@ -157,7 +157,7 @@ private fun BoxScope.BottomButtons(onClick: (Direction) -> Unit) {
     Box(
         modifier = Modifier.Companion
             .align(Alignment.BottomCenter)
-            .size(180.dp)
+            .size(200.dp)
             .padding(bottom = 16.dp)
     ) {
         Icon(
@@ -171,7 +171,7 @@ private fun BoxScope.BottomButtons(onClick: (Direction) -> Unit) {
                 )
                 .clickable { onClick(Direction.NORTH) }
                 .padding(8.dp)
-                .size(40.dp)
+                .size(50.dp)
         )
 
         Icon(
@@ -185,7 +185,7 @@ private fun BoxScope.BottomButtons(onClick: (Direction) -> Unit) {
                 )
                 .clickable { onClick(Direction.SOUTH) }
                 .padding(8.dp)
-                .size(40.dp)
+                .size(50.dp)
         )
 
         Icon(
@@ -199,7 +199,7 @@ private fun BoxScope.BottomButtons(onClick: (Direction) -> Unit) {
                 )
                 .clickable { onClick(Direction.WEST) }
                 .padding(8.dp)
-                .size(40.dp)
+                .size(50.dp)
         )
 
         Icon(
@@ -213,7 +213,7 @@ private fun BoxScope.BottomButtons(onClick: (Direction) -> Unit) {
                 )
                 .clickable { onClick(Direction.EAST) }
                 .padding(8.dp)
-                .size(40.dp)
+                .size(50.dp)
         )
     }
 }

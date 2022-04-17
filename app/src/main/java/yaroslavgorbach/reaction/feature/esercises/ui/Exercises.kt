@@ -139,11 +139,8 @@ private fun ShowExerciseAvailableDialog(onDismiss: () -> Unit, onShowAd: () -> U
                 Button(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(4.dp)
-                        .background(
-                            color = MaterialTheme.colors.primary,
-                            shape = MaterialTheme.shapes.medium
-                        ),
+                        .height(50.dp)
+                        .padding(4.dp),
                     onClick = onDismiss
                 ) {
                     Text(stringResource(id = R.string.good))
@@ -151,11 +148,8 @@ private fun ShowExerciseAvailableDialog(onDismiss: () -> Unit, onShowAd: () -> U
                 Button(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(4.dp)
-                        .background(
-                            color = MaterialTheme.colors.primary,
-                            shape = MaterialTheme.shapes.medium
-                        ),
+                        .height(50.dp)
+                        .padding(4.dp),
                     onClick = onShowAd
                 ) {
                     Text(stringResource(id = R.string.open_by_ad))

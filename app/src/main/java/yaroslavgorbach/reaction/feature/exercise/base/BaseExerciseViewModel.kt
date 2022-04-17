@@ -9,7 +9,6 @@ import yaroslavgorbach.reaction.BuildConfig
 import yaroslavgorbach.reaction.business.exercises.GetExerciseInteractor
 import yaroslavgorbach.reaction.data.exercises.local.model.Exercise
 import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
-import yaroslavgorbach.reaction.feature.exercise.cpmplexSort.model.ComplexSortUiMessage
 import yaroslavgorbach.reaction.utill.TimerCountDown
 import yaroslavgorbach.reaction.utill.UiMessageManager
 
@@ -25,7 +24,7 @@ abstract class BaseExerciseViewModel(
     protected val timerCountDown: TimerCountDown =
         TimerCountDown(
             coroutineScope = viewModelScope,
-            millisInFuture = if (BuildConfig.IS_PROD) TimerCountDown.ONE_MINUTE else TimerCountDown.TEN_SECONDS,
+            millisInFuture = if (BuildConfig.IS_PROD) TimerCountDown.ONE_MINUTE else TimerCountDown.FIFE_SECONDS,
             countDownInterval = 100
         )
 

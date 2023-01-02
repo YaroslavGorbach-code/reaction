@@ -7,7 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import yaroslavgorbach.reaction.EXERCISE_NAME_ARG
-import yaroslavgorbach.reaction.business.description.ObserveDescriptionResInteractor
+import yaroslavgorbach.reaction.domain.description.ObserveDescriptionResInteractor
 import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
 import yaroslavgorbach.reaction.feature.description.model.DescriptionActions
 import yaroslavgorbach.reaction.feature.description.model.DescriptionViewState

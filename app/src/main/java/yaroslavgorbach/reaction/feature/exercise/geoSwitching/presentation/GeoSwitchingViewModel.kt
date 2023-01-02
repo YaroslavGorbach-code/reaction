@@ -6,9 +6,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.launch
-import yaroslavgorbach.reaction.business.exercise.ObserveFiguresInteractor
-import yaroslavgorbach.reaction.business.exercises.GetExerciseInteractor
-import yaroslavgorbach.reaction.business.exercises.UpdateExerciseInteractor
+import yaroslavgorbach.reaction.domain.exercise.ObserveFiguresInteractor
+import yaroslavgorbach.reaction.domain.exercises.GetExerciseInteractor
+import yaroslavgorbach.reaction.domain.exercises.UpdateExerciseInteractor
 import yaroslavgorbach.reaction.data.exercise.geoSwitching.model.GeoFigure
 import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
 import yaroslavgorbach.reaction.feature.exercise.base.BaseExerciseViewModel

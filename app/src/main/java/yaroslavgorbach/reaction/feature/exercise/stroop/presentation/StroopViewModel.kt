@@ -8,9 +8,9 @@ import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.launch
-import yaroslavgorbach.reaction.business.exercise.ObserveStoopWordsInteractor
-import yaroslavgorbach.reaction.business.exercises.GetExerciseInteractor
-import yaroslavgorbach.reaction.business.exercises.UpdateExerciseInteractor
+import yaroslavgorbach.reaction.domain.exercise.ObserveStoopWordsInteractor
+import yaroslavgorbach.reaction.domain.exercises.GetExerciseInteractor
+import yaroslavgorbach.reaction.domain.exercises.UpdateExerciseInteractor
 import yaroslavgorbach.reaction.data.exercise.stroop.model.StroopWord
 import yaroslavgorbach.reaction.data.exercise.stroop.model.WordColorVariant
 import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName

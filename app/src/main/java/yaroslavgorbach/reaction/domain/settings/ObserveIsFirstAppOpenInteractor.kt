@@ -1,4 +1,4 @@
-package yaroslavgorbach.reaction.business.settings
+package yaroslavgorbach.reaction.domain.settings
 
 import kotlinx.coroutines.flow.Flow
 import yaroslavgorbach.reaction.data.settings.repo.RepoSettings

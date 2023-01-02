@@ -1,4 +1,4 @@
-package yaroslavgorbach.reaction.business.exercise
+package yaroslavgorbach.reaction.domain.exercise
 
 import kotlinx.coroutines.flow.Flow
 import yaroslavgorbach.reaction.data.exercise.extraWord.model.WordPack

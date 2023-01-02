@@ -6,9 +6,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.launch
-import yaroslavgorbach.reaction.business.exercise.ObserveExtraNumbersInteractor
-import yaroslavgorbach.reaction.business.exercises.GetExerciseInteractor
-import yaroslavgorbach.reaction.business.exercises.UpdateExerciseInteractor
+import yaroslavgorbach.reaction.domain.exercise.ObserveExtraNumbersInteractor
+import yaroslavgorbach.reaction.domain.exercises.GetExerciseInteractor
+import yaroslavgorbach.reaction.domain.exercises.UpdateExerciseInteractor
 import yaroslavgorbach.reaction.data.exercise.extraNumber.local.model.Number
 import yaroslavgorbach.reaction.data.exercise.extraNumber.local.model.NumberPack
 import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName

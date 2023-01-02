@@ -6,7 +6,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import yaroslavgorbach.reaction.BuildConfig
-import yaroslavgorbach.reaction.business.exercises.GetExerciseInteractor
+import yaroslavgorbach.reaction.domain.exercises.GetExerciseInteractor
 import yaroslavgorbach.reaction.data.exercises.local.model.Exercise
 import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
 import yaroslavgorbach.reaction.utill.TimerCountDown

@@ -1,4 +1,4 @@
-package yaroslavgorbach.reaction.business.settings
+package yaroslavgorbach.reaction.domain.settings
 
 import yaroslavgorbach.reaction.data.settings.repo.RepoSettings
 import javax.inject.Inject

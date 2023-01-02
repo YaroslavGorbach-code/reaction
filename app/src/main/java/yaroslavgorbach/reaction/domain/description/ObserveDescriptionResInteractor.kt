@@ -1,8 +1,8 @@
-package yaroslavgorbach.reaction.business.description
+package yaroslavgorbach.reaction.domain.description
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import yaroslavgorbach.reaction.business.exercises.ObserveExercisesInteractor
+import yaroslavgorbach.reaction.domain.exercises.ObserveExercisesInteractor
 import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
 import javax.inject.Inject
 

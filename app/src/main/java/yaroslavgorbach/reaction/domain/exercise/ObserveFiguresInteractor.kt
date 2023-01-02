@@ -1,4 +1,4 @@
-package yaroslavgorbach.reaction.business.exercise
+package yaroslavgorbach.reaction.domain.exercise
 
 import yaroslavgorbach.reaction.data.exercise.repo.RepoExercise
 import javax.inject.Inject

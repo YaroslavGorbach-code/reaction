@@ -6,10 +6,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.launch
-import yaroslavgorbach.reaction.business.exercises.MakeExerciseAvailableInteractor
-import yaroslavgorbach.reaction.business.exercises.ObserveExercisesInteractor
-import yaroslavgorbach.reaction.business.settings.ChangeIsFirstAppOpenToFalseInteractor
-import yaroslavgorbach.reaction.business.settings.ObserveIsFirstAppOpenInteractor
+import yaroslavgorbach.reaction.domain.exercises.MakeExerciseAvailableInteractor
+import yaroslavgorbach.reaction.domain.exercises.ObserveExercisesInteractor
+import yaroslavgorbach.reaction.domain.settings.ChangeIsFirstAppOpenToFalseInteractor
+import yaroslavgorbach.reaction.domain.settings.ObserveIsFirstAppOpenInteractor
 import yaroslavgorbach.reaction.feature.esercises.model.ExercisesActions
 import yaroslavgorbach.reaction.feature.esercises.model.ExercisesUiMassage
 import yaroslavgorbach.reaction.feature.esercises.model.ExercisesViewState

@@ -1,4 +1,4 @@
-package yaroslavgorbach.reaction.business.exercises
+package yaroslavgorbach.reaction.domain.exercises
 
 import kotlinx.coroutines.flow.first
 import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName

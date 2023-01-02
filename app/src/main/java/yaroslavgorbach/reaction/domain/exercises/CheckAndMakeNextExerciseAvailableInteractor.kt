@@ -1,4 +1,4 @@
-package yaroslavgorbach.reaction.business.exercises
+package yaroslavgorbach.reaction.domain.exercises
 
 import yaroslavgorbach.reaction.data.exercises.local.model.Exercise
 import yaroslavgorbach.reaction.data.exercises.repo.RepoExercises

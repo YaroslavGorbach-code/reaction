@@ -2,8 +2,9 @@ package yaroslavgorbach.reaction.feature.exercise.faceControl.ui
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
@@ -134,7 +135,7 @@ internal fun FaceControl(
 
                 LazyVerticalGrid(
                     contentPadding = PaddingValues(8.dp),
-                    cells = GridCells.Adaptive(60.dp),
+                    columns = GridCells.Adaptive(60.dp),
                     modifier = Modifier.align(Alignment.Center)
                 ) {
                     state.facePacks.firstOrNull()?.faces?.let { faces ->

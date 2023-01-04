@@ -4,8 +4,8 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
@@ -152,7 +152,7 @@ internal fun ComplexSort(
             }
 
             LazyVerticalGrid(
-                cells = GridCells.Adaptive(100.dp),
+                columns = GridCells.Adaptive(100.dp),
                 modifier = Modifier.align(Alignment.BottomCenter),
                 contentPadding = PaddingValues(8.dp)
             ) {

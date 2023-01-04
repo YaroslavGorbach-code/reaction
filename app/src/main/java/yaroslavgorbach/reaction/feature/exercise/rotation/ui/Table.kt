@@ -3,8 +3,8 @@ package yaroslavgorbach.reaction.feature.exercise.rotation.ui
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -20,7 +20,7 @@ import yaroslavgorbach.reaction.data.exercise.rotation.model.Table
 @Composable
 fun Table(table: Table) {
     LazyVerticalGrid(
-        cells = GridCells.Fixed(table.width),
+        columns = GridCells.Fixed(table.width),
         modifier = Modifier
             .width(250.dp)
             .padding(16.dp)

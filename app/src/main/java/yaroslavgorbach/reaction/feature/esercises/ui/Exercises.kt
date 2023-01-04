@@ -1,6 +1,6 @@
 package yaroslavgorbach.reaction.feature.esercises.ui
 
-import androidx.compose.foundation.background
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -8,12 +8,16 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.calculateCurrentOffsetForPage
+import com.google.android.material.animation.AnimationUtils.lerp
 import yaroslavgorbach.reaction.R
 import yaroslavgorbach.reaction.data.exercises.local.model.Exercise
 import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
@@ -23,6 +27,7 @@ import yaroslavgorbach.reaction.feature.esercises.model.ExercisesUiMassage
 import yaroslavgorbach.reaction.feature.esercises.model.ExercisesViewState
 import yaroslavgorbach.reaction.feature.esercises.presentation.ExercisesViewModel
 import yaroslavgorbach.reaction.utill.findActivity
+import kotlin.math.absoluteValue
 
 @ExperimentalMaterialApi
 @Composable
@@ -55,6 +60,8 @@ internal fun Exercises(
     )
 }
 
+@SuppressLint("RestrictedApi")
+@OptIn(ExperimentalPagerApi::class)
 @ExperimentalMaterialApi
 @Composable
 internal fun Exercises(
@@ -97,6 +104,29 @@ internal fun Exercises(
 
         onMessageShown(uiMessage.id)
     }
+//    HorizontalPager(count = 4) { page ->
+//        Card(
+//            Modifier
+//                .graphicsLayer {
+//                    // Calculate the absolute offset for the current page from the
+//                    // scroll position. We use the absolute value which allows us to mirror
+//                    // any effects for both directions
+//                    val pageOffset = calculateCurrentOffsetForPage(page).absoluteValue
+//
+//                    // We animate the scaleX + scaleY, between 85% and 100%
+//                   lerp(0.85f, 1f, 1f - pageOffset.coerceIn(0f, 1f).toFloat()
+//                    ).also { scale ->
+//                        scaleX = scale
+//                        scaleY = scale
+//                    }
+//
+//                    // We animate the alpha, between 50% and 100%
+//                    alpha = lerp(0.5f, 1f, 1f - pageOffset.coerceIn(0f, 1f))
+//                }
+//        ) {
+//            // Card content
+//        }
+//    }
 
     LazyColumn {
         item {
@@ -184,7 +214,6 @@ private fun ShowOnboardingDialog(onDismiss: () -> Unit) {
 }
 
 @ExperimentalMaterialApi
-@Preview(showBackground = true)
 @Composable
 fun ExercisesPreview() {
     ReactionTheme {

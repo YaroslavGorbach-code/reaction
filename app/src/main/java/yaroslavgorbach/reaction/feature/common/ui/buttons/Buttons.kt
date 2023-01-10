@@ -92,10 +92,10 @@ fun SecondaryLargeButton(text: String, onClick: () -> Unit) {
 }
 
 @Composable
-fun SecondaryMediumButton(text: String, onClick: () -> Unit) {
+fun SecondaryMediumButton(modifier: Modifier = Modifier, text: String, onClick: () -> Unit) {
     Button(
         onClick = onClick,
-        modifier = Modifier
+        modifier = modifier
             .height(48.dp)
             .fillMaxWidth(),
         colors = ButtonDefaults.buttonColors(backgroundColor = LightSilver),

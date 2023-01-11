@@ -1,18 +1,18 @@
 package yaroslavgorbach.reaction.feature.esercises.ui
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.background
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.Center
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
+import androidx.compose.ui.Alignment.Companion.Bottom
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -24,6 +24,8 @@ import yaroslavgorbach.reaction.R
 import yaroslavgorbach.reaction.data.exercises.local.model.Exercise
 import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
 import yaroslavgorbach.reaction.feature.common.ui.buttons.SecondaryMediumButton
+import yaroslavgorbach.reaction.feature.common.ui.theme.AppTypography
+import yaroslavgorbach.reaction.feature.common.ui.theme.EerieBlack
 import yaroslavgorbach.reaction.feature.common.ui.theme.ReactionTheme
 import yaroslavgorbach.reaction.feature.esercises.model.ExercisesActions
 import yaroslavgorbach.reaction.feature.esercises.model.ExercisesUiMassage
@@ -102,11 +104,44 @@ internal fun Exercises(
         onMessageShown(uiMessage.id)
     }
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier.fillMaxSize()) {
+        
+        Row(modifier = Modifier.padding(horizontal = 20.dp)) {
+            Text(
+                text = "Your\n" + "Exercises",
+                style = AppTypography.h3,
+                modifier = Modifier.padding(top = 60.dp).weight(1f),
+                color = EerieBlack
+            )
+
+            Image(
+                painter = painterResource(id = R.drawable.ic_main_screen_logo),
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(start = 40.dp)
+                    .size(75.dp)
+                    .align(Bottom)
+            )
+        }
+
+        // TODO: add real progress here
+        LinearProgressIndicator(
+            progress = 0.5f,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 21.dp, start = 20.dp, end = 135.dp)
+        )
+
+        Text(
+            text = "Overall progress",
+            modifier = Modifier.padding(start = 20.dp, top = 5.dp),
+            style = AppTypography.body3
+        )
+
         HorizontalPager(
+            modifier = Modifier.padding(top = 42.dp),
             count = state.exercises.size,
-            contentPadding = PaddingValues(horizontal = 48.dp),
-            modifier = Modifier.align(Center)
+            contentPadding = PaddingValues(horizontal = 48.dp)
         ) { page ->
             Box(modifier = Modifier
                 .wrapContentSize()
@@ -114,8 +149,7 @@ internal fun Exercises(
                     val pageOffset = calculateCurrentOffsetForPage(page).absoluteValue
 
                     // We animate the scaleX + scaleY, between 85% and 100%
-                    lerp(
-                        0.85f, 1f, 1f - pageOffset.coerceIn(0f, 1f)
+                    lerp(0.85f, 1f, 1f - pageOffset.coerceIn(0f, 1f)
                     ).also { scale ->
                         scaleX = scale
                         scaleY = scale

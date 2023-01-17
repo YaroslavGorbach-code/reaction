@@ -1,6 +1,5 @@
 package yaroslavgorbach.reaction.feature.exercise.cpmplexSort.ui
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -70,7 +69,6 @@ internal fun ComplexSort(
     )
 }
 
-@OptIn(ExperimentalAnimationApi::class)
 @ExperimentalFoundationApi
 @ExperimentalMaterialApi
 @Composable

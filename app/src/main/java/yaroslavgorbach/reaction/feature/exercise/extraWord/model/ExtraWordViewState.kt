@@ -9,7 +9,7 @@ import yaroslavgorbach.reaction.utill.UiMessage
 
 data class ExtraWordViewState(
     val wordPacks: List<WordPack> = listOf(WordPack.Empty),
-    val timerState: TimerCountDown.TimerState = TimerCountDown.TimerState.Tick(0, "00:00", 0f),
+    val timerState: TimerCountDown.TimerState = TimerCountDown.TimerState.Tick(0,0, "00:00", 0f),
     val finishExerciseState: FinishExerciseState = FinishExerciseState(name = ExerciseName.EXTRA_WORD),
     val message: UiMessage<ExtraWordUiMessage>? = null
 ) {

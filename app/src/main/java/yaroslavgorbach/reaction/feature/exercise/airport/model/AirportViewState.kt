@@ -9,7 +9,7 @@ import yaroslavgorbach.reaction.utill.UiMessage
 
 data class AirportViewState(
     val plane: Plane = Plane.Test,
-    val timerState: TimerCountDown.TimerState = TimerCountDown.TimerState.Tick(0, "00:00", 0f),
+    val timerState: TimerCountDown.TimerState = TimerCountDown.TimerState.Tick(0, 0, "00:00", 0f),
     val finishExerciseState: FinishExerciseState = FinishExerciseState(name = ExerciseName.AIRPORT),
     val message: UiMessage<AirportUiMessage>? = null
 ) {

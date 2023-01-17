@@ -10,7 +10,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import kotlinx.coroutines.InternalCoroutinesApi
 import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
-import yaroslavgorbach.reaction.feature.description.ui.Description
 import yaroslavgorbach.reaction.feature.exercise.airport.ui.AirportExercise
 import yaroslavgorbach.reaction.feature.exercise.cpmplexSort.ui.ComplexSort
 import yaroslavgorbach.reaction.feature.exercise.extraNumber.ui.ExtraNumbers
@@ -21,6 +20,7 @@ import yaroslavgorbach.reaction.feature.exercise.numbersAndLetters.ui.NumbersAnd
 import yaroslavgorbach.reaction.feature.exercise.rotation.ui.RotationExercise
 import yaroslavgorbach.reaction.feature.exercise.stroop.ui.StroopExercise
 import yaroslavgorbach.reaction.feature.esercises.ui.Exercises
+import yaroslavgorbach.reaction.feature.timer.ui.ExerciseTimer
 
 const val EXERCISE_NAME_ARG = "EXERCISE_NAME_ARG"
 
@@ -44,9 +44,10 @@ private sealed class LeafScreen(
     object Airport : LeafScreen("Airport")
     object Rotation : LeafScreen("Rotation")
 
-    object ShowDescription : LeafScreen("Description/{${EXERCISE_NAME_ARG}}") {
+    object ExerciseStartTimer : LeafScreen("ExerciseStartTimer/{${EXERCISE_NAME_ARG}}") {
+
         fun createRoute(root: Screen, exerciseName: ExerciseName): String {
-            return "${root.route}/Description/$exerciseName"
+            return "${root.route}/ExerciseStartTimer/$exerciseName"
         }
     }
 }
@@ -79,7 +80,7 @@ private fun NavGraphBuilder.addExercisesTopLevel(
         startDestination = LeafScreen.Exercises.createRoute(Screen.Exercises),
     ) {
         addExercises(navController, Screen.Exercises)
-        addDescription(navController, Screen.Exercises)
+        addExerciseTimer(navController, Screen.Exercises)
         addExtraNumbersExercise(navController, Screen.Exercises)
         addExtraWordsExercise(navController, Screen.Exercises)
         addFaceControlExercise(navController, Screen.Exercises)
@@ -98,39 +99,31 @@ private fun NavGraphBuilder.addExercises(
     root: Screen,
 ) {
     composable(LeafScreen.Exercises.createRoute(root)) {
-        Exercises(openDescription = { exerciseName ->
-            navController.navigate(
-                LeafScreen.ShowDescription.createRoute(
-                    root = root,
-                    exerciseName = exerciseName
-                )
-            )
+        Exercises(openExerciseStartTimer = {
+            navController.navigate(LeafScreen.ExerciseStartTimer.createRoute(root = root, exerciseName = it))
         })
     }
 }
 
 @ExperimentalMaterialApi
-private fun NavGraphBuilder.addDescription(
+private fun NavGraphBuilder.addExerciseTimer(
     navController: NavController,
     root: Screen,
 ) {
     composable(
-        LeafScreen.ShowDescription.createRoute(root), arguments = listOf(
-            navArgument(EXERCISE_NAME_ARG) {
-                type = NavType.EnumType(ExerciseName::class.java)
-            })
-    ) { backStackEntry ->
-        Description(
-            exerciseName = backStackEntry.arguments?.getSerializable(EXERCISE_NAME_ARG) as ExerciseName,
+        LeafScreen.ExerciseStartTimer.createRoute(root),
+        arguments = listOf(navArgument(EXERCISE_NAME_ARG) { type = NavType.EnumType(ExerciseName::class.java) })
+    ) {
+        ExerciseTimer(
             openExercise = { exerciseName ->
-                navController.navigate(
-                    mapExerciseNameToLeafScreen(exerciseName = exerciseName).createRoute(root = root)
-                ) {
-                    popUpTo(LeafScreen.ShowDescription.createRoute(root)) {
-                        inclusive = true
-                    }
+                navController.navigate(mapExerciseNameToLeafScreen(exerciseName = exerciseName).createRoute(root = root)) {
+                    popUpTo(
+                        LeafScreen.ExerciseStartTimer.createRoute(root)
+                    ) { inclusive = true }
                 }
-            }, onBackClick = navController::popBackStack)
+            },
+            onBackClick = navController::popBackStack
+        )
     }
 }
 
@@ -143,9 +136,8 @@ private fun NavGraphBuilder.addExtraNumbersExercise(
     composable(LeafScreen.ExtraNumbers.createRoute(root)) {
         ExtraNumbers(onBackClick = navController::popBackStack, onRepeatExerciseClick = {
             navController.navigate(
-                LeafScreen.ShowDescription.createRoute(
-                    root = root,
-                    exerciseName = ExerciseName.EXTRA_NUMBER
+                LeafScreen.ExerciseStartTimer.createRoute(
+                    root = root, exerciseName = ExerciseName.EXTRA_NUMBER
                 )
             ) {
                 popUpTo(LeafScreen.Exercises.createRoute(root = root)) {
@@ -165,9 +157,8 @@ private fun NavGraphBuilder.addExtraWordsExercise(
     composable(LeafScreen.ExtraWords.createRoute(root)) {
         ExtraWords(onBackClick = navController::popBackStack, onRepeatExerciseClick = {
             navController.navigate(
-                LeafScreen.ShowDescription.createRoute(
-                    root = root,
-                    exerciseName = ExerciseName.EXTRA_WORD
+                LeafScreen.ExerciseStartTimer.createRoute(
+                    root = root, exerciseName = ExerciseName.EXTRA_WORD
                 )
             ) {
                 popUpTo(LeafScreen.Exercises.createRoute(root = root)) {
@@ -187,10 +178,7 @@ private fun NavGraphBuilder.addFaceControlExercise(
     composable(LeafScreen.FaceControl.createRoute(root)) {
         FaceControl(onBackClick = navController::popBackStack, onRepeatExerciseClick = {
             navController.navigate(
-                LeafScreen.ShowDescription.createRoute(
-                    root = root,
-                    exerciseName = ExerciseName.FACE_CONTROL
-                )
+                LeafScreen.ExerciseStartTimer.createRoute(root = root, exerciseName = ExerciseName.FACE_CONTROL)
             ) {
                 popUpTo(LeafScreen.Exercises.createRoute(root = root)) {
                     inclusive = false
@@ -209,10 +197,7 @@ private fun NavGraphBuilder.addComplexSortExercise(
     composable(LeafScreen.ComplexSort.createRoute(root)) {
         ComplexSort(onBackClick = navController::popBackStack, onRepeatExerciseClick = {
             navController.navigate(
-                LeafScreen.ShowDescription.createRoute(
-                    root = root,
-                    exerciseName = ExerciseName.COMPLEX_SORT
-                )
+                LeafScreen.ExerciseStartTimer.createRoute(root = root, exerciseName = ExerciseName.COMPLEX_SORT)
             ) {
                 popUpTo(LeafScreen.Exercises.createRoute(root = root)) {
                     inclusive = false
@@ -232,9 +217,8 @@ private fun NavGraphBuilder.addStroopExercise(
     composable(LeafScreen.Stroop.createRoute(root)) {
         StroopExercise(onBackClick = navController::popBackStack, onRepeatExerciseClick = {
             navController.navigate(
-                LeafScreen.ShowDescription.createRoute(
-                    root = root,
-                    exerciseName = ExerciseName.STROOP
+                LeafScreen.ExerciseStartTimer.createRoute(
+                    root = root, exerciseName = ExerciseName.STROOP
                 )
             ) {
                 popUpTo(LeafScreen.Exercises.createRoute(root = root)) {
@@ -255,10 +239,7 @@ private fun NavGraphBuilder.addGeoSwitchingExercise(
     composable(LeafScreen.GeoSwitching.createRoute(root)) {
         GeoSwitchingExercise(onBackClick = navController::popBackStack, onRepeatExerciseClick = {
             navController.navigate(
-                LeafScreen.ShowDescription.createRoute(
-                    root = root,
-                    exerciseName = ExerciseName.GEO_SWITCHING
-                )
+                LeafScreen.ExerciseStartTimer.createRoute(root = root, exerciseName = ExerciseName.GEO_SWITCHING)
             ) {
                 popUpTo(LeafScreen.Exercises.createRoute(root = root)) {
                     inclusive = false
@@ -278,9 +259,8 @@ private fun NavGraphBuilder.addNumberAndLetterExercise(
     composable(LeafScreen.NumberAndLetter.createRoute(root)) {
         NumbersAndLettersExercise(onBackClick = navController::popBackStack, onRepeatExerciseClick = {
             navController.navigate(
-                LeafScreen.ShowDescription.createRoute(
-                    root = root,
-                    exerciseName = ExerciseName.NUMBERS_AND_LETTERS
+                LeafScreen.ExerciseStartTimer.createRoute(
+                    root = root, exerciseName = ExerciseName.NUMBERS_AND_LETTERS
                 )
             ) {
                 popUpTo(LeafScreen.Exercises.createRoute(root = root)) {
@@ -301,9 +281,8 @@ private fun NavGraphBuilder.addAirportExercise(
     composable(LeafScreen.Airport.createRoute(root)) {
         AirportExercise(onBackClick = navController::popBackStack, onRepeatExerciseClick = {
             navController.navigate(
-                LeafScreen.ShowDescription.createRoute(
-                    root = root,
-                    exerciseName = ExerciseName.AIRPORT
+                LeafScreen.ExerciseStartTimer.createRoute(
+                    root = root, exerciseName = ExerciseName.AIRPORT
                 )
             ) {
                 popUpTo(LeafScreen.Exercises.createRoute(root = root)) {
@@ -324,7 +303,7 @@ private fun NavGraphBuilder.addRotationExercise(
     composable(LeafScreen.Rotation.createRoute(root)) {
         RotationExercise(onBackClick = navController::popBackStack, onRepeatExerciseClick = {
             navController.navigate(
-                LeafScreen.ShowDescription.createRoute(
+                LeafScreen.ExerciseStartTimer.createRoute(
                     root = root,
                     exerciseName = ExerciseName.ROTATION
                 )

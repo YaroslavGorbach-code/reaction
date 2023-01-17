@@ -1,6 +1,7 @@
 package yaroslavgorbach.reaction.utill
 
 import android.os.CountDownTimer
+import android.util.Log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -18,7 +19,7 @@ class TimerCountDown(private val coroutineScope: CoroutineScope, private val mil
     }
 
     sealed class TimerState {
-        class Tick(val millisUntilFinished: Long, val timeUtilFinishedString: String, val timeUntilFinishedProgress: Float) : TimerState()
+        class Tick(val secondsUntilFinished: Long, val millisUntilFinished: Long, val timeUtilFinishedString: String, val timeUntilFinishedProgress: Float) : TimerState()
         object Finish : TimerState()
     }
 
@@ -32,8 +33,9 @@ class TimerCountDown(private val coroutineScope: CoroutineScope, private val mil
             val minutes = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)
             val seconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) % 60
             val progress: Float = millisUntilFinished.toFloat() / millisInFuture.toFloat()
+            val secondsUntilFinish: Float = millisUntilFinished.toFloat() / ONE_SECOND
 
-            _state.emit(TimerState.Tick(millisUntilFinished, "$minutes:$seconds", progress))
+            _state.emit(TimerState.Tick(secondsUntilFinish.toLong(), millisUntilFinished, "$minutes:$seconds", progress))
         }
     }
 

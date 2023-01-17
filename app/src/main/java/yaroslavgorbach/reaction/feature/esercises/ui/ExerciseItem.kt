@@ -22,14 +22,13 @@ import yaroslavgorbach.reaction.utill.singleClickable
 
 @ExperimentalMaterialApi
 @Composable
-fun ExerciseItem(exercise: Exercise, onExerciseClick: (isAvailable: Boolean) -> Unit) {
+fun ExerciseItem(exercise: Exercise) {
     Box(modifier = Modifier.fillMaxSize()) {
 
         Column(modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
-            .background(EerieBlack)
-            .singleClickable { onExerciseClick(exercise.isAvailable) }) {
+            .background(EerieBlack)) {
 
             ProgressIndicator(
                 modifier = Modifier
@@ -104,7 +103,7 @@ fun ProgressIndicator(modifier: Modifier, gaps: Int, filledGaps: Int) {
 fun ExerciseItemPreview(exercise: Exercise = Exercise.Test) {
     ReactionTheme {
         Surface {
-            ExerciseItem(exercise = exercise) {}
+            ExerciseItem(exercise = exercise)
         }
     }
 }

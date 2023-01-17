@@ -8,7 +8,7 @@ import yaroslavgorbach.reaction.utill.UiMessage
 
 data class ComplexSortViewState(
     val items: List<ComplexSortItem> = emptyList(),
-    val timerState: TimerCountDown.TimerState = TimerCountDown.TimerState.Tick(0, "00:00", 0f),
+    val timerState: TimerCountDown.TimerState = TimerCountDown.TimerState.Tick(0,0, "00:00", 0f),
     val finishExerciseState: FinishExerciseState = FinishExerciseState(name = ExerciseName.COMPLEX_SORT),
     val uiMessage: UiMessage<ComplexSortUiMessage>? = null
 ) {

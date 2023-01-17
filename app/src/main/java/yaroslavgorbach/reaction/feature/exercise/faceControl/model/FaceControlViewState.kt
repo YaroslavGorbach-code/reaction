@@ -9,7 +9,7 @@ import yaroslavgorbach.reaction.utill.UiMessage
 
 data class FaceControlViewState(
     val facePacks: List<FacePack> = listOf(FacePack.Empty),
-    val timerState: TimerCountDown.TimerState = TimerCountDown.TimerState.Tick(0, "00:00", 0f),
+    val timerState: TimerCountDown.TimerState = TimerCountDown.TimerState.Tick(0, 0, "00:00", 0f),
     val finishExerciseState: FinishExerciseState = FinishExerciseState(name = ExerciseName.FACE_CONTROL),
     val message: UiMessage<FaceControlUiMessage>? = null
 ) {

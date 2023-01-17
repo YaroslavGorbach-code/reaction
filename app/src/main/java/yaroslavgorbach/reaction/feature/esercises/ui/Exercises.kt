@@ -37,11 +37,11 @@ import kotlin.math.absoluteValue
 @ExperimentalMaterialApi
 @Composable
 fun Exercises(
-    openDescription: (exerciseName: ExerciseName) -> Unit,
+    openExerciseStartTimer: (exerciseName: ExerciseName) -> Unit,
 ) {
     Exercises(
         viewModel = hiltViewModel(),
-        openDescription = openDescription,
+        openExerciseStartTimer = openExerciseStartTimer,
     )
 }
 
@@ -49,13 +49,13 @@ fun Exercises(
 @Composable
 internal fun Exercises(
     viewModel: ExercisesViewModel,
-    openDescription: (exerciseName: ExerciseName) -> Unit,
+    openExerciseStartTimer: (exerciseName: ExerciseName) -> Unit,
 ) {
     val viewState = viewModel.state.collectAsState()
 
     Exercises(state = viewState.value, onMessageShown = viewModel::clearMessage, actioner = { action ->
         when (action) {
-            is ExercisesActions.OpenDetails -> openDescription(action.exerciseName)
+            is ExercisesActions.OpenExerciseStartTimer -> openExerciseStartTimer(action.exerciseName)
             else -> viewModel.submitAction(action)
         }
     })
@@ -143,6 +143,8 @@ internal fun Exercises(
             count = state.exercises.size,
             contentPadding = PaddingValues(horizontal = 48.dp)
         ) { page ->
+            val exercise = state.exercises[page]
+
             Box(modifier = Modifier
                 .wrapContentSize()
                 .graphicsLayer {
@@ -156,29 +158,25 @@ internal fun Exercises(
                     }
 
                 }) {
+
                 Card(
                     Modifier
                         .height(500.dp)
                         .padding(top = 42.dp, bottom = 24.dp)
                     , shape = RoundedCornerShape(30.dp)
-                ) {
-
-                    val exercise = state.exercises[page]
-                    ExerciseItem(exercise) { isAvailable ->
-                        if (isAvailable) {
-                            actioner(ExercisesActions.OpenDetails(exerciseName = exercise.name))
-                        } else {
-                            actioner(ExercisesActions.ShowExerciseIsNotAvailableDialog(exerciseName = exercise.name))
-                        }
-                    }
-                }
+                ) { ExerciseItem(exercise) }
 
                 SecondaryMediumButton(
                     modifier = Modifier
                         .align(Alignment.BottomCenter)
-                        .width(163.dp), text = "Start Exercise"
+                        .width(163.dp),
+                    text = "Start Exercise"
                 ) {
-
+                    if (exercise.isAvailable) {
+                        actioner(ExercisesActions.OpenExerciseStartTimer(exerciseName = exercise.name))
+                    } else {
+                        actioner(ExercisesActions.ShowExerciseIsNotAvailableDialog(exerciseName = exercise.name))
+                    }
                 }
             }
         }

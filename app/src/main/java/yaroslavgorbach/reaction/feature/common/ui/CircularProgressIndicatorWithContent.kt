@@ -7,18 +7,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import yaroslavgorbach.reaction.feature.common.ui.theme.EerieBlack
+import yaroslavgorbach.reaction.feature.common.ui.theme.LightSilver
 
 @Composable
 fun CircularProgressIndicatorWithContent(
     modifier: Modifier,
+    viewModifier: Modifier,
     progress: Float,
-    strokeColor: Color = Color.Green,
-    backgroundStrokeColor: Color = Color.LightGray,
-    strokeWidth: Dp = 1.dp,
-    backgroundStrokeWidth: Dp = 1.dp,
+    strokeColor: Color = EerieBlack,
+    backgroundColor: Color = LightSilver,
+    strokeWidth: Dp = 16.dp,
     isVisible: Boolean = true,
     content: @Composable BoxScope.() -> Unit,
 ) {
@@ -28,11 +30,12 @@ fun CircularProgressIndicatorWithContent(
                 progress = progress,
                 color = strokeColor,
                 strokeWidth = strokeWidth,
-                modifier = Modifier.drawBehind {
+                modifier = viewModifier
+                    .drawBehind {
                     drawCircle(
-                        color = backgroundStrokeColor,
+                        color = backgroundColor,
                         radius = (size.maxDimension / 2.0f) - (strokeWidth.value),
-                        style = Stroke(width = backgroundStrokeWidth.toPx())
+                        style = Fill
                     )
                 }
             )

@@ -1,179 +1,131 @@
 package yaroslavgorbach.reaction.feature.exercise.common.ui
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.BottomCenter
-import androidx.compose.ui.Alignment.Companion.Center
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import yaroslavgorbach.reaction.R
+import androidx.compose.foundation.layout.*
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
+import androidx.compose.ui.text.style.TextAlign
 import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
-import yaroslavgorbach.reaction.feature.common.ui.Toolbar
+import yaroslavgorbach.reaction.feature.common.ui.CircularProgressIndicatorWithContent
+import yaroslavgorbach.reaction.feature.common.ui.buttons.OutlineLargeButton
+import yaroslavgorbach.reaction.feature.common.ui.buttons.PrimaryLargeButton
+import yaroslavgorbach.reaction.feature.common.ui.theme.AppTypography
+import yaroslavgorbach.reaction.feature.common.ui.theme.EerieBlack
 import yaroslavgorbach.reaction.feature.common.ui.theme.ReactionTheme
 import yaroslavgorbach.reaction.feature.exercise.common.model.FinishExerciseState
 
-
 @Composable
 fun ExerciseResult(
-    finishExerciseState: FinishExerciseState,
-    onBackClick: () -> Unit,
-    onRepeatExercise: () -> Unit
+    finishExerciseState: FinishExerciseState, onBackClick: () -> Unit, onRepeatExercise: () -> Unit
 ) {
 
-    Column(Modifier.fillMaxSize()) {
-        Toolbar { onBackClick() }
-
-        Column(
-            modifier = Modifier
-                .padding(16.dp)
-                .background(color = MaterialTheme.colors.onSurface, shape = RoundedCornerShape(10))
-        ) {
+    Box(Modifier.fillMaxSize()) {
+        Column {
             Text(
-                modifier = Modifier.fillMaxWidth(),
-                text = stringResource(id = R.string.result),
-                style = MaterialTheme.typography.caption,
-                fontSize = 45.sp,
-                textAlign = TextAlign.Center
+                text = "Result",
+                style = AppTypography.h1.copy(platformStyle = PlatformTextStyle(includeFontPadding = false)),
+                modifier = Modifier.padding(top = 34.dp, start = 20.dp),
+                color = EerieBlack,
             )
 
             Text(
-                modifier = Modifier.fillMaxWidth(),
-                text = stringResource(finishExerciseState.name.res),
-                style = MaterialTheme.typography.body1,
-                fontSize = 24.sp,
-                textAlign = TextAlign.Center
+                text = stringResource(id = finishExerciseState.name.res),
+                style = AppTypography.body3,
+                modifier = Modifier.padding(start = 20.dp),
+                color = EerieBlack
             )
 
-            Row(
-                Modifier
-                    .align(CenterHorizontally)
-                    .wrapContentSize()
-                    .padding(24.dp)
-            ) {
+            Text(
+                text = "Total rounds: ${finishExerciseState.summaryPoints}",
+                style = AppTypography.h4,
+                modifier = Modifier.padding(top = 40.dp, start = 20.dp),
+                color = EerieBlack
+            )
 
-                Box {
-                    Text(
-                        text = finishExerciseState.progressString,
-                        modifier = Modifier.align(Center),
-                        textAlign = TextAlign.Center,
-                        fontSize = 16.sp
-                    )
-
-                    CircularProgressIndicator(
-                        progress = 1f,
-                        color = Color.Red.copy(alpha = 0.4f),
-                        modifier = Modifier.size(60.dp),
-                        strokeWidth = 4.dp
-                    )
-
-                    CircularProgressIndicator(
-                        progress = finishExerciseState.correctPresent,
-                        color = Color.Green,
-                        modifier = Modifier.size(60.dp),
-                        strokeWidth = 4.dp
-                    )
-                }
-
-                Column(
-                    Modifier
-                        .padding(start = 16.dp)
-                        .align(Alignment.CenterVertically)
-                ) {
-
-                    Text(
-                        text = stringResource(id = R.string.number_of_rounds) + " ${finishExerciseState.summaryPoints}",
-                        style = MaterialTheme.typography.caption,
-                        fontSize = 18.sp
-                    )
-
-                    Text(
-                        text = stringResource(id = R.string.correct) + " ${finishExerciseState.pointsCorrect}",
-                        style = MaterialTheme.typography.body1,
-                        fontSize = 12.sp
-                    )
-
-                    Text(
-                        text = stringResource(id = R.string.incorrect) + " ${finishExerciseState.pointsIncorrect}",
-                        style = MaterialTheme.typography.body1,
-                        fontSize = 12.sp
-                    )
-                }
-            }
+            Text(
+                // TODO: add real logic
+                text = "Average time on answer: ${30}s",
+                style = AppTypography.h4,
+                modifier = Modifier.padding(top = 4.dp, start = 20.dp),
+                color = EerieBlack
+            )
         }
 
-        Box(modifier = Modifier.fillMaxSize()) {
-            Column(
-                modifier = Modifier
-                    .align(Center)
-                    .padding(bottom = 100.dp)
+        Column(modifier = Modifier.align(Alignment.Center).fillMaxWidth()) {
+            CircularProgressIndicatorWithContent(
+                modifier = Modifier.size(200.dp).align(CenterHorizontally),
+                viewModifier = Modifier.size(200.dp),
+                progress = finishExerciseState.correctPresent
             ) {
-                Icon(
-                    modifier = Modifier
-                        .size(100.dp)
-                        .align(CenterHorizontally),
-                    imageVector = finishExerciseState.icon,
-                    tint = MaterialTheme.colors.primary,
-                    contentDescription = null
-                )
-
                 Text(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 8.dp),
-                    text = if (finishExerciseState.isWin)
-                        stringResource(id = R.string.result_good)
-                    else stringResource(
+                    text = finishExerciseState.progressString,
+                    modifier = Modifier.align(Alignment.Center),
+                    style = AppTypography.h2
+                )
+            }
+
+            Text(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(CenterHorizontally)
+                    .padding(top = 32.dp, end = 20.dp, start = 20.dp), text = if (finishExerciseState.isWin) {
+                    stringResource(id = R.string.result_good_title)
+                } else {
+                    stringResource(id = R.string.result_bad_title)
+                },
+                style = AppTypography.h5,
+                textAlign = TextAlign.Center
+            )
+
+            Text(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(CenterHorizontally)
+                    .padding(top = 8.dp, end = 20.dp, start = 20.dp), text = if (finishExerciseState.isWin) {
+                    stringResource(id = R.string.result_good, finishExerciseState.progressString)
+                } else {
+                    stringResource(
                         id = R.string.result_bad,
                         finishExerciseState.winRule.minRounds,
                         finishExerciseState.winRule.minCorrectPresent
-                    ),
-                    style = MaterialTheme.typography.body1,
-                    fontSize = 16.sp,
+                    )
+                }, style = AppTypography.subtitle3,
+                textAlign = TextAlign.Center
+            )
+
+            if (finishExerciseState.isWin.not()) {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .align(CenterHorizontally)
+                        .padding(top = 8.dp, end = 20.dp, start = 20.dp),
+                    text = stringResource(id = R.string.result_bad_subtitle),
+                    style = AppTypography.body2,
                     textAlign = TextAlign.Center
                 )
             }
+        }
 
-            Row(
+        Column(
+            modifier = Modifier
+                .padding(bottom = 10.dp, start = 20.dp, end = 20.dp)
+                .align(Alignment.BottomCenter)
+        ) {
+            PrimaryLargeButton("Try again") {}
+
+            OutlineLargeButton(
                 modifier = Modifier
-                    .align(BottomCenter)
-                    .padding(8.dp),
-            ) {
-                Button(
-                    modifier = Modifier.padding(8.dp),
-                    shape = RoundedCornerShape(30),
-                    onClick = { onBackClick() },
-                    colors = ButtonDefaults.outlinedButtonColors()
-                ) {
-                    Text(
-                        modifier = Modifier.padding(8.dp),
-                        text = stringResource(id = R.string.to_menu),
-                        fontSize = 16.sp
-                    )
-                }
-
-                Button(
-                    modifier = Modifier.padding(8.dp),
-                    onClick = { onRepeatExercise() },
-                    shape = RoundedCornerShape(30),
-                    colors = ButtonDefaults.outlinedButtonColors()
-                ) {
-                    Text(
-                        modifier = Modifier.padding(8.dp),
-                        text = stringResource(id = R.string.one_more_time),
-                        fontSize = 16.sp
-                    )
-                }
-            }
+                    .padding(top = 16.dp)
+                    .height(48.dp)
+                    .fillMaxWidth(), text = "Finish"
+            ) {}
         }
     }
 }
@@ -182,7 +134,8 @@ fun ExerciseResult(
 @Composable
 fun ExerciseResultPreview() {
     ReactionTheme {
-        ExerciseResult(finishExerciseState = FinishExerciseState(name = ExerciseName.NO_NAME),
-            onBackClick = {}, onRepeatExercise = {})
+        ExerciseResult(finishExerciseState = FinishExerciseState(name = ExerciseName.AIRPORT),
+            onBackClick = {},
+            onRepeatExercise = {})
     }
 }

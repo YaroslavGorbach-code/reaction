@@ -10,9 +10,12 @@
     <string name="incorrect">Incorrect answers:</string>
     <string name="to_menu">Back</string>
     <string name="one_more_time">Try Again</string>
-    <string name="result_good">Excellent result! \n Shall we repeat?</string>
+    <string name="result_good_title">Excellent result!</string>
+    <string name="result_bad_title">The result is not enough</string>
+    <string name="result_good">You finished %1$s of rounds correctly</string>
     <string name="result_bad">Not bad, but you need to complete at least %1$d rounds to finish this level
-         and get more than %2$d percent correct answers. \n Will you try again?</string>
+         and get more than %2$d percent correct answers.</string>
+    <string name="result_bad_subtitle">Shall we repeat?</string>
     <string name="empty" />
     <string name="good">Ok</string>
     <string name="exercise_is_unavailable">Exercise is not available</string>

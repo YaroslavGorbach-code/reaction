@@ -28,5 +28,5 @@ data class FinishExerciseState(
         get() = correctPresent > winRule.minCorrectPresent / 100f && summaryPoints >= winRule.minRounds
 
     val progressString: String
-        get() = "${(correctPresent * 100).toInt()} %"
+        get() = "${(correctPresent * 100).toInt()}%"
 }

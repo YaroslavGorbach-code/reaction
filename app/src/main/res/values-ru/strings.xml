@@ -11,7 +11,7 @@
     <string name="incorrect">Не правильных ответов:</string>
     <string name="to_menu">На главную</string>
     <string name="one_more_time">Ещё раз</string>
-    <string name="result_good">Отличный результат! \n Повторим?</string>
+    <string name="result_good">Вы выполнили %1$s правильно</string>
     <string name="result_bad">Не плохо, но для прохождения данного уровня необходимо выполнить минимум %1$d раундов
         и получить больше %2$d процентов правильных ответов. \n Попробуете еще раз?</string>
     <string name="empty" />

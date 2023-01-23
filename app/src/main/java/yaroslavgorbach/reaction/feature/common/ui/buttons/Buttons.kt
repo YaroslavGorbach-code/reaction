@@ -1,11 +1,9 @@
 package yaroslavgorbach.reaction.feature.common.ui.buttons
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -117,7 +115,7 @@ fun SecondarySmallButton(text: String, onClick: () -> Unit) {
         modifier = Modifier
             .height(40.dp)
             .fillMaxWidth(),
-        colors = ButtonDefaults.buttonColors(backgroundColor = LightSilver),
+        colors = ButtonDefaults.outlinedButtonColors(backgroundColor = LightSilver),
         shape = MaterialTheme.shapes.small
     ) {
         Text(
@@ -131,12 +129,12 @@ fun SecondarySmallButton(text: String, onClick: () -> Unit) {
 
 @Composable
 fun OutlineMediumButton(text: String, onClick: () -> Unit) {
-    Button(
+    OutlinedButton(
         onClick = onClick,
         modifier = Modifier
             .height(48.dp)
             .fillMaxWidth(),
-        colors = ButtonDefaults.buttonColors(backgroundColor = EerieBlack),
+        border = BorderStroke(width = 1.dp, color = EerieBlack),
         shape = MaterialTheme.shapes.medium
     ) {
         Text(
@@ -149,13 +147,13 @@ fun OutlineMediumButton(text: String, onClick: () -> Unit) {
 }
 
 @Composable
-fun OutlineLargeButton(text: String, onClick: () -> Unit) {
-    Button(
+fun OutlineLargeButton(modifier: Modifier = Modifier, text: String, onClick: () -> Unit) {
+    OutlinedButton(
+        border = BorderStroke(width = 1.dp, color = EerieBlack),
         onClick = onClick,
-        modifier = Modifier
-            .height(40.dp)
+        modifier = modifier
+            .height(48.dp)
             .fillMaxWidth(),
-        colors = ButtonDefaults.outlinedButtonColors(backgroundColor = EerieBlack),
         shape = MaterialTheme.shapes.small
     ) {
         Text(

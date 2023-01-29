@@ -11,17 +11,20 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.InternalCoroutinesApi
+import yaroslavgorbach.reaction.R
 import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
 import yaroslavgorbach.reaction.feature.common.ui.theme.ReactionTheme
 import yaroslavgorbach.reaction.feature.exercise.common.mapper.ExerciseNameToInstructionResMapper
 import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseResult
 import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseTopBar
 import yaroslavgorbach.reaction.feature.exercise.common.ui.YesNoBottomButtons
+import yaroslavgorbach.reaction.feature.exercise.cpmplexSort.model.ComplexSortUiMessage
 import yaroslavgorbach.reaction.feature.exercise.numbersAndLetters.model.NumbersAndLettersUiMessage
 import yaroslavgorbach.reaction.feature.exercise.rotation.model.RotationActions
 import yaroslavgorbach.reaction.feature.exercise.rotation.model.RotationUiMessage
@@ -92,49 +95,42 @@ internal fun RotationExercise(
                 is TimerCountDown.TimerState.Tick -> {
                     ExerciseTopBar(
                         instruction = stringResource(
-                            id = ExerciseNameToInstructionResMapper.map(
-                                exerciseName = ExerciseName.ROTATION
-                            )
+                            id = ExerciseNameToInstructionResMapper.map(exerciseName = ExerciseName.ROTATION)
                         ),
-                        timeProgress = state.timerState.timeUntilFinishedProgress,
-                        onBack = { actioner(RotationActions.Back) },
+                        timer = state.timerState.timeUtilFinishedString,
+                        content = {
+                            state.message?.let { message ->
+                                when (message.message) {
+                                    RotationUiMessage.AnswerIsCorrect -> {
+                                        Icon(
+                                            painter = painterResource(id = R.drawable.ic_dot_green),
+                                            contentDescription = "",
+                                            tint = Color.Green,
+                                            modifier = Modifier
+                                                .align(Alignment.CenterEnd)
+                                                .padding(top = 14.dp, end = 27.dp)
+                                        )
+                                    }
+
+                                    RotationUiMessage.AnswerIsNotCorrect -> {
+                                        Icon(
+                                            painter = painterResource(id = R.drawable.ic_dot_red),
+                                            contentDescription = "",
+                                            tint = Color.Red,
+                                            modifier = Modifier
+                                                .align(Alignment.CenterEnd)
+                                                .padding(top = 14.dp, end = 27.dp)
+                                        )
+                                    }
+                                }
+                                onMessageShown(message.id)
+                            }
+                        }
                     )
                 }
             }
 
-            Box(
-                Modifier
-                    .fillMaxSize()
-            ) {
-                state.message?.let { message ->
-                    when (message.message) {
-                        RotationUiMessage.AnswerIsCorrect -> {
-                            Icon(
-                                Icons.Default.Circle,
-                                contentDescription = "",
-                                tint = Color.Green,
-                                modifier = Modifier
-                                    .align(Alignment.TopCenter)
-                                    .padding(top = 4.dp)
-                                    .fillMaxWidth()
-                            )
-                        }
-
-                        RotationUiMessage.AnswerIsNotCorrect -> {
-                            Icon(
-                                Icons.Default.Circle,
-                                contentDescription = "",
-                                tint = Color.Red,
-                                modifier = Modifier
-                                    .align(Alignment.TopCenter)
-                                    .padding(top = 4.dp)
-                                    .fillMaxWidth()
-                            )
-                        }
-                    }
-                    onMessageShown(message.id)
-                }
-
+            Box(Modifier.fillMaxSize()) {
                 Column(modifier = Modifier.align(Alignment.Center)) {
                     Table(table = state.tables.firstTable)
                     Table(table = state.tables.secondTable)

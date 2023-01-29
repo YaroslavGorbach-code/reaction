@@ -13,13 +13,16 @@ import androidx.compose.material.icons.filled.Circle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterEnd
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import yaroslavgorbach.reaction.R
 import yaroslavgorbach.reaction.data.exercise.complexSort.model.ComplexSortItem
 import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
 import yaroslavgorbach.reaction.feature.common.ui.theme.ReactionTheme
@@ -98,32 +101,29 @@ internal fun ComplexSort(
                                 complexSortIsSimilar = state.items.firstOrNull()?.isSimilar ?: false
                             )
                         ),
-                        timeProgress = state.timerState.timeUntilFinishedProgress,
-                        onBack = { actioner(ComplexSortActions.Back) },
+                        timer = state.timerState.timeUtilFinishedString,
                         content = {
                             state.uiMessage?.let { message ->
                                 when (message.message) {
                                     ComplexSortUiMessage.AnswerIsCorrect -> {
                                         Icon(
-                                            Icons.Default.Circle,
+                                            painter = painterResource(id = R.drawable.ic_dot_green),
                                             contentDescription = "",
                                             tint = Color.Green,
                                             modifier = Modifier
-                                                .align(CenterHorizontally)
-                                                .padding(top = 4.dp)
-                                                .fillMaxWidth()
+                                                .align(CenterEnd)
+                                                .padding(top = 14.dp, end = 27.dp)
                                         )
                                     }
 
                                     ComplexSortUiMessage.AnswerIsNotCorrect -> {
                                         Icon(
-                                            Icons.Default.Circle,
+                                            painter = painterResource(id = R.drawable.ic_dot_red),
                                             contentDescription = "",
                                             tint = Color.Red,
                                             modifier = Modifier
-                                                .align(CenterHorizontally)
-                                                .padding(top = 4.dp)
-                                                .fillMaxWidth()
+                                                .align(CenterEnd)
+                                                .padding(top = 14.dp, end = 27.dp)
                                         )
                                     }
                                 }

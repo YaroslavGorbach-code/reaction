@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -30,7 +31,6 @@ import yaroslavgorbach.reaction.feature.exercise.common.mapper.ExerciseNameToIns
 import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseResult
 import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseTopBar
 import yaroslavgorbach.reaction.feature.exercise.common.ui.YesNoBottomButtons
-import yaroslavgorbach.reaction.feature.exercise.faceControl.model.FaceControlUiMessage
 import yaroslavgorbach.reaction.feature.exercise.geoSwitching.model.GeoSwitchingActions
 import yaroslavgorbach.reaction.feature.exercise.geoSwitching.model.GeoSwitchingUiMessage
 import yaroslavgorbach.reaction.feature.exercise.geoSwitching.model.GeoSwitchingViewState
@@ -105,32 +105,29 @@ internal fun GeoSwitchingExercise(
                                 exerciseName = ExerciseName.GEO_SWITCHING
                             )
                         ),
-                        timeProgress = state.timerState.timeUntilFinishedProgress,
-                        onBack = { actioner(GeoSwitchingActions.Back) },
+                        timer = state.timerState.timeUtilFinishedString,
                         content = {
                             state.message?.let { message ->
                                 when (message.message) {
                                     GeoSwitchingUiMessage.AnswerIsCorrect -> {
                                         Icon(
-                                            Icons.Default.Circle,
+                                            painter = painterResource(id = R.drawable.ic_dot_green),
                                             contentDescription = "",
                                             tint = Color.Green,
                                             modifier = Modifier
-                                                .align(CenterHorizontally)
-                                                .padding(top = 4.dp)
-                                                .fillMaxWidth()
+                                                .align(Alignment.CenterEnd)
+                                                .padding(top = 14.dp, end = 27.dp)
                                         )
                                     }
 
                                     GeoSwitchingUiMessage.AnswerIsNotCorrect -> {
                                         Icon(
-                                            Icons.Default.Circle,
+                                            painter = painterResource(id = R.drawable.ic_dot_red),
                                             contentDescription = "",
                                             tint = Color.Red,
                                             modifier = Modifier
-                                                .align(CenterHorizontally)
-                                                .padding(top = 4.dp)
-                                                .fillMaxWidth()
+                                                .align(Alignment.CenterEnd)
+                                                .padding(top = 14.dp, end = 27.dp)
                                         )
                                     }
                                 }

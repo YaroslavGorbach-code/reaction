@@ -6,7 +6,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -16,10 +15,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import yaroslavgorbach.reaction.R
 import yaroslavgorbach.reaction.data.exercise.airport.model.Direction
 import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
 import yaroslavgorbach.reaction.feature.common.ui.theme.ReactionTheme
@@ -30,7 +31,6 @@ import yaroslavgorbach.reaction.feature.exercise.airport.presentation.AirportVie
 import yaroslavgorbach.reaction.feature.exercise.common.mapper.ExerciseNameToInstructionResMapper
 import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseResult
 import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseTopBar
-import yaroslavgorbach.reaction.feature.exercise.cpmplexSort.model.ComplexSortUiMessage
 import yaroslavgorbach.reaction.utill.TimerCountDown
 
 @ExperimentalFoundationApi
@@ -99,32 +99,29 @@ internal fun AirportExercise(
                                 airportTaskVariant = state.plane.taskVariant
                             )
                         ),
-                        timeProgress = state.timerState.timeUntilFinishedProgress,
-                        onBack = { actioner(AirportActions.Back) },
+                        timer = state.timerState.timeUtilFinishedString,
                         content = {
                             state.message?.let { message ->
                                 when (message.message) {
                                     AirportUiMessage.AnswerIsCorrect -> {
                                         Icon(
-                                            Icons.Default.Circle,
+                                            painter = painterResource(id = R.drawable.ic_dot_green),
                                             contentDescription = "",
                                             tint = Color.Green,
                                             modifier = Modifier
-                                                .align(Alignment.CenterHorizontally)
-                                                .padding(top = 4.dp)
-                                                .fillMaxWidth()
+                                                .align(Alignment.CenterEnd)
+                                                .padding(top = 14.dp, end = 27.dp)
                                         )
                                     }
 
                                     AirportUiMessage.AnswerIsNotCorrect -> {
                                         Icon(
-                                            Icons.Default.Circle,
+                                            painter = painterResource(id = R.drawable.ic_dot_red),
                                             contentDescription = "",
                                             tint = Color.Red,
                                             modifier = Modifier
-                                                .align(Alignment.CenterHorizontally)
-                                                .padding(top = 4.dp)
-                                                .fillMaxWidth()
+                                                .align(Alignment.CenterEnd)
+                                                .padding(top = 14.dp, end = 27.dp)
                                         )
                                     }
                                 }

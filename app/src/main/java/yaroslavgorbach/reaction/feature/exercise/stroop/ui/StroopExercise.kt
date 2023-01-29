@@ -10,9 +10,13 @@ import androidx.compose.material.icons.filled.Circle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterEnd
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
+import androidx.compose.ui.Alignment.Companion.CenterStart
+import androidx.compose.ui.Alignment.Companion.End
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -32,7 +36,6 @@ import yaroslavgorbach.reaction.feature.exercise.stroop.model.StroopUiMessage
 import yaroslavgorbach.reaction.feature.exercise.stroop.model.StroopViewState
 import yaroslavgorbach.reaction.feature.exercise.stroop.presentation.StroopViewModel
 import yaroslavgorbach.reaction.utill.TimerCountDown
-
 
 @ExperimentalMaterialApi
 @ExperimentalFoundationApi
@@ -101,32 +104,29 @@ internal fun StroopExercise(
                                 exerciseName = ExerciseName.STROOP
                             )
                         ),
-                        timeProgress = state.timerState.timeUntilFinishedProgress,
-                        onBack = { actioner(StroopActions.Back) },
+                        timer = state.timerState.timeUtilFinishedString,
                         content = {
                             state.message?.let { message ->
                                 when (message.message) {
                                     StroopUiMessage.AnswerIsCorrect -> {
                                         Icon(
-                                            Icons.Default.Circle,
+                                            painter = painterResource(id = R.drawable.ic_dot_green),
                                             contentDescription = "",
                                             tint = Color.Green,
                                             modifier = Modifier
-                                                .align(CenterHorizontally)
-                                                .padding(top = 4.dp)
-                                                .fillMaxWidth()
+                                                .align(CenterEnd)
+                                                .padding(top = 14.dp, end = 27.dp)
                                         )
                                     }
 
                                     StroopUiMessage.AnswerIsNotCorrect -> {
                                         Icon(
-                                            Icons.Default.Circle,
+                                            painter = painterResource(id = R.drawable.ic_dot_red),
                                             contentDescription = "",
                                             tint = Color.Red,
                                             modifier = Modifier
-                                                .align(CenterHorizontally)
-                                                .padding(top = 4.dp)
-                                                .fillMaxWidth()
+                                                .align(CenterEnd)
+                                                .padding(top = 14.dp, end = 27.dp)
                                         )
                                     }
                                 }
@@ -183,7 +183,6 @@ internal fun StroopExercise(
         }
     }
 }
-
 
 @ExperimentalFoundationApi
 @ExperimentalMaterialApi

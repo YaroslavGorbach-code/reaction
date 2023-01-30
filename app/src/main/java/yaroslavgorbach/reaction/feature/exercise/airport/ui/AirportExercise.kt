@@ -23,7 +23,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import yaroslavgorbach.reaction.R
 import yaroslavgorbach.reaction.data.exercise.airport.model.Direction
 import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
+import yaroslavgorbach.reaction.feature.common.ui.theme.EerieBlack
 import yaroslavgorbach.reaction.feature.common.ui.theme.ReactionTheme
+import yaroslavgorbach.reaction.feature.common.ui.theme.White
 import yaroslavgorbach.reaction.feature.exercise.airport.model.AirportActions
 import yaroslavgorbach.reaction.feature.exercise.airport.model.AirportUiMessage
 import yaroslavgorbach.reaction.feature.exercise.airport.model.AirportViewState
@@ -138,9 +140,8 @@ internal fun AirportExercise(
                 modifier = Modifier
                     .align(Alignment.Center)
                     .rotate(state.plane.direction.degree)
-                    .background(color = MaterialTheme.colors.onSurface, shape = MaterialTheme.shapes.large)
                     .padding(16.dp)
-                    .size(120.dp),
+                    .size(140.dp),
                 tint = state.plane.color,
             )
 
@@ -155,59 +156,47 @@ private fun BoxScope.BottomButtons(onClick: (Direction) -> Unit) {
         modifier = Modifier.Companion
             .align(Alignment.BottomCenter)
             .size(210.dp)
-            .padding(bottom = 16.dp)
+            .padding(bottom = 20.dp)
     ) {
         Icon(
+            tint = EerieBlack,
             imageVector = Icons.Default.North,
             contentDescription = null,
             modifier = Modifier
                 .align(Alignment.TopCenter)
-                .background(
-                    color = MaterialTheme.colors.onSurface,
-                    shape = MaterialTheme.shapes.medium
-                )
                 .clickable { onClick(Direction.NORTH) }
                 .padding(8.dp)
                 .size(50.dp)
         )
 
         Icon(
+            tint = EerieBlack,
             imageVector = Icons.Default.South,
             contentDescription = null,
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .background(
-                    color = MaterialTheme.colors.onSurface,
-                    shape = MaterialTheme.shapes.medium
-                )
                 .clickable { onClick(Direction.SOUTH) }
                 .padding(8.dp)
                 .size(50.dp)
         )
 
         Icon(
+            tint = EerieBlack,
             imageVector = Icons.Default.West,
             contentDescription = null,
             modifier = Modifier
                 .align(Alignment.CenterStart)
-                .background(
-                    color = MaterialTheme.colors.onSurface,
-                    shape = MaterialTheme.shapes.medium
-                )
                 .clickable { onClick(Direction.WEST) }
                 .padding(8.dp)
                 .size(50.dp)
         )
 
         Icon(
+            tint = EerieBlack,
             imageVector = Icons.Default.East,
             contentDescription = null,
             modifier = Modifier
                 .align(Alignment.CenterEnd)
-                .background(
-                    color = MaterialTheme.colors.onSurface,
-                    shape = MaterialTheme.shapes.medium
-                )
                 .clickable { onClick(Direction.EAST) }
                 .padding(8.dp)
                 .size(50.dp)

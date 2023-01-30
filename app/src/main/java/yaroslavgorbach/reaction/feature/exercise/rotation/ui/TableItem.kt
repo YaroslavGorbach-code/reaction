@@ -3,6 +3,7 @@ package yaroslavgorbach.reaction.feature.exercise.rotation.ui
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -18,7 +19,7 @@ fun TableCell(color: Color) {
         modifier = Modifier
             .size(35.dp)
             .padding(2.dp)
-            .background(color = color, shape = MaterialTheme.shapes.small)
+            .background(color = color, shape = RoundedCornerShape(4.dp))
     )
 }
 

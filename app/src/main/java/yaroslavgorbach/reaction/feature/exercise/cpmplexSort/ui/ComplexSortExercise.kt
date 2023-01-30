@@ -134,29 +134,21 @@ internal fun ComplexSort(
                 }
             }
 
-            Box(
+            ComplexSortItemUi(
                 modifier = Modifier
-                    .align(Alignment.Center)
-                    .background(
-                        color = MaterialTheme.colors.onSurface,
-                        shape = MaterialTheme.shapes.medium
-                    )
-                    .padding(16.dp)
-            ) {
-                ComplexSortItemUi(
-                    item = state.items.firstOrNull() ?: ComplexSortItem.Test,
-                    isClickable = false
-                ) {}
-            }
+                    .align(Alignment.Center),
+                item = state.items.firstOrNull() ?: ComplexSortItem.Test,
+                isClickable = false
+            ) {}
 
             LazyVerticalGrid(
                 columns = GridCells.Adaptive(100.dp),
                 modifier = Modifier.align(Alignment.BottomCenter),
-                contentPadding = PaddingValues(8.dp)
+                contentPadding = PaddingValues(16.dp)
             ) {
                 item {
                     ComplexSortItemUi(
-                        modifier = Modifier.padding(end = 8.dp),
+                        modifier = Modifier.padding(end = 16.dp),
                         item = ComplexSortItem.ExampleFirst,
                         isClickable = true
                     ) {
@@ -166,7 +158,7 @@ internal fun ComplexSort(
 
                 item {
                     ComplexSortItemUi(
-                        modifier = Modifier.padding(end = 8.dp),
+                        modifier = Modifier.padding(end = 16.dp),
                         item = ComplexSortItem.ExampleSecond,
                         isClickable = true
                     ) {

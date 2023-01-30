@@ -11,6 +11,7 @@ import androidx.compose.ui.unit.dp
 import yaroslavgorbach.reaction.R
 import androidx.compose.foundation.layout.*
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.text.style.TextAlign
 import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
 import yaroslavgorbach.reaction.feature.common.ui.CircularProgressIndicatorWithContent
@@ -118,7 +119,7 @@ fun ExerciseResult(
                 .padding(bottom = 10.dp, start = 20.dp, end = 20.dp)
                 .align(Alignment.BottomCenter)
         ) {
-            PrimaryLargeButton("Try again") {}
+            PrimaryLargeButton(modifier = Modifier.fillMaxWidth(), text = "Try again") {}
 
             OutlineLargeButton(
                 modifier = Modifier

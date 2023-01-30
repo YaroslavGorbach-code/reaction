@@ -3,6 +3,7 @@ package yaroslavgorbach.reaction.feature.common.ui.buttons
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -14,12 +15,11 @@ import yaroslavgorbach.reaction.feature.common.ui.theme.LightSilver
 import yaroslavgorbach.reaction.feature.common.ui.theme.White
 
 @Composable
-fun PrimaryLargeButton(text: String, onClick: () -> Unit) {
+fun PrimaryLargeButton(modifier: Modifier = Modifier, text: String, onClick: () -> Unit) {
     Button(
         onClick = onClick,
-        modifier = Modifier
-            .height(52.dp)
-            .fillMaxWidth(),
+        modifier = modifier
+            .height(52.dp),
         colors = ButtonDefaults.buttonColors(backgroundColor = EerieBlack),
         shape = MaterialTheme.shapes.large
     ) {
@@ -52,10 +52,10 @@ fun PrimaryMediumButton(text: String, onClick: () -> Unit) {
 }
 
 @Composable
-fun PrimarySmallButton(text: String, onClick: () -> Unit) {
+fun PrimarySmallButton(modifier: Modifier, text: String, onClick: () -> Unit) {
     Button(
         onClick = onClick,
-        modifier = Modifier
+        modifier = modifier
             .height(40.dp)
             .fillMaxWidth(),
         colors = ButtonDefaults.buttonColors(backgroundColor = EerieBlack),

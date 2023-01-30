@@ -32,7 +32,7 @@ fun Table(table: Table) {
                 if (table.filledCellsIndexes.any { it == index }) {
                     TableCell(color = Color.Red)
                 } else {
-                    TableCell(color = MaterialTheme.colors.onSurface)
+                    TableCell(color = MaterialTheme.colors.primary)
                 }
             }
         }

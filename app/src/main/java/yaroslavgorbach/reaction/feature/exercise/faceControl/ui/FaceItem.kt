@@ -22,13 +22,11 @@ fun FaceItem(face: Face, onFaceClick: () -> Unit) {
     Image(
         imageVector = face.icon,
         contentDescription = "",
-        colorFilter = if (isSystemInDarkTheme())
-            ColorFilter.tint(Color.White)
-        else ColorFilter.tint(Color.Black),
+        colorFilter = ColorFilter.tint(Color.White),
         modifier = Modifier
             .padding(4.dp)
             .background(
-                color = MaterialTheme.colors.onSurface,
+                color = MaterialTheme.colors.primary,
                 shape = MaterialTheme.shapes.medium
             )
             .clickable { onFaceClick() }

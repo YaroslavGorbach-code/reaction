@@ -26,8 +26,10 @@ import kotlinx.coroutines.InternalCoroutinesApi
 import yaroslavgorbach.reaction.R
 import yaroslavgorbach.reaction.data.exercise.stroop.model.WordColorVariant
 import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
+import yaroslavgorbach.reaction.feature.common.ui.buttons.PrimaryLargeButton
 import yaroslavgorbach.reaction.feature.common.ui.theme.ReactionTheme
 import yaroslavgorbach.reaction.feature.exercise.common.mapper.ExerciseNameToInstructionResMapper
+import yaroslavgorbach.reaction.feature.exercise.common.model.YesNoChoseVariations
 import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseResult
 import yaroslavgorbach.reaction.feature.exercise.common.ui.ExerciseTopBar
 import yaroslavgorbach.reaction.feature.exercise.rotation.model.RotationUiMessage
@@ -83,7 +85,7 @@ internal fun StroopExercise(
     state: StroopViewState,
     actioner: (StroopActions) -> Unit,
     onMessageShown: (id: Long) -> Unit,
-    ) {
+) {
     if (state.finishExerciseState.isFinished) {
         ExerciseResult(
             finishExerciseState = state.finishExerciseState,
@@ -137,23 +139,13 @@ internal fun StroopExercise(
                 }
             }
 
-            Box(
-                modifier = Modifier
-                    .align(Alignment.Center)
-                    .background(
-                        color = MaterialTheme.colors.onSurface,
-                        shape = MaterialTheme.shapes.large
-                    )
-                    .padding(16.dp)
-            ) {
-                Text(
-                    text = state.word.text,
-                    color = state.word.color.color,
-                    fontSize = 40.sp,
-                    style = MaterialTheme.typography.caption
-                )
-            }
-
+            Text(
+                modifier = Modifier.align(Alignment.Center),
+                text = state.word.text,
+                color = state.word.color.color,
+                fontSize = 40.sp,
+                style = MaterialTheme.typography.caption
+            )
 
             Row(
                 modifier = Modifier
@@ -161,24 +153,17 @@ internal fun StroopExercise(
                     .padding(16.dp)
                     .wrapContentSize()
             ) {
-                Button(
-                    shape = RoundedCornerShape(30),
+                PrimaryLargeButton(
+                    text = stringResource(id = R.string.red),
                     onClick = { actioner(StroopActions.OnChose(WordColorVariant.RED)) },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(0.5f)
-                ) {
-                    Text(text = stringResource(id = R.string.red), fontSize = 24.sp)
-                }
+                    modifier = Modifier.weight(0.5f)
+                )
 
-                Button(modifier = Modifier
-                    .padding(start = 16.dp)
-                    .fillMaxWidth()
-                    .weight(0.5f),
-                    shape = RoundedCornerShape(30),
-                    onClick = { actioner(StroopActions.OnChose(WordColorVariant.GREEN)) }) {
-                    Text(text = stringResource(id = R.string.green), fontSize = 24.sp)
-                }
+                PrimaryLargeButton(
+                    modifier = Modifier.weight(0.5f).padding(start = 16.dp),
+                    text = stringResource(id = R.string.green),
+                    onClick = { actioner(StroopActions.OnChose(WordColorVariant.GREEN)) }
+                )
             }
         }
     }

@@ -16,8 +16,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import yaroslavgorbach.reaction.data.exercise.extraNumber.local.model.Number
 import yaroslavgorbach.reaction.feature.common.ui.theme.ReactionTheme
+import yaroslavgorbach.reaction.feature.common.ui.theme.White
 
 @Composable
 fun NumberItem(number: Number, onNumberClick: () -> Unit) {
@@ -25,12 +27,14 @@ fun NumberItem(number: Number, onNumberClick: () -> Unit) {
             .padding(4.dp)
             .clickable { onNumberClick() }
             .background(
-                color = MaterialTheme.colors.onSurface,
+                color = MaterialTheme.colors.primary,
                 shape = MaterialTheme.shapes.medium
             )
             .size(60.dp)) {
 
             Text(
+                fontSize = 14.sp,
+                color = White,
                 text = number.number.toString(),
                 textAlign = TextAlign.Center,
                 modifier = Modifier.align(Alignment.Center),
@@ -38,7 +42,6 @@ fun NumberItem(number: Number, onNumberClick: () -> Unit) {
             )
         }
 }
-
 
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_NO)
 @Composable

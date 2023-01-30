@@ -162,10 +162,6 @@ private fun BoxScope.CroiseVariants(state: GeoSwitchingViewState) {
                 .fillMaxWidth()
                 .weight(0.5f)
                 .padding(end = 8.dp)
-                .background(
-                    color = MaterialTheme.colors.onSurface,
-                    shape = MaterialTheme.shapes.large
-                )
                 .padding(4.dp)
         ) {
             Text(
@@ -194,10 +190,6 @@ private fun BoxScope.CroiseVariants(state: GeoSwitchingViewState) {
                 .fillMaxWidth()
                 .weight(0.5f)
                 .padding(start = 4.dp)
-                .background(
-                    color = MaterialTheme.colors.onSurface,
-                    shape = MaterialTheme.shapes.large
-                )
                 .padding(4.dp)
         ) {
             Text(

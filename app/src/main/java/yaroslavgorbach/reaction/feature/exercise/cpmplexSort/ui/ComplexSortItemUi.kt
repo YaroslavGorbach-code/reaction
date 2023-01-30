@@ -16,7 +16,6 @@ import yaroslavgorbach.reaction.data.exercise.complexSort.model.ComplexSortItem
 
 @Composable
 fun ComplexSortItemUi(modifier: Modifier = Modifier, item: ComplexSortItem, isClickable: Boolean, onItemClick: () -> Unit) {
-
     Box(
         modifier = modifier
             .background(color = item.color, shape = Shapes.medium)
@@ -26,7 +25,6 @@ fun ComplexSortItemUi(modifier: Modifier = Modifier, item: ComplexSortItem, isCl
     ) {
         Icon(imageVector = item.icon, contentDescription = null, Modifier.fillMaxSize(), tint = Color.White)
     }
-
 }
 
 

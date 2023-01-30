@@ -24,7 +24,9 @@ import yaroslavgorbach.reaction.feature.exercise.common.model.FinishExerciseStat
 
 @Composable
 fun ExerciseResult(
-    finishExerciseState: FinishExerciseState, onBackClick: () -> Unit, onRepeatExercise: () -> Unit
+    finishExerciseState: FinishExerciseState,
+    onBackClick: () -> Unit,
+    onRepeatExercise: () -> Unit
 ) {
 
     Box(Modifier.fillMaxSize()) {
@@ -59,9 +61,15 @@ fun ExerciseResult(
             )
         }
 
-        Column(modifier = Modifier.align(Alignment.Center).fillMaxWidth()) {
+        Column(
+            modifier = Modifier
+                .align(Alignment.Center)
+                .fillMaxWidth()
+        ) {
             CircularProgressIndicatorWithContent(
-                modifier = Modifier.size(200.dp).align(CenterHorizontally),
+                modifier = Modifier
+                    .size(200.dp)
+                    .align(CenterHorizontally),
                 viewModifier = Modifier.size(200.dp),
                 progress = finishExerciseState.correctPresent
             ) {
@@ -80,9 +88,7 @@ fun ExerciseResult(
                     stringResource(id = R.string.result_good_title)
                 } else {
                     stringResource(id = R.string.result_bad_title)
-                },
-                style = AppTypography.h5,
-                textAlign = TextAlign.Center
+                }, style = AppTypography.h5, textAlign = TextAlign.Center
             )
 
             Text(
@@ -97,8 +103,7 @@ fun ExerciseResult(
                         finishExerciseState.winRule.minRounds,
                         finishExerciseState.winRule.minCorrectPresent
                     )
-                }, style = AppTypography.subtitle3,
-                textAlign = TextAlign.Center
+                }, style = AppTypography.subtitle3, textAlign = TextAlign.Center
             )
 
             if (finishExerciseState.isWin.not()) {
@@ -119,14 +124,14 @@ fun ExerciseResult(
                 .padding(bottom = 10.dp, start = 20.dp, end = 20.dp)
                 .align(Alignment.BottomCenter)
         ) {
-            PrimaryLargeButton(modifier = Modifier.fillMaxWidth(), text = "Try again") {}
+            PrimaryLargeButton(modifier = Modifier.fillMaxWidth(), text = "Try again") { onRepeatExercise() }
 
             OutlineLargeButton(
                 modifier = Modifier
                     .padding(top = 16.dp)
                     .height(48.dp)
                     .fillMaxWidth(), text = "Finish"
-            ) {}
+            ) { onBackClick() }
         }
     }
 }

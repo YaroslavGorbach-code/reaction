@@ -2,6 +2,7 @@ package yaroslavgorbach.reaction.feature.esercises.ui
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
@@ -11,24 +12,27 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import yaroslavgorbach.reaction.R
 import yaroslavgorbach.reaction.data.exercises.local.model.Exercise
 import yaroslavgorbach.reaction.data.exercises.local.model.Exercise.Companion.NEED_WINS_TO_OPEN_NEXT_EXERCISE
 import yaroslavgorbach.reaction.feature.common.ui.theme.*
-import yaroslavgorbach.reaction.utill.singleClickable
 
 @ExperimentalMaterialApi
 @Composable
-fun ExerciseItem(exercise: Exercise) {
+fun ExerciseItem(exercise: Exercise, showUnavailablePrompt: () -> Unit) {
     Box(modifier = Modifier.fillMaxSize()) {
 
-        Column(modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight()
-            .background(EerieBlack)) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
+                .background(EerieBlack)
+        ) {
 
             ProgressIndicator(
                 modifier = Modifier
@@ -62,6 +66,20 @@ fun ExerciseItem(exercise: Exercise) {
                 text = stringResource(id = exercise.descriptionRes),
                 style = AppTypography.subtitle4
             )
+        }
+        if (exercise.isAvailable.not()) {
+            Box(modifier = Modifier
+                .fillMaxSize()
+                .clickable { showUnavailablePrompt() }
+                .background(color = Color.Black.copy(alpha = 0.8f))) {
+
+                Icon(
+                    tint = White,
+                    painter = painterResource(id = R.drawable.ic_lock),
+                    contentDescription = null,
+                    modifier = Modifier.align(Alignment.Center)
+                )
+            }
         }
     }
 }
@@ -103,7 +121,7 @@ fun ProgressIndicator(modifier: Modifier, gaps: Int, filledGaps: Int) {
 fun ExerciseItemPreview(exercise: Exercise = Exercise.Test) {
     ReactionTheme {
         Surface {
-            ExerciseItem(exercise = exercise)
+            ExerciseItem(exercise = exercise) {}
         }
     }
 }

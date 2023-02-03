@@ -42,8 +42,9 @@ class NumbersAndLettersViewModel @Inject constructor(
         pointsCorrect,
         pointsInCorrect,
         isExerciseFinished,
-        uiMessageManager.message
-    ) { numbersAndLetters, timerState, pointsCorrect, pointsIncorrect, isExerciseFinished, message ->
+        uiMessageManager.message,
+        averageTimeForAnswer
+    ) { numbersAndLetters, timerState, pointsCorrect, pointsIncorrect, isExerciseFinished, message, averageTimeForAnswer ->
         NumbersAndLettersViewState(
             numberAndLetter = numbersAndLetters.firstOr(NumberAndLetter.Test),
             timerState = timerState,
@@ -51,7 +52,8 @@ class NumbersAndLettersViewModel @Inject constructor(
                 name = exerciseName,
                 isFinished = isExerciseFinished,
                 pointsCorrect = pointsCorrect,
-                pointsIncorrect = pointsIncorrect
+                pointsIncorrect = pointsIncorrect,
+                averageTimeForAnswer = averageTimeForAnswer
             ),
             message = message
         )
@@ -89,6 +91,8 @@ class NumbersAndLettersViewModel @Inject constructor(
     }
 
     private fun onChose(variant: YesNoChoseVariations) {
+        onAnswer()
+
         viewModelScope.launch {
             val currentItem = items.first().first()
 

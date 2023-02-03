@@ -2,7 +2,7 @@ package yaroslavgorbach.reaction.domain.exercises
 
 import kotlinx.coroutines.flow.first
 import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
-import yaroslavgorbach.reaction.data.exercises.repo.RepoExercises
+import yaroslavgorbach.reaction.data.exercises.local.repo.RepoExercises
 import javax.inject.Inject
 
 class MakeExerciseAvailableInteractor @Inject constructor(

@@ -12,6 +12,7 @@ data class FinishExerciseState(
     val isFinished: Boolean = false,
     val pointsCorrect: Int = 0,
     val pointsIncorrect: Int = 0,
+    val averageTimeForAnswer: Long = 0
 ) {
     val winRule = ExerciseNameToWinRuleMapper.map(name)
 

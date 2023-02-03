@@ -5,11 +5,11 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import yaroslavgorbach.reaction.data.exercises.local.ExerciseDatabase
+import yaroslavgorbach.reaction.data.ExerciseDatabase
 import yaroslavgorbach.reaction.data.exercises.local.dao.ExerciseDao
-import yaroslavgorbach.reaction.data.exercises.repo.RepoExercises
-import yaroslavgorbach.reaction.data.exercises.repo.RepoExercisesImp
-import javax.inject.Singleton
+import yaroslavgorbach.reaction.data.statistics.dao.StatisticsDao
+import yaroslavgorbach.reaction.data.exercises.local.repo.RepoExercises
+import yaroslavgorbach.reaction.data.exercises.local.repo.RepoExercisesImp
 
 @Module
 @InstallIn(SingletonComponent::class)

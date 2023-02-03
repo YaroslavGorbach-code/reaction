@@ -45,7 +45,8 @@ class ExtraNumberViewModel @Inject constructor(
         pointsInCorrect,
         isExerciseFinished,
         uiMessageManager.message,
-    ) { numberPacks, timerState, pointsCorrect, pointsIncorrect, isFinish, message ->
+        averageTimeForAnswer,
+    ) { numberPacks, timerState, pointsCorrect, pointsIncorrect, isFinish, message, averageTimeForAnswer ->
         ExtraNumberViewState(
             numberPacks = numberPacks,
             timerState = timerState,
@@ -53,7 +54,8 @@ class ExtraNumberViewModel @Inject constructor(
                 name = exerciseName,
                 isFinished = isFinish,
                 pointsCorrect = pointsCorrect,
-                pointsIncorrect = pointsIncorrect
+                pointsIncorrect = pointsIncorrect,
+                averageTimeForAnswer = averageTimeForAnswer
             ),
             message = message
         )
@@ -93,6 +95,8 @@ class ExtraNumberViewModel @Inject constructor(
     }
 
     private fun onNumberClick(number: Number) {
+        onAnswer()
+
         viewModelScope.launch {
             if (number.isExtra) {
                 pointsCorrect.emit(pointsCorrect.value + 1)

@@ -105,12 +105,14 @@ internal fun Exercises(
     }
 
     Column(modifier = Modifier.fillMaxSize()) {
-        
+
         Row(modifier = Modifier.padding(horizontal = 20.dp)) {
             Text(
                 text = "Your\n" + "Exercises",
                 style = AppTypography.h3,
-                modifier = Modifier.padding(top = 60.dp).weight(1f),
+                modifier = Modifier
+                    .padding(top = 60.dp)
+                    .weight(1f),
                 color = EerieBlack
             )
 
@@ -126,8 +128,7 @@ internal fun Exercises(
 
         // TODO: add real progress here
         LinearProgressIndicator(
-            progress = 0.5f,
-            modifier = Modifier
+            progress = 0.5f, modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 21.dp, start = 20.dp, end = 135.dp)
         )
@@ -151,7 +152,8 @@ internal fun Exercises(
                     val pageOffset = calculateCurrentOffsetForPage(page).absoluteValue
 
                     // We animate the scaleX + scaleY, between 85% and 100%
-                    lerp(0.85f, 1f, 1f - pageOffset.coerceIn(0f, 1f)
+                    lerp(
+                        0.85f, 1f, 1f - pageOffset.coerceIn(0f, 1f)
                     ).also { scale ->
                         scaleX = scale
                         scaleY = scale
@@ -162,20 +164,20 @@ internal fun Exercises(
                 Card(
                     Modifier
                         .height(500.dp)
-                        .padding(top = 42.dp, bottom = 24.dp)
-                    , shape = RoundedCornerShape(30.dp)
-                ) { ExerciseItem(exercise) }
-
-                SecondaryMediumButton(
-                    modifier = Modifier
-                        .align(Alignment.BottomCenter)
-                        .width(163.dp),
-                    text = "Start Exercise"
+                        .padding(top = 42.dp, bottom = 24.dp), shape = RoundedCornerShape(30.dp)
                 ) {
-                    if (exercise.isAvailable) {
+                    ExerciseItem(exercise) {
+                        actioner(ExercisesActions.ShowExerciseIsNotAvailableDialog(exercise.name))
+                    }
+                }
+
+                if (exercise.isAvailable) {
+                    SecondaryMediumButton(
+                        modifier = Modifier
+                            .align(Alignment.BottomCenter)
+                            .width(163.dp), text = "Start Exercise"
+                    ) {
                         actioner(ExercisesActions.OpenExerciseStartTimer(exerciseName = exercise.name))
-                    } else {
-                        actioner(ExercisesActions.ShowExerciseIsNotAvailableDialog(exerciseName = exercise.name))
                     }
                 }
             }

@@ -42,8 +42,9 @@ class AirportViewModel @Inject constructor(
         pointsCorrect,
         pointsInCorrect,
         isExerciseFinished,
-        uiMessageManager.message
-    ) { itemPacks, timerState, pointsCorrect, pointsIncorrect, isExerciseFinished, message ->
+        uiMessageManager.message,
+        averageTimeForAnswer
+    ) { itemPacks, timerState, pointsCorrect, pointsIncorrect, isExerciseFinished, message, averageTimeForAnswer ->
         AirportViewState(
             plane = itemPacks.firstOr(Plane.Test),
             timerState = timerState,
@@ -51,7 +52,8 @@ class AirportViewModel @Inject constructor(
                 name = exerciseName,
                 isFinished = isExerciseFinished,
                 pointsCorrect = pointsCorrect,
-                pointsIncorrect = pointsIncorrect
+                pointsIncorrect = pointsIncorrect,
+                averageTimeForAnswer = averageTimeForAnswer
             ),
             message = message
         )
@@ -89,6 +91,8 @@ class AirportViewModel @Inject constructor(
     }
 
     private fun onItemClick(item: Direction) {
+        onAnswer()
+
         viewModelScope.launch {
             val currentItem = items.first().first()
 

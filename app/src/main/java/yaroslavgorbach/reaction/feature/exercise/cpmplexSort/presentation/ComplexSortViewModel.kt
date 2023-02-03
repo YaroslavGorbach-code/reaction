@@ -43,7 +43,8 @@ class ComplexSortViewModel @Inject constructor(
         pointsInCorrect,
         isExerciseFinished,
         uiMessageManager.message,
-    ) { itemPacks, timerState, pointsCorrect, pointsIncorrect, isExerciseFinished, message ->
+        averageTimeForAnswer,
+    ) { itemPacks, timerState, pointsCorrect, pointsIncorrect, isExerciseFinished, message, averageTimeForAnswer ->
         ComplexSortViewState(
             items = itemPacks,
             timerState = timerState,
@@ -51,7 +52,8 @@ class ComplexSortViewModel @Inject constructor(
                 name = exerciseName,
                 isFinished = isExerciseFinished,
                 pointsCorrect = pointsCorrect,
-                pointsIncorrect = pointsIncorrect
+                pointsIncorrect = pointsIncorrect,
+                averageTimeForAnswer = averageTimeForAnswer
             ),
             uiMessage = message
         )
@@ -90,6 +92,8 @@ class ComplexSortViewModel @Inject constructor(
     }
 
     private fun onItemClick(item: ComplexSortItem) {
+        onAnswer()
+
         viewModelScope.launch {
             val currentItem = items.first().first()
             currentItem.checkAnswer(item) { isCorrect ->

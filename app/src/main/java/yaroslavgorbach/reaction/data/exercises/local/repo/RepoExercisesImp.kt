@@ -1,8 +1,7 @@
-package yaroslavgorbach.reaction.data.exercises.repo
+package yaroslavgorbach.reaction.data.exercises.local.repo
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.onEach
-import yaroslavgorbach.reaction.R
 import yaroslavgorbach.reaction.data.exercises.local.dao.ExerciseDao
 import yaroslavgorbach.reaction.data.exercises.local.model.Exercise
 import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName

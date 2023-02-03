@@ -44,8 +44,9 @@ class ExtraWordViewModel @Inject constructor(
         pointsCorrect,
         pointsInCorrect,
         isExerciseFinished,
-        uiMessageManager.message
-    ) { wordPacks, timerState, pointsCorrect, pointsIncorrect, isExerciseFinished, message ->
+        uiMessageManager.message,
+        averageTimeForAnswer
+    ) { wordPacks, timerState, pointsCorrect, pointsIncorrect, isExerciseFinished, message, averageTimeForAnswer ->
         ExtraWordViewState(
             wordPacks = wordPacks,
             timerState = timerState,
@@ -53,7 +54,8 @@ class ExtraWordViewModel @Inject constructor(
                 name = exerciseName,
                 isFinished = isExerciseFinished,
                 pointsCorrect = pointsCorrect,
-                pointsIncorrect = pointsIncorrect
+                pointsIncorrect = pointsIncorrect,
+                averageTimeForAnswer = averageTimeForAnswer
             ),
             message = message
         )
@@ -91,6 +93,8 @@ class ExtraWordViewModel @Inject constructor(
     }
 
     private fun onWordClick(word: Word) {
+        onAnswer()
+
         viewModelScope.launch {
             if (word.isExtra) {
                 pointsCorrect.emit(pointsCorrect.value + 1)

@@ -42,8 +42,9 @@ class GeoSwitchingViewModel @Inject constructor(
         pointsCorrect,
         pointsInCorrect,
         isExerciseFinished,
-        uiMessageManager.message
-    ) { figures, timerState, pointsCorrect, pointsIncorrect, isExerciseFinished, message ->
+        uiMessageManager.message,
+        averageTimeForAnswer
+    ) { figures, timerState, pointsCorrect, pointsIncorrect, isExerciseFinished, message, averageTimeForAnswer ->
         GeoSwitchingViewState(
             figure = figures.firstOr(GeoFigure.Test),
             timerState = timerState,
@@ -51,7 +52,8 @@ class GeoSwitchingViewModel @Inject constructor(
                 name = exerciseName,
                 isFinished = isExerciseFinished,
                 pointsCorrect = pointsCorrect,
-                pointsIncorrect = pointsIncorrect
+                pointsIncorrect = pointsIncorrect,
+                averageTimeForAnswer = averageTimeForAnswer
             ),
             message = message
         )
@@ -89,6 +91,8 @@ class GeoSwitchingViewModel @Inject constructor(
     }
 
     private fun onChose(variant: YesNoChoseVariations) {
+        onAnswer()
+
         viewModelScope.launch {
             val currentItem = items.first().first()
 

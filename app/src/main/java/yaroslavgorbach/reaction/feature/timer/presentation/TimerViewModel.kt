@@ -16,7 +16,7 @@ import yaroslavgorbach.reaction.utill.TimerCountDown.Companion.ONE_SECOND
 import javax.inject.Inject
 
 @HiltViewModel
-class ExerciseTimerViewModel @Inject constructor(savedState: SavedStateHandle) : ViewModel() {
+class TimerViewModel @Inject constructor(savedState: SavedStateHandle) : ViewModel() {
 
     val exerciseName: ExerciseName = savedState[EXERCISE_NAME_ARG]!!
 

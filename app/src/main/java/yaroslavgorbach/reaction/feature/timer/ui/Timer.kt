@@ -1,6 +1,5 @@
 package yaroslavgorbach.reaction.feature.timer.ui
 
-import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.ExperimentalMaterialApi
@@ -16,7 +15,7 @@ import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
 import yaroslavgorbach.reaction.feature.common.ui.theme.AppTypography
 import yaroslavgorbach.reaction.feature.timer.model.ExerciseTimerActions
 import yaroslavgorbach.reaction.feature.timer.model.ExerciseTimerViewState
-import yaroslavgorbach.reaction.feature.timer.presentation.ExerciseTimerViewModel
+import yaroslavgorbach.reaction.feature.timer.presentation.TimerViewModel
 import yaroslavgorbach.reaction.utill.TimerCountDown
 
 @ExperimentalMaterialApi
@@ -25,7 +24,7 @@ fun ExerciseTimer(
     openExercise: (exerciseName: ExerciseName) -> Unit,
     onBackClick: () -> Unit,
 ) {
-    val viewModel: ExerciseTimerViewModel = hiltViewModel()
+    val viewModel: TimerViewModel = hiltViewModel()
 
     ExerciseTimer(
         viewModel = viewModel,
@@ -37,7 +36,7 @@ fun ExerciseTimer(
 @ExperimentalMaterialApi
 @Composable
 internal fun ExerciseTimer(
-    viewModel: ExerciseTimerViewModel,
+    viewModel: TimerViewModel,
     openExercise: (exerciseName: ExerciseName) -> Unit,
     onBack: () -> Unit,
 ) {

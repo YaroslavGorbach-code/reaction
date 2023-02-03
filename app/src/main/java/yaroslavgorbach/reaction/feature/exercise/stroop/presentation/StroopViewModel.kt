@@ -43,8 +43,9 @@ class StroopViewModel @Inject constructor(
         pointsCorrect,
         pointsInCorrect,
         isExerciseFinished,
-        uiMessageManager.message
-    ) { words, timerState, pointsCorrect, pointsIncorrect, isExerciseFinished, message ->
+        uiMessageManager.message,
+        averageTimeForAnswer
+    ) { words, timerState, pointsCorrect, pointsIncorrect, isExerciseFinished, message, averageTimeForAnswer ->
         StroopViewState(
             word = words.firstOrNull() ?: StroopWord.Empty,
             timerState = timerState,
@@ -92,6 +93,8 @@ class StroopViewModel @Inject constructor(
     }
 
     private fun checkChosenValiant(wordColorVariant: WordColorVariant) {
+        onAnswer()
+
         viewModelScope.launch {
             val currentWord = state.value.word
 

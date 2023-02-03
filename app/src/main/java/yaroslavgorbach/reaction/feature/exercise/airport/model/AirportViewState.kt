@@ -3,7 +3,6 @@ package yaroslavgorbach.reaction.feature.exercise.airport.model
 import yaroslavgorbach.reaction.data.exercise.airport.model.Plane
 import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
 import yaroslavgorbach.reaction.feature.exercise.common.model.FinishExerciseState
-import yaroslavgorbach.reaction.feature.exercise.extraNumber.model.ExtraNumberUiMessage
 import yaroslavgorbach.reaction.utill.TimerCountDown
 import yaroslavgorbach.reaction.utill.UiMessage
 

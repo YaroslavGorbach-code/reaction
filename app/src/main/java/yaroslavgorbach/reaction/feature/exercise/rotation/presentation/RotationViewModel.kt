@@ -44,8 +44,9 @@ class RotationViewModel @Inject constructor(
         pointsCorrect,
         pointsInCorrect,
         isExerciseFinished,
-        uiMessageManager.message
-    ) { tables, timerState, pointsCorrect, pointsIncorrect, isExerciseFinished, message ->
+        uiMessageManager.message,
+        averageTimeForAnswer
+    ) { tables, timerState, pointsCorrect, pointsIncorrect, isExerciseFinished, message, averageTimeForAnswer ->
         RotationViewState(
             tables = tables.firstOr(Tables.Test),
             timerState = timerState,
@@ -53,7 +54,8 @@ class RotationViewModel @Inject constructor(
                 name = exerciseName,
                 isFinished = isExerciseFinished,
                 pointsCorrect = pointsCorrect,
-                pointsIncorrect = pointsIncorrect
+                pointsIncorrect = pointsIncorrect,
+                averageTimeForAnswer = averageTimeForAnswer
             ),
             message = message
         )
@@ -93,6 +95,8 @@ class RotationViewModel @Inject constructor(
     }
 
     private fun checkChosenValiant(choseVariant: YesNoChoseVariations) {
+        onAnswer()
+
         viewModelScope.launch {
             val currentTables = state.value.tables
 

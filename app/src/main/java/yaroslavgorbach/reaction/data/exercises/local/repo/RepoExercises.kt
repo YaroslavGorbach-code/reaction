@@ -1,4 +1,4 @@
-package yaroslavgorbach.reaction.data.exercises.repo
+package yaroslavgorbach.reaction.data.exercises.local.repo
 
 import kotlinx.coroutines.flow.Flow
 import yaroslavgorbach.reaction.data.exercises.local.model.Exercise

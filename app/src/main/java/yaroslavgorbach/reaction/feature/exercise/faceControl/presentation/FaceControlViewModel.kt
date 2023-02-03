@@ -41,8 +41,9 @@ class FaceControlViewModel @Inject constructor(
         pointsCorrect,
         pointsInCorrect,
         isExerciseFinished,
-        uiMessageManager.message
-    ) { facePacks, timerState, pointsCorrect, pointsIncorrect, isExerciseFinished, message ->
+        uiMessageManager.message,
+        averageTimeForAnswer
+    ) { facePacks, timerState, pointsCorrect, pointsIncorrect, isExerciseFinished, message, averageTimeForAnswer ->
         FaceControlViewState(
             facePacks = facePacks,
             timerState = timerState,
@@ -50,7 +51,8 @@ class FaceControlViewModel @Inject constructor(
                 name = exerciseName,
                 isFinished = isExerciseFinished,
                 pointsCorrect = pointsCorrect,
-                pointsIncorrect = pointsIncorrect
+                pointsIncorrect = pointsIncorrect,
+                averageTimeForAnswer = averageTimeForAnswer
             ),
             message = message
         )
@@ -88,6 +90,8 @@ class FaceControlViewModel @Inject constructor(
     }
 
     private fun onFaceClick(face: Face) {
+        onAnswer()
+
         viewModelScope.launch {
             if (face.isDissatisfied) {
                 pointsCorrect.emit(pointsCorrect.value + 1)

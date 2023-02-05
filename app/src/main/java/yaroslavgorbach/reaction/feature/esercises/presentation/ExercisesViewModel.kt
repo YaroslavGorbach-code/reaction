@@ -28,8 +28,7 @@ class ExercisesViewModel @Inject constructor(
 ) : ViewModel() {
     private val pendingActions = MutableSharedFlow<ExercisesActions>()
 
-    private val exerciseAvailabilityDialogState =
-        MutableStateFlow(ExercisesViewState.ExerciseAvailabilityDialogState())
+    private val exerciseAvailabilityDialogState = MutableStateFlow(ExercisesViewState.ExerciseAvailabilityDialogState())
 
     private val uiMessageManager: UiMessageManager<ExercisesUiMassage> = UiMessageManager()
 
@@ -40,9 +39,7 @@ class ExercisesViewModel @Inject constructor(
         uiMessageManager.message,
         ::ExercisesViewState
     ).stateIn(
-        scope = viewModelScope,
-        started = WhileSubscribed(5000),
-        initialValue = ExercisesViewState.Empty
+        scope = viewModelScope, started = WhileSubscribed(5000), initialValue = ExercisesViewState.Empty
     )
 
     init {
@@ -57,8 +54,7 @@ class ExercisesViewModel @Inject constructor(
                     is ExercisesActions.ShowExerciseIsNotAvailableDialog -> {
                         exerciseAvailabilityDialogState.emit(
                             ExercisesViewState.ExerciseAvailabilityDialogState(
-                                isVisible = true,
-                                exerciseName = action.exerciseName
+                                isVisible = true, exerciseName = action.exerciseName
                             )
                         )
                     }
@@ -82,6 +78,9 @@ class ExercisesViewModel @Inject constructor(
                                 makeExerciseAvailableInteractor.invoke(exerciseName = action.exerciseName)
                             }
                         }
+                    }
+                    is ExercisesActions.ShowStatisticsPrompt -> {
+                        uiMessageManager.emitMessage(UiMessage(ExercisesUiMassage.ShowStatistics(action.exerciseName)))
                     }
                     else -> error("$action is not handled")
                 }

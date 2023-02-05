@@ -24,9 +24,8 @@ import yaroslavgorbach.reaction.feature.common.ui.theme.*
 
 @ExperimentalMaterialApi
 @Composable
-fun ExerciseItem(exercise: Exercise, showUnavailablePrompt: () -> Unit) {
+fun ExerciseItem(exercise: Exercise, showUnavailablePrompt: () -> Unit, showStatisticsPrompt: () -> Unit) {
     Box(modifier = Modifier.fillMaxSize()) {
-
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -34,13 +33,31 @@ fun ExerciseItem(exercise: Exercise, showUnavailablePrompt: () -> Unit) {
                 .background(EerieBlack)
         ) {
 
-            ProgressIndicator(
-                modifier = Modifier
-                    .padding(horizontal = 24.dp, vertical = 24.dp)
-                    .fillMaxWidth(),
-                gaps = NEED_WINS_TO_OPEN_NEXT_EXERCISE,
-                filledGaps = exercise.numberOfWins
-            )
+            if (exercise.isNextExerciseAvailable.not()) {
+                ProgressIndicator(
+                    modifier = Modifier
+                        .padding(horizontal = 24.dp, vertical = 24.dp)
+                        .fillMaxWidth(),
+                    gaps = NEED_WINS_TO_OPEN_NEXT_EXERCISE,
+                    filledGaps = exercise.numberOfWins
+                )
+            } else {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight()
+                ) {
+                    Icon(
+                        tint = LightSilver,
+                        painter = painterResource(id = R.drawable.ic_analitics),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .align(Alignment.TopEnd)
+                            .clickable { showStatisticsPrompt() }
+                            .padding(horizontal = 24.dp, vertical = 24.dp)
+                    )
+                }
+            }
 
             Icon(
                 tint = White,
@@ -121,7 +138,7 @@ fun ProgressIndicator(modifier: Modifier, gaps: Int, filledGaps: Int) {
 fun ExerciseItemPreview(exercise: Exercise = Exercise.Test) {
     ReactionTheme {
         Surface {
-            ExerciseItem(exercise = exercise) {}
+            ExerciseItem(exercise = exercise, showStatisticsPrompt = {}, showUnavailablePrompt = {})
         }
     }
 }

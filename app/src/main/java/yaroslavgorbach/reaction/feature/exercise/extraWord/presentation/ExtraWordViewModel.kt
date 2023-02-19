@@ -12,6 +12,7 @@ import yaroslavgorbach.reaction.domain.exercises.UpdateExerciseInteractor
 import yaroslavgorbach.reaction.data.exercise.extraWord.model.Word
 import yaroslavgorbach.reaction.data.exercise.extraWord.model.WordPack
 import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
+import yaroslavgorbach.reaction.domain.statistics.SaveStatisticsInteractor
 import yaroslavgorbach.reaction.feature.exercise.base.BaseExerciseViewModel
 import yaroslavgorbach.reaction.feature.exercise.common.model.FinishExerciseState
 import yaroslavgorbach.reaction.feature.exercise.extraWord.model.ExtraWordActions
@@ -27,9 +28,11 @@ class ExtraWordViewModel @Inject constructor(
     observeExtraWordsInteractor: ObserveExtraWordsInteractor,
     getExerciseInteractor: GetExerciseInteractor,
     private val updateExerciseInteractor: UpdateExerciseInteractor,
+    saveStatisticsInteractor: SaveStatisticsInteractor
 ) : BaseExerciseViewModel(
     exerciseName = ExerciseName.EXTRA_WORD,
-    getExerciseInteractor = getExerciseInteractor
+    getExerciseInteractor = getExerciseInteractor,
+    saveStatisticsInteractor
 ) {
 
     private val pendingActions = MutableSharedFlow<ExtraWordActions>()
@@ -74,15 +77,15 @@ class ExtraWordViewModel @Inject constructor(
             pendingActions.collect { action ->
                 when (action) {
                     is ExtraWordActions.WordClick -> onWordClick(action.word)
-                    is ExtraWordActions.FinishExercise -> finishExercise()
+                    is ExtraWordActions.FinishExercise -> finishExercise(state.value.finishExerciseState.isWin)
                     else -> error("$action is not handled")
                 }
             }
         }
     }
 
-    override suspend fun finishExercise() {
-        super.finishExercise()
+    override suspend fun finishExercise(isSuccess: Boolean) {
+        super.finishExercise(isSuccess)
         updateExercise()
     }
 

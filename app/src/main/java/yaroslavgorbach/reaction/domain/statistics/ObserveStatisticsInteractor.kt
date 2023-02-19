@@ -9,7 +9,7 @@ import java.util.Date
 import javax.inject.Inject
 
 class ObserveStatisticsInteractor @Inject constructor (private val repoStatistics: RepoStatistics) {
-    operator fun invoke(exerciseName: ExerciseName, dateFrom: Date, dateTo: Date): Flow<List<ExerciseStatistics>> {
-        return repoStatistics.observe(exerciseName, dateFrom, dateTo)
+    operator fun invoke(exerciseName: ExerciseName): Flow<List<ExerciseStatistics>> {
+        return repoStatistics.observe(exerciseName)
     }
 }

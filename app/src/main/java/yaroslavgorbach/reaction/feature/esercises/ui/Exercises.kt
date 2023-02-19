@@ -38,6 +38,7 @@ import yaroslavgorbach.reaction.feature.esercises.model.ExercisesActions
 import yaroslavgorbach.reaction.feature.esercises.model.ExercisesUiMassage
 import yaroslavgorbach.reaction.feature.esercises.model.ExercisesViewState
 import yaroslavgorbach.reaction.feature.esercises.presentation.ExercisesViewModel
+import yaroslavgorbach.reaction.feature.onboarding.ShowOnboardingDialog
 import yaroslavgorbach.reaction.utill.findActivity
 import kotlin.math.absoluteValue
 
@@ -77,6 +78,7 @@ internal fun Exercises(
     actioner: (ExercisesActions) -> Unit,
     onMessageShown: (id: Long) -> Unit,
 ) {
+
     val coroutineScope = rememberCoroutineScope()
 
     val modalSheetState = rememberModalBottomSheetState(
@@ -126,7 +128,7 @@ internal fun Exercises(
     ModalBottomSheetLayout(sheetState = modalSheetState,
         sheetShape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp),
         sheetContent = {
-            StatisticsBottomShitContent()
+            StatisticsBottomShitContent(state.statisticsState)
         },
         content = {
             Column(modifier = Modifier.fillMaxSize()) {
@@ -216,184 +218,6 @@ internal fun Exercises(
 }
 
 @Composable
-private fun StatisticsBottomShitContent() {
-    val graphsHeight = 220.dp
-
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight()
-    ) {
-        Text(text = "Statistics", style = AppTypography.h3, modifier = Modifier.padding(top = 20.dp, start = 20.dp))
-
-        Text(text = "Mon, 19.03", style = AppTypography.subtitle5, modifier = Modifier.padding(start = 20.dp))
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 30.dp, start = 20.dp, top = 23.dp)
-        ) {
-            Box(modifier = Modifier.weight(0.8f).height(graphsHeight)) {
-                Column(modifier = Modifier.align(Center)) {
-                    Column(
-                        modifier = Modifier.background(color = StatisticCardsBg, shape = RoundedCornerShape(12))
-                    ) {
-                        Text(
-                            text = "Correct",
-                            modifier = Modifier.padding(start = 20.dp, top = 16.dp),
-                            style = AppTypography.subtitle4.copy(platformStyle = PlatformTextStyle(includeFontPadding = false))
-                        )
-
-                        Text(
-                            text = "32% of correct answers",
-                            modifier = Modifier.padding(start = 20.dp, top = 8.dp),
-                            style = AppTypography.body4
-                        )
-
-                        // TODO: real data add
-                        LinearProgressIndicator(
-                            backgroundColor = White,
-                            progress = 0.5f,
-                            modifier = Modifier
-                                .wrapContentWidth()
-                                .padding(top = 8.dp, start = 20.dp, end = 20.dp, bottom = 16.dp)
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    Column(modifier = Modifier.background(color = StatisticCardsBg, shape = RoundedCornerShape(12))) {
-                        Text(
-                            text = "Average",
-                            modifier = Modifier.padding(start = 20.dp, top = 16.dp),
-                            style = AppTypography.subtitle4.copy(platformStyle = PlatformTextStyle(includeFontPadding = false))
-                        )
-
-                        Text(
-                            text = "Time to answer 0.4s",
-                            modifier = Modifier.padding(start = 20.dp, top = 8.dp),
-                            style = AppTypography.body4
-                        )
-
-                        // TODO: real data add
-                        LinearProgressIndicator(
-                            backgroundColor = White,
-                            progress = 0.9f,
-                            modifier = Modifier
-                                .wrapContentWidth()
-                                .padding(top = 8.dp, start = 20.dp, end = 20.dp, bottom = 16.dp)
-                        )
-                    }
-                }
-            }
-
-            Spacer(modifier = Modifier.width(16.dp))
-
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .height(graphsHeight)
-                    .background(color = StatisticCardsBg, shape = RoundedCornerShape(12))
-            ) {
-                Text(
-                    text = "Weekly progress",
-                    modifier = Modifier.padding(start = 20.dp, top = 16.dp),
-                    style = AppTypography.subtitle4.copy(platformStyle = PlatformTextStyle(includeFontPadding = false))
-                )
-                Text(
-                    text = "01.12.22 - 0.7.12.22",
-                    modifier = Modifier.padding(start = 20.dp),
-                    style = AppTypography.body5
-                )
-
-                Row(modifier = Modifier.padding(top = 12.dp, start = 20.dp, end = 20.dp)) {
-                    VerticalProgress(
-                        progress = 0.7f, modifier = Modifier
-                            .wrapContentWidth()
-                            .weight(1f), "Mon"
-                    )
-
-                    VerticalProgress(
-                        progress = 0.8f, modifier = Modifier
-                            .wrapContentWidth()
-                            .weight(1f), "Tue"
-                    )
-
-                    VerticalProgress(
-                        progress = 0.9f, modifier = Modifier
-                            .wrapContentWidth()
-                            .weight(1f), "Wed"
-                    )
-
-                    VerticalProgress(
-                        progress = 0.1f, modifier = Modifier
-                            .wrapContentWidth()
-                            .weight(1f), "Thu"
-                    )
-
-                    VerticalProgress(
-                        progress = 0.4f, modifier = Modifier
-                            .wrapContentWidth()
-                            .weight(1f), "Fri"
-                    )
-
-                    VerticalProgress(
-                        progress = 0.2f, modifier = Modifier
-                            .wrapContentWidth()
-                            .weight(1f), "Sat"
-                    )
-
-                    VerticalProgress(
-                        progress = 0.6f, modifier = Modifier
-                            .wrapContentWidth()
-                            .weight(1f), "Sun"
-                    )
-                }
-            }
-
-            Spacer(modifier = Modifier.width(20.dp))
-        }
-    }
-}
-
-@Composable
-fun VerticalProgress(
-    progress: Float, modifier: Modifier = Modifier, label: String
-) {
-    val mProgress = animateFloatAsState(targetValue = progress * 100 / 100)
-
-    Column(modifier) {
-
-        Column(
-            modifier = Modifier
-                .background(color = White, shape = RoundedCornerShape(12.dp))
-                .width(14.dp)
-                .height(138.dp)
-        ) {
-            Box(
-                modifier = Modifier
-                    .weight(if ((1 - mProgress.value) == 0f) 0.0001f else 1f - mProgress.value)
-                    .fillMaxWidth()
-            )
-            Box(
-                modifier = Modifier
-                    .weight(mProgress.value)
-                    .fillMaxWidth()
-                    .background(color = EerieBlack, shape = RoundedCornerShape(12.dp))
-            )
-        }
-        Text(
-            text = label,
-            style = AppTypography.subtitle7,
-            modifier = Modifier
-                .padding(top = 3.dp)
-                .align(CenterHorizontally),
-            textAlign = TextAlign.Center
-        )
-    }
-}
-
-@Composable
 private fun ShowExerciseAvailableDialog(onDismiss: () -> Unit, onShowAd: () -> Unit) {
     AlertDialog(onDismissRequest = onDismiss,
         title = { Text(stringResource(id = R.string.exercise_is_unavailable)) },
@@ -422,25 +246,6 @@ private fun ShowExerciseAvailableDialog(onDismiss: () -> Unit, onShowAd: () -> U
         })
 }
 
-@Composable
-private fun ShowOnboardingDialog(onDismiss: () -> Unit) {
-    AlertDialog(onDismissRequest = onDismiss,
-        title = { Text(stringResource(id = R.string.about_app)) },
-        text = { Text(stringResource(id = R.string.onboarding_text)) },
-        buttons = {
-            Row(
-                modifier = Modifier.padding(all = 8.dp), horizontalArrangement = Arrangement.Center
-            ) {
-                Button(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(8.dp), onClick = onDismiss
-                ) {
-                    Text(stringResource(id = R.string.start))
-                }
-            }
-        })
-}
 
 @ExperimentalMaterialApi
 @Composable

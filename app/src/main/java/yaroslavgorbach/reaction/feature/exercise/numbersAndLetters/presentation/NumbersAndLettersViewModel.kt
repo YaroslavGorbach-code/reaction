@@ -11,6 +11,7 @@ import yaroslavgorbach.reaction.domain.exercises.GetExerciseInteractor
 import yaroslavgorbach.reaction.domain.exercises.UpdateExerciseInteractor
 import yaroslavgorbach.reaction.data.exercise.numbersLetters.model.NumberAndLetter
 import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
+import yaroslavgorbach.reaction.domain.statistics.SaveStatisticsInteractor
 import yaroslavgorbach.reaction.feature.exercise.base.BaseExerciseViewModel
 import yaroslavgorbach.reaction.feature.exercise.common.model.FinishExerciseState
 import yaroslavgorbach.reaction.feature.exercise.common.model.YesNoChoseVariations
@@ -28,7 +29,12 @@ class NumbersAndLettersViewModel @Inject constructor(
     observeNumbersAndLettersInteractor: ObserveNumbersAndLettersInteractor,
     getExerciseInteractor: GetExerciseInteractor,
     private val updateExerciseInteractor: UpdateExerciseInteractor,
-) : BaseExerciseViewModel(exerciseName = ExerciseName.NUMBERS_AND_LETTERS, getExerciseInteractor) {
+    saveStatisticsInteractor: SaveStatisticsInteractor
+) : BaseExerciseViewModel(
+    exerciseName = ExerciseName.NUMBERS_AND_LETTERS,
+    getExerciseInteractor,
+    saveStatisticsInteractor
+) {
 
     private val pendingActions = MutableSharedFlow<NumbersAndLettersActions>()
 
@@ -72,15 +78,15 @@ class NumbersAndLettersViewModel @Inject constructor(
             pendingActions.collect { action ->
                 when (action) {
                     is NumbersAndLettersActions.Chose -> onChose(action.chose)
-                    is NumbersAndLettersActions.FinishExercise -> finishExercise()
+                    is NumbersAndLettersActions.FinishExercise -> finishExercise(state.value.finishExerciseState.isWin)
                     else -> error("$action is not handled")
                 }
             }
         }
     }
 
-    override suspend fun finishExercise() {
-        super.finishExercise()
+    override suspend fun finishExercise(isSuccess: Boolean) {
+        super.finishExercise(isSuccess)
         updateExercise()
     }
 

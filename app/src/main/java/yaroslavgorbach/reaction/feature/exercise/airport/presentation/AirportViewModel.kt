@@ -12,6 +12,7 @@ import yaroslavgorbach.reaction.domain.exercises.UpdateExerciseInteractor
 import yaroslavgorbach.reaction.data.exercise.airport.model.Direction
 import yaroslavgorbach.reaction.data.exercise.airport.model.Plane
 import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
+import yaroslavgorbach.reaction.domain.statistics.SaveStatisticsInteractor
 import yaroslavgorbach.reaction.feature.exercise.airport.model.AirportActions
 import yaroslavgorbach.reaction.feature.exercise.airport.model.AirportUiMessage
 import yaroslavgorbach.reaction.feature.exercise.airport.model.AirportViewState
@@ -27,8 +28,11 @@ import javax.inject.Inject
 class AirportViewModel @Inject constructor(
     observePlainsInteractor: ObservePlainsInteractor,
     private val updateExerciseInteractor: UpdateExerciseInteractor,
-    getExerciseInteractor: GetExerciseInteractor
-) : BaseExerciseViewModel(exerciseName = ExerciseName.AIRPORT, getExerciseInteractor) {
+    getExerciseInteractor: GetExerciseInteractor,
+    saveStatisticsInteractor: SaveStatisticsInteractor
+) : BaseExerciseViewModel(
+    exerciseName = ExerciseName.AIRPORT, getExerciseInteractor, saveStatisticsInteractor
+) {
 
     private val pendingActions = MutableSharedFlow<AirportActions>()
 
@@ -65,22 +69,20 @@ class AirportViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            observePlainsInteractor()
-                .flowOn(Dispatchers.IO)
-                .collect(items::emit)
+            observePlainsInteractor().flowOn(Dispatchers.IO).collect(items::emit)
 
             pendingActions.collect { action ->
                 when (action) {
                     is AirportActions.Chose -> onItemClick(action.direction)
-                    is AirportActions.FinishExercise -> finishExercise()
+                    is AirportActions.FinishExercise -> finishExercise(state.value.finishExerciseState.isWin)
                     else -> error("$action is not handled")
                 }
             }
         }
     }
 
-    override suspend fun finishExercise() {
-        super.finishExercise()
+    override suspend fun finishExercise(isSuccess: Boolean) {
+        super.finishExercise(isSuccess)
         updateExercise()
     }
 
@@ -96,10 +98,10 @@ class AirportViewModel @Inject constructor(
         viewModelScope.launch {
             val currentItem = items.first().first()
 
-            if (currentItem.checkIsResultCorrect(item)){
+            if (currentItem.checkIsResultCorrect(item)) {
                 pointsCorrect.emit(pointsCorrect.value + 1)
                 uiMessageManager.emitMessage(UiMessage(AirportUiMessage.AnswerIsCorrect))
-            }else{
+            } else {
                 pointsInCorrect.emit(pointsInCorrect.value + 1)
                 uiMessageManager.emitMessage(UiMessage(AirportUiMessage.AnswerIsNotCorrect))
             }

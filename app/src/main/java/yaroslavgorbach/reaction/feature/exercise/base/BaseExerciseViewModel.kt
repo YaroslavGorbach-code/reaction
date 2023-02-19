@@ -1,21 +1,24 @@
 package yaroslavgorbach.reaction.feature.exercise.base
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import yaroslavgorbach.reaction.BuildConfig
-import yaroslavgorbach.reaction.domain.exercises.GetExerciseInteractor
 import yaroslavgorbach.reaction.data.exercises.local.model.Exercise
 import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
+import yaroslavgorbach.reaction.data.statistics.model.ExerciseStatistics
+import yaroslavgorbach.reaction.domain.exercises.GetExerciseInteractor
+import yaroslavgorbach.reaction.domain.statistics.SaveStatisticsInteractor
 import yaroslavgorbach.reaction.utill.TimerCountDown
 import yaroslavgorbach.reaction.utill.UiMessageManager
-import java.util.Date
+import java.util.*
 
 abstract class BaseExerciseViewModel(
-    val exerciseName: ExerciseName, getExerciseInteractor: GetExerciseInteractor
+    val exerciseName: ExerciseName,
+    getExerciseInteractor: GetExerciseInteractor,
+    val saveStatisticsInteractor: SaveStatisticsInteractor
 ) : ViewModel() {
 
     abstract val uiMessageManager: UiMessageManager<*>
@@ -48,16 +51,16 @@ abstract class BaseExerciseViewModel(
         timerCountDown.start()
     }
 
-    protected open suspend fun finishExercise() {
+    protected open suspend fun finishExercise(isSuccess: Boolean) {
         isExerciseFinished.emit(true)
-        averageTimeForAnswer.emit(answersAverageTime.sum() / answersAverageTime.size)
+        averageTimeForAnswer.emit(answersAverageTime.sum() / if (answersAverageTime.size != 0) answersAverageTime.size else 1)
+        saveStatistics(isSuccess)
     }
 
     protected fun onAnswer() {
         val time = Date().time
         val timeSpendOnAnswer = time - previousAnswerTime
         previousAnswerTime = time
-        Log.v("dsasddsa", timeSpendOnAnswer.toString())
         answersAverageTime.add(timeSpendOnAnswer)
     }
 
@@ -66,5 +69,18 @@ abstract class BaseExerciseViewModel(
             delay(200)
             uiMessageManager.clearMessage(id)
         }
+    }
+
+    private suspend fun saveStatistics(isSuccess: Boolean) {
+        val statistics = ExerciseStatistics(
+            name = exerciseName,
+            correctAnswers = pointsCorrect.value,
+            averageTimeToAnswer = averageTimeForAnswer.value,
+            numberOfAnswers = pointsCorrect.value + pointsInCorrect.value,
+            isSuccess = isSuccess,
+            date = Date().time
+        )
+
+        saveStatisticsInteractor(statistics)
     }
 }

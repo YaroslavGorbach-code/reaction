@@ -11,6 +11,7 @@ import yaroslavgorbach.reaction.domain.exercises.GetExerciseInteractor
 import yaroslavgorbach.reaction.domain.exercises.UpdateExerciseInteractor
 import yaroslavgorbach.reaction.data.exercise.geoSwitching.model.GeoFigure
 import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
+import yaroslavgorbach.reaction.domain.statistics.SaveStatisticsInteractor
 import yaroslavgorbach.reaction.feature.exercise.base.BaseExerciseViewModel
 import yaroslavgorbach.reaction.feature.exercise.common.model.FinishExerciseState
 import yaroslavgorbach.reaction.feature.exercise.common.model.YesNoChoseVariations
@@ -28,7 +29,12 @@ class GeoSwitchingViewModel @Inject constructor(
     observeGeoFiguresInteractor: ObserveFiguresInteractor,
     getExerciseInteractor: GetExerciseInteractor,
     private val updateExerciseInteractor: UpdateExerciseInteractor,
-) : BaseExerciseViewModel(exerciseName = ExerciseName.GEO_SWITCHING, getExerciseInteractor) {
+    saveStatisticsInteractor: SaveStatisticsInteractor
+) : BaseExerciseViewModel(
+    exerciseName = ExerciseName.GEO_SWITCHING,
+    getExerciseInteractor,
+    saveStatisticsInteractor
+) {
 
     private val pendingActions = MutableSharedFlow<GeoSwitchingActions>()
 
@@ -72,15 +78,15 @@ class GeoSwitchingViewModel @Inject constructor(
             pendingActions.collect { action ->
                 when (action) {
                     is GeoSwitchingActions.Chose -> onChose(action.yesNoChose)
-                    is GeoSwitchingActions.FinishExercise -> finishExercise()
+                    is GeoSwitchingActions.FinishExercise -> finishExercise(state.value.finishExerciseState.isWin)
                     else -> error("$action is not handled")
                 }
             }
         }
     }
 
-    override suspend fun finishExercise() {
-        super.finishExercise()
+    override suspend fun finishExercise(isSuccess: Boolean) {
+        super.finishExercise(isSuccess)
         updateExercise()
     }
 

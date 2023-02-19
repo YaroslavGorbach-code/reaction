@@ -14,6 +14,7 @@ import yaroslavgorbach.reaction.domain.exercises.UpdateExerciseInteractor
 import yaroslavgorbach.reaction.data.exercise.stroop.model.StroopWord
 import yaroslavgorbach.reaction.data.exercise.stroop.model.WordColorVariant
 import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
+import yaroslavgorbach.reaction.domain.statistics.SaveStatisticsInteractor
 import yaroslavgorbach.reaction.feature.exercise.base.BaseExerciseViewModel
 import yaroslavgorbach.reaction.feature.exercise.common.model.FinishExerciseState
 import yaroslavgorbach.reaction.feature.exercise.stroop.model.StroopActions
@@ -29,13 +30,19 @@ class StroopViewModel @Inject constructor(
     observeStoopWordsInteractor: ObserveStoopWordsInteractor,
     getExerciseInteractor: GetExerciseInteractor,
     private val updateExerciseInteractor: UpdateExerciseInteractor,
-) : BaseExerciseViewModel(exerciseName = ExerciseName.STROOP, getExerciseInteractor) {
+    saveStatisticsInteractor: SaveStatisticsInteractor
+) : BaseExerciseViewModel(
+    exerciseName = ExerciseName.STROOP,
+    getExerciseInteractor,
+    saveStatisticsInteractor
+) {
 
     private val pendingActions = MutableSharedFlow<StroopActions>()
 
     private val words: MutableStateFlow<List<StroopWord>> = MutableStateFlow(emptyList())
 
     override val uiMessageManager: UiMessageManager<StroopUiMessage> = UiMessageManager()
+
 
     val state: StateFlow<StroopViewState> = combine(
         words,
@@ -53,7 +60,8 @@ class StroopViewModel @Inject constructor(
                 name = exerciseName,
                 isFinished = isExerciseFinished,
                 pointsCorrect = pointsCorrect,
-                pointsIncorrect = pointsIncorrect
+                pointsIncorrect = pointsIncorrect,
+                averageTimeForAnswer = averageTimeForAnswer
             ),
             message = message
         )
@@ -74,15 +82,15 @@ class StroopViewModel @Inject constructor(
             pendingActions.collect { action ->
                 when (action) {
                     is StroopActions.OnChose -> checkChosenValiant(action.chose)
-                    is StroopActions.FinishExercise -> finishExercise()
+                    is StroopActions.FinishExercise -> finishExercise(state.value.finishExerciseState.isWin)
                     else -> error("$action is not handled")
                 }
             }
         }
     }
 
-    override suspend fun finishExercise() {
-        super.finishExercise()
+    override suspend fun finishExercise(isSuccess: Boolean) {
+        super.finishExercise(isSuccess)
         updateExercise()
     }
 

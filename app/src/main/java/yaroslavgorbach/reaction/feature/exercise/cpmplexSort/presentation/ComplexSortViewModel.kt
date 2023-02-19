@@ -11,6 +11,7 @@ import yaroslavgorbach.reaction.domain.exercises.GetExerciseInteractor
 import yaroslavgorbach.reaction.domain.exercises.UpdateExerciseInteractor
 import yaroslavgorbach.reaction.data.exercise.complexSort.model.ComplexSortItem
 import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
+import yaroslavgorbach.reaction.domain.statistics.SaveStatisticsInteractor
 import yaroslavgorbach.reaction.feature.exercise.base.BaseExerciseViewModel
 import yaroslavgorbach.reaction.feature.exercise.cpmplexSort.model.ComplexSortUiMessage
 import yaroslavgorbach.reaction.feature.exercise.common.model.FinishExerciseState
@@ -25,10 +26,12 @@ import javax.inject.Inject
 class ComplexSortViewModel @Inject constructor(
     observeComplexSortItemPacksItemsInteractor: ObserveComplexSortItemsInteractor,
     getExerciseInteractor: GetExerciseInteractor,
-    private val updateExerciseInteractor: UpdateExerciseInteractor
+    private val updateExerciseInteractor: UpdateExerciseInteractor,
+    saveStatisticsInteractor: SaveStatisticsInteractor
 ) : BaseExerciseViewModel(
     exerciseName = ExerciseName.COMPLEX_SORT,
-    getExerciseInteractor = getExerciseInteractor
+    getExerciseInteractor = getExerciseInteractor,
+    saveStatisticsInteractor
 ) {
     private val pendingActions = MutableSharedFlow<ComplexSortActions>()
 
@@ -73,15 +76,15 @@ class ComplexSortViewModel @Inject constructor(
             pendingActions.collect { action ->
                 when (action) {
                     is ComplexSortActions.ItemClick -> onItemClick(action.item)
-                    is ComplexSortActions.FinishExercise -> finishExercise()
+                    is ComplexSortActions.FinishExercise -> finishExercise(state.value.finishExerciseState.isWin)
                     else -> error("$action is not handled")
                 }
             }
         }
     }
 
-    override suspend fun finishExercise() {
-        super.finishExercise()
+    override suspend fun finishExercise(isSuccess: Boolean) {
+        super.finishExercise(isSuccess)
         updateExercise()
     }
 

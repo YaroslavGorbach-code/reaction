@@ -7,7 +7,7 @@ import yaroslavgorbach.reaction.data.statistics.model.ExerciseStatistics
 import java.util.Date
 
 interface RepoStatistics {
-    fun observe(name: ExerciseName, dateFrom: Date, dateTo: Date): Flow<List<ExerciseStatistics>>
+    fun observe(name: ExerciseName): Flow<List<ExerciseStatistics>>
 
     suspend fun insert(exercise: ExerciseStatistics)
 

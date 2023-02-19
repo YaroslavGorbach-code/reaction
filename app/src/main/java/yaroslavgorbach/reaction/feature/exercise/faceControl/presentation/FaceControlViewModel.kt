@@ -13,6 +13,7 @@ import yaroslavgorbach.reaction.domain.exercises.UpdateExerciseInteractor
 import yaroslavgorbach.reaction.data.exercise.faceControl.model.Face
 import yaroslavgorbach.reaction.data.exercise.faceControl.model.FacePack
 import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
+import yaroslavgorbach.reaction.domain.statistics.SaveStatisticsInteractor
 import yaroslavgorbach.reaction.feature.exercise.base.BaseExerciseViewModel
 import yaroslavgorbach.reaction.feature.exercise.common.model.FinishExerciseState
 import yaroslavgorbach.reaction.feature.exercise.faceControl.model.FaceControlActions
@@ -27,7 +28,12 @@ class FaceControlViewModel @Inject constructor(
     observeFaceControlInteractor: ObserveFaceControlInteractor,
     getExerciseInteractor: GetExerciseInteractor,
     private val updateExerciseInteractor: UpdateExerciseInteractor,
-) : BaseExerciseViewModel(exerciseName = ExerciseName.FACE_CONTROL, getExerciseInteractor) {
+    saveStatisticsInteractor: SaveStatisticsInteractor
+) : BaseExerciseViewModel(
+    exerciseName = ExerciseName.FACE_CONTROL,
+    getExerciseInteractor,
+    saveStatisticsInteractor
+) {
 
     private val pendingActions = MutableSharedFlow<FaceControlActions>()
 
@@ -64,22 +70,20 @@ class FaceControlViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            observeFaceControlInteractor()
-                .flowOn(Dispatchers.IO)
-                .collect(facePacks::emit)
+            observeFaceControlInteractor().flowOn(Dispatchers.IO).collect(facePacks::emit)
 
             pendingActions.collect { action ->
                 when (action) {
                     is FaceControlActions.FaceClick -> onFaceClick(action.face)
-                    is FaceControlActions.FinishExercise -> finishExercise()
+                    is FaceControlActions.FinishExercise -> finishExercise(state.value.finishExerciseState.isWin)
                     else -> error("$action is not handled")
                 }
             }
         }
     }
 
-    override suspend fun finishExercise() {
-        super.finishExercise()
+    override suspend fun finishExercise(isSuccess: Boolean) {
+        super.finishExercise(isSuccess)
         updateExercise()
     }
 

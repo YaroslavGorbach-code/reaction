@@ -6,10 +6,12 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.launch
+import yaroslavgorbach.reaction.data.statistics.model.ExerciseStatistics
 import yaroslavgorbach.reaction.domain.exercises.MakeExerciseAvailableInteractor
 import yaroslavgorbach.reaction.domain.exercises.ObserveExercisesInteractor
 import yaroslavgorbach.reaction.domain.settings.ChangeIsFirstAppOpenToFalseInteractor
 import yaroslavgorbach.reaction.domain.settings.ObserveIsFirstAppOpenInteractor
+import yaroslavgorbach.reaction.domain.statistics.ObserveStatisticsInteractor
 import yaroslavgorbach.reaction.feature.esercises.model.ExercisesActions
 import yaroslavgorbach.reaction.feature.esercises.model.ExercisesUiMassage
 import yaroslavgorbach.reaction.feature.esercises.model.ExercisesViewState
@@ -24,11 +26,17 @@ class ExercisesViewModel @Inject constructor(
     observeIsFirstAppOpenInteractor: ObserveIsFirstAppOpenInteractor,
     changeIsFirstAppOpenToFalseInteractor: ChangeIsFirstAppOpenToFalseInteractor,
     makeExerciseAvailableInteractor: MakeExerciseAvailableInteractor,
+    observeStatisticsInteractor: ObserveStatisticsInteractor,
     adManager: AdManager
 ) : ViewModel() {
+
     private val pendingActions = MutableSharedFlow<ExercisesActions>()
 
-    private val exerciseAvailabilityDialogState = MutableStateFlow(ExercisesViewState.ExerciseAvailabilityDialogState())
+    private val exerciseAvailabilityDialogState = MutableStateFlow(
+        ExercisesViewState.ExerciseAvailabilityDialogState()
+    )
+
+    private val statistics = MutableStateFlow<List<ExercisesViewState.StatisticState>>(emptyList())
 
     private val uiMessageManager: UiMessageManager<ExercisesUiMassage> = UiMessageManager()
 
@@ -37,9 +45,12 @@ class ExercisesViewModel @Inject constructor(
         exerciseAvailabilityDialogState,
         observeIsFirstAppOpenInteractor(),
         uiMessageManager.message,
+        statistics,
         ::ExercisesViewState
     ).stateIn(
-        scope = viewModelScope, started = WhileSubscribed(5000), initialValue = ExercisesViewState.Empty
+        scope = viewModelScope,
+        started = WhileSubscribed(5000),
+        initialValue = ExercisesViewState.Empty
     )
 
     init {
@@ -80,7 +91,15 @@ class ExercisesViewModel @Inject constructor(
                         }
                     }
                     is ExercisesActions.ShowStatisticsPrompt -> {
-                        uiMessageManager.emitMessage(UiMessage(ExercisesUiMassage.ShowStatistics(action.exerciseName)))
+                        loadStatistics(observeStatisticsInteractor, action)
+
+                        uiMessageManager.emitMessage(
+                            UiMessage(
+                                ExercisesUiMassage.ShowStatistics(
+                                    action.exerciseName
+                                )
+                            )
+                        )
                     }
                     else -> error("$action is not handled")
                 }
@@ -100,6 +119,40 @@ class ExercisesViewModel @Inject constructor(
         }
     }
 
+    private fun loadStatistics(
+        observeStatisticsInteractor: ObserveStatisticsInteractor,
+        action: ExercisesActions.ShowStatisticsPrompt
+    ) {
+        observeStatisticsInteractor(exerciseName = action.exerciseName).map(::mapStatisticsEntityToUiState)
+            .onEach(statistics::emit)
+            .launchIn(viewModelScope)
+    }
+
+    private fun mapStatisticsEntityToUiState(statistics: List<ExerciseStatistics>): List<ExercisesViewState.StatisticState> {
+
+        return statistics.groupBy { it.period }.map { periodWithStatistics ->
+            val statisticsForCurrentPeriod = periodWithStatistics.value
+            val correctPercent = (statisticsForCurrentPeriod.sumOf { it.percentOfCorrectAnswers }
+                .toFloat() / statisticsForCurrentPeriod.size)
+
+            val timeToAnswer = statisticsForCurrentPeriod.sumOf { it.averageTimeToAnswer }
+                .toFloat() / statisticsForCurrentPeriod.size
+
+            val bars = statisticsForCurrentPeriod.groupBy { it.dayOfWeek }.map { statisticsMap->
+                ExercisesViewState.StatisticState.WinPercentsBar(
+                    dayOfWeek = statisticsMap.key,
+                    numberOfWins = statisticsMap.value.sumOf { it.correctAnswers }.toFloat(),
+                    numberOfRounds = statisticsMap.value.sumOf { it.numberOfAnswers }.toFloat()
+                )
+            }
+            ExercisesViewState.StatisticState(
+                period = periodWithStatistics.key,
+                correctPercent = correctPercent,
+                timeToAnswer = timeToAnswer,
+                bars = bars
+            )
+        }
+    }
 }
 
 

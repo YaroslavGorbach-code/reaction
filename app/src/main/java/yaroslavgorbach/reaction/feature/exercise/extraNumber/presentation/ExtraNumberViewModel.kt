@@ -12,6 +12,7 @@ import yaroslavgorbach.reaction.domain.exercises.UpdateExerciseInteractor
 import yaroslavgorbach.reaction.data.exercise.extraNumber.local.model.Number
 import yaroslavgorbach.reaction.data.exercise.extraNumber.local.model.NumberPack
 import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
+import yaroslavgorbach.reaction.domain.statistics.SaveStatisticsInteractor
 import yaroslavgorbach.reaction.feature.exercise.base.BaseExerciseViewModel
 import yaroslavgorbach.reaction.feature.exercise.common.model.FinishExerciseState
 import yaroslavgorbach.reaction.feature.exercise.extraNumber.model.ExtraNumberActions
@@ -26,10 +27,12 @@ import javax.inject.Inject
 class ExtraNumberViewModel @Inject constructor(
     observeExtraNumbersInteractor: ObserveExtraNumbersInteractor,
     private val updateExerciseInteractor: UpdateExerciseInteractor,
-    getExerciseInteractor: GetExerciseInteractor
+    getExerciseInteractor: GetExerciseInteractor,
+    saveStatisticsInteractor: SaveStatisticsInteractor
 ) : BaseExerciseViewModel(
     exerciseName = ExerciseName.EXTRA_NUMBER,
-    getExerciseInteractor = getExerciseInteractor
+    getExerciseInteractor = getExerciseInteractor,
+    saveStatisticsInteractor
 ) {
 
     private val pendingActions = MutableSharedFlow<ExtraNumberActions>()
@@ -76,15 +79,15 @@ class ExtraNumberViewModel @Inject constructor(
             pendingActions.collect { action ->
                 when (action) {
                     is ExtraNumberActions.NumberClick -> onNumberClick(action.number)
-                    is ExtraNumberActions.FinishExercise -> finishExercise()
+                    is ExtraNumberActions.FinishExercise -> finishExercise(state.value.finishExerciseState.isWin)
                     else -> error("$action is not handled")
                 }
             }
         }
     }
 
-    override suspend fun finishExercise() {
-        super.finishExercise()
+    override suspend fun finishExercise(isSuccess: Boolean) {
+        super.finishExercise(isSuccess)
         updateExercise()
     }
 

@@ -10,7 +10,9 @@ data class ExercisesViewState(
     val isOnboardingDialogVisible: Boolean = false,
     val message: UiMessage<ExercisesUiMassage>? = null,
     val statisticsState: List<StatisticState> = emptyList(),
+    val overAllProgress: Float = 0f
 ) {
+
     data class ExerciseAvailabilityDialogState(
         val isVisible: Boolean = false, val exerciseName: ExerciseName = ExerciseName.NO_NAME
     )

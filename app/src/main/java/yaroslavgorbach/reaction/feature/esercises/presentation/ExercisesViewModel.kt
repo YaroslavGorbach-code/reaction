@@ -1,5 +1,6 @@
 package yaroslavgorbach.reaction.feature.esercises.presentation
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -45,9 +46,23 @@ class ExercisesViewModel @Inject constructor(
         exerciseAvailabilityDialogState,
         observeIsFirstAppOpenInteractor(),
         uiMessageManager.message,
-        statistics,
-        ::ExercisesViewState
-    ).stateIn(
+        statistics
+    ) { exercises, exerciseAvailabilityDialogState, isFirstAppOpen, uiMessage, statistic ->
+        val overAllProgress = try {
+            (exercises.filter { it.isNextExerciseAvailable }.size.toFloat() / exercises.size.toFloat())
+        } catch (e: Exception) {
+            0f
+        }
+
+        ExercisesViewState(
+            exercises,
+            exerciseAvailabilityDialogState,
+            isFirstAppOpen,
+            uiMessage,
+            statistic,
+            overAllProgress
+        )
+    }.stateIn(
         scope = viewModelScope,
         started = WhileSubscribed(5000),
         initialValue = ExercisesViewState.Empty

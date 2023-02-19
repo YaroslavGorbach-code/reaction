@@ -29,7 +29,6 @@ fun StatisticsBottomShitContent(state: List<ExercisesViewState.StatisticState>) 
     val graphsHeight = 220.dp
 
     val pagerState = rememberPagerState()
-    Log.v("dfeasasdasdasd", state.toString())
     Column(
         modifier = Modifier
             .fillMaxWidth()

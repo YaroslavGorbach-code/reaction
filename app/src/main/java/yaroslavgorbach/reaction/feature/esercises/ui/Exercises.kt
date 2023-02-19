@@ -153,9 +153,8 @@ internal fun Exercises(
                     )
                 }
 
-                // TODO: add real progress here
                 LinearProgressIndicator(
-                    progress = 0.5f,
+                    progress = state.overAllProgress,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(top = 21.dp, start = 20.dp, end = 135.dp)

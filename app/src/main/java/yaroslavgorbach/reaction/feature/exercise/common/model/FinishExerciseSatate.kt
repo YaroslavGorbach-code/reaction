@@ -20,7 +20,14 @@ data class FinishExerciseState(
         get() = pointsCorrect + pointsIncorrect
 
     val correctPresent: Float
-        get() = ((pointsCorrect.toFloat() / (pointsIncorrect.toFloat() + pointsCorrect.toFloat())))
+        get() {
+            val value = ((pointsCorrect.toFloat() / (pointsIncorrect.toFloat() + pointsCorrect.toFloat())))
+            return if (value.isNaN()){
+                0f
+            } else {
+                value
+            }
+        }
 
     val icon: ImageVector
         get() = if (isWin) Icons.Outlined.SentimentSatisfied else Icons.Outlined.SentimentDissatisfied

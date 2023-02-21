@@ -9,6 +9,7 @@ import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.style.TextAlign
@@ -17,6 +18,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
+import yaroslavgorbach.reaction.feature.common.ui.pagerIndicator.PagerIndicator
 import yaroslavgorbach.reaction.feature.common.ui.theme.AppTypography
 import yaroslavgorbach.reaction.feature.common.ui.theme.EerieBlack
 import yaroslavgorbach.reaction.feature.common.ui.theme.StatisticCardsBg
@@ -28,6 +30,7 @@ import yaroslavgorbach.reaction.feature.esercises.model.ExercisesViewState
 fun StatisticsBottomShitContent(state: List<ExercisesViewState.StatisticState>) {
     val graphsHeight = 220.dp
 
+    Log.v("dsaasdasd", state.toString())
     val pagerState = rememberPagerState()
     Column(
         modifier = Modifier
@@ -52,9 +55,12 @@ fun StatisticsBottomShitContent(state: List<ExercisesViewState.StatisticState>) 
             ) {
                 Column(modifier = Modifier.align(Alignment.Center)) {
                     Column(
-                        modifier = Modifier.background(
-                            color = StatisticCardsBg, shape = RoundedCornerShape(12)
-                        )
+                        modifier = Modifier
+                            .background(
+                                color = StatisticCardsBg,
+                                shape = RoundedCornerShape(12)
+                            )
+                            .fillMaxWidth()
                     ) {
                         Text(
                             text = "Correct",
@@ -116,94 +122,105 @@ fun StatisticsBottomShitContent(state: List<ExercisesViewState.StatisticState>) 
 
             Spacer(modifier = Modifier.width(16.dp))
 
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .height(graphsHeight)
-                    .background(color = StatisticCardsBg, shape = RoundedCornerShape(12))
-            ) {
-                Text(
-                    text = "Weekly progress",
-                    modifier = Modifier.padding(start = 20.dp, top = 16.dp),
-                    style = AppTypography.subtitle4.copy(
-                        platformStyle = PlatformTextStyle(
-                            includeFontPadding = false
+            Column(modifier = Modifier.weight(1f)) {
+                Column(
+                    modifier = Modifier
+                        .height(graphsHeight)
+                        .background(color = StatisticCardsBg, shape = RoundedCornerShape(12))
+                ) {
+
+                    Text(
+                        text = "Weekly wins",
+                        modifier = Modifier.padding(start = 20.dp, top = 16.dp),
+                        style = AppTypography.subtitle4.copy(
+                            platformStyle = PlatformTextStyle(
+                                includeFontPadding = false
+                            )
                         )
                     )
-                )
-                Text(
-                    text = state.getOrNull(pagerState.currentPage)?.period.toString(),
-                    modifier = Modifier.padding(start = 20.dp),
-                    style = AppTypography.body5
-                )
 
-                HorizontalPager(count = state.size, state = pagerState) {
-                    Row(modifier = Modifier.padding(top = 12.dp, start = 20.dp, end = 20.dp)) {
-                        VerticalProgress(
-                            progress = state.getOrNull(it)?.bars?.find { it.dayOfWeek == 1 }?.percentOfWins
-                                ?: 0f,
-                            modifier = Modifier
-                                .wrapContentWidth()
-                                .weight(1f),
-                            "Sun"
-                        )
+                    Text(
+                        text = state.getOrNull(pagerState.currentPage)?.period.toString(),
+                        modifier = Modifier.padding(start = 20.dp),
+                        style = AppTypography.body5
+                    )
 
-                        VerticalProgress(
-                            progress = state.getOrNull(it)?.bars?.find { it.dayOfWeek == 2 }?.percentOfWins
-                                ?: 0f,
-                            modifier = Modifier
-                                .wrapContentWidth()
-                                .weight(1f),
-                            "Mon"
-                        )
+                    HorizontalPager(count = state.size, state = pagerState) {
+                        Row(modifier = Modifier.padding(top = 12.dp, start = 20.dp, end = 20.dp)) {
+                            VerticalProgress(
+                                progress = state.getOrNull(it)?.bars?.find { it.dayOfWeek == 1 }?.percentOfWins
+                                    ?: 0f,
+                                modifier = Modifier
+                                    .wrapContentWidth()
+                                    .weight(1f),
+                                "Sun"
+                            )
 
-                        VerticalProgress(
-                            progress = state.getOrNull(it)?.bars?.find { it.dayOfWeek == 3 }?.percentOfWins
-                                ?: 0f,
-                            modifier = Modifier
-                                .wrapContentWidth()
-                                .weight(1f),
-                            "Tue"
-                        )
+                            VerticalProgress(
+                                progress = state.getOrNull(it)?.bars?.find { it.dayOfWeek == 2 }?.percentOfWins
+                                    ?: 0f,
+                                modifier = Modifier
+                                    .wrapContentWidth()
+                                    .weight(1f),
+                                "Mon"
+                            )
 
-                        VerticalProgress(
-                            progress = state.getOrNull(it)?.bars?.find { it.dayOfWeek == 4 }?.percentOfWins
-                                ?: 0f,
-                            modifier = Modifier
-                                .wrapContentWidth()
-                                .weight(1f),
-                            "Wed"
-                        )
+                            VerticalProgress(
+                                progress = state.getOrNull(it)?.bars?.find { it.dayOfWeek == 3 }?.percentOfWins
+                                    ?: 0f,
+                                modifier = Modifier
+                                    .wrapContentWidth()
+                                    .weight(1f),
+                                "Tue"
+                            )
 
-                        VerticalProgress(
-                            progress = state.getOrNull(it)?.bars?.find { it.dayOfWeek == 5 }?.percentOfWins
-                                ?: 0f,
-                            modifier = Modifier
-                                .wrapContentWidth()
-                                .weight(1f),
-                            "Thu"
-                        )
+                            VerticalProgress(
+                                progress = state.getOrNull(it)?.bars?.find { it.dayOfWeek == 4 }?.percentOfWins
+                                    ?: 0f,
+                                modifier = Modifier
+                                    .wrapContentWidth()
+                                    .weight(1f),
+                                "Wed"
+                            )
 
-                        VerticalProgress(
-                            progress = state.getOrNull(it)?.bars?.find { it.dayOfWeek == 6 }?.percentOfWins
-                                ?: 0f,
-                            modifier = Modifier
-                                .wrapContentWidth()
-                                .weight(1f),
-                            "Fri"
-                        )
+                            VerticalProgress(
+                                progress = state.getOrNull(it)?.bars?.find { it.dayOfWeek == 5 }?.percentOfWins
+                                    ?: 0f,
+                                modifier = Modifier
+                                    .wrapContentWidth()
+                                    .weight(1f),
+                                "Thu"
+                            )
 
-                        VerticalProgress(
-                            progress = state.getOrNull(it)?.bars?.find { it.dayOfWeek == 7 }?.percentOfWins
-                                ?: 0f,
-                            modifier = Modifier
-                                .wrapContentWidth()
-                                .weight(1f),
-                            "Sat"
-                        )
+                            VerticalProgress(
+                                progress = state.getOrNull(it)?.bars?.find { it.dayOfWeek == 6 }?.percentOfWins
+                                    ?: 0f,
+                                modifier = Modifier
+                                    .wrapContentWidth()
+                                    .weight(1f),
+                                "Fri"
+                            )
+
+                            VerticalProgress(
+                                progress = state.getOrNull(it)?.bars?.find { it.dayOfWeek == 7 }?.percentOfWins
+                                    ?: 0f,
+                                modifier = Modifier
+                                    .wrapContentWidth()
+                                    .weight(1f),
+                                "Sat"
+                            )
+                        }
                     }
                 }
+
+                PagerIndicator(
+                    modifier = Modifier
+                        .align(CenterHorizontally)
+                        .padding(top = 9.dp),
+                    pagerState = pagerState
+                )
             }
+
 
             Spacer(modifier = Modifier.width(20.dp))
         }

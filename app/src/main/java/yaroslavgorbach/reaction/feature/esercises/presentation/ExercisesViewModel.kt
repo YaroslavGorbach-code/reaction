@@ -1,6 +1,5 @@
 package yaroslavgorbach.reaction.feature.esercises.presentation
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -147,17 +146,19 @@ class ExercisesViewModel @Inject constructor(
 
         return statistics.groupBy { it.period }.map { periodWithStatistics ->
             val statisticsForCurrentPeriod = periodWithStatistics.value
-            val correctPercent = (statisticsForCurrentPeriod.sumOf { it.percentOfCorrectAnswers }
-                .toFloat() / statisticsForCurrentPeriod.size)
+            val sumOfAnswers = statisticsForCurrentPeriod.sumOf { it.numberOfAnswers }.toFloat()
+            val sumOfCorrectAnswers = statisticsForCurrentPeriod.sumOf { it.correctAnswers }.toFloat()
+            val correctPercent = sumOfCorrectAnswers / sumOfAnswers
+
 
             val timeToAnswer = statisticsForCurrentPeriod.sumOf { it.averageTimeToAnswer }
                 .toFloat() / statisticsForCurrentPeriod.size
 
-            val bars = statisticsForCurrentPeriod.groupBy { it.dayOfWeek }.map { statisticsMap->
+            val bars = statisticsForCurrentPeriod.groupBy { it.dayOfWeek }.map { statisticsMap ->
                 ExercisesViewState.StatisticState.WinPercentsBar(
                     dayOfWeek = statisticsMap.key,
-                    numberOfWins = statisticsMap.value.sumOf { it.correctAnswers }.toFloat(),
-                    numberOfRounds = statisticsMap.value.sumOf { it.numberOfAnswers }.toFloat()
+                    numberOfWins = statisticsMap.value.filter { it.isSuccess }.size.toFloat(),
+                    numberOfRounds = statisticsMap.value.size.toFloat()
                 )
             }
             ExercisesViewState.StatisticState(
@@ -169,6 +170,3 @@ class ExercisesViewModel @Inject constructor(
         }
     }
 }
-
-
-

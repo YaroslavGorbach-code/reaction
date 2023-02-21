@@ -1,6 +1,5 @@
 package yaroslavgorbach.reaction.data.statistics.model
 
-import android.util.Log
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
@@ -38,14 +37,5 @@ data class ExerciseStatistics(
             val calendar = Calendar.getInstance(Locale.US)
             calendar.time = Date(date)
             return calendar.get(Calendar.DAY_OF_WEEK)
-        }
-
-    val percentOfCorrectAnswers: Int
-        get() {
-            return try {
-                correctAnswers / numberOfAnswers
-            } catch (e: java.lang.ArithmeticException) {
-                0
-            }
         }
 }

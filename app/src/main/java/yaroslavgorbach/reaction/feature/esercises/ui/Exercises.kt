@@ -1,10 +1,7 @@
 package yaroslavgorbach.reaction.feature.esercises.ui
 
 import android.annotation.SuppressLint
-import android.util.Log
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -13,15 +10,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.Bottom
-import androidx.compose.ui.Alignment.Companion.Center
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.PlatformTextStyle
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -32,8 +24,11 @@ import kotlinx.coroutines.launch
 import yaroslavgorbach.reaction.R
 import yaroslavgorbach.reaction.data.exercises.local.model.Exercise
 import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
+import yaroslavgorbach.reaction.feature.common.ui.buttons.PrimaryLargeButton
 import yaroslavgorbach.reaction.feature.common.ui.buttons.SecondaryMediumButton
 import yaroslavgorbach.reaction.feature.common.ui.theme.*
+import yaroslavgorbach.reaction.feature.common.ui.theme.AppTypography.Companion.body2
+import yaroslavgorbach.reaction.feature.common.ui.theme.AppTypography.Companion.h3
 import yaroslavgorbach.reaction.feature.esercises.model.ExercisesActions
 import yaroslavgorbach.reaction.feature.esercises.model.ExercisesUiMassage
 import yaroslavgorbach.reaction.feature.esercises.model.ExercisesViewState
@@ -61,12 +56,15 @@ internal fun Exercises(
 ) {
     val viewState = viewModel.state.collectAsState()
 
-    Exercises(state = viewState.value, onMessageShown = viewModel::clearMessage, actioner = { action ->
-        when (action) {
-            is ExercisesActions.OpenExerciseStartTimer -> openExerciseStartTimer(action.exerciseName)
-            else -> viewModel.submitAction(action)
-        }
-    })
+    Exercises(
+        state = viewState.value,
+        onMessageShown = viewModel::clearMessage,
+        actioner = { action ->
+            when (action) {
+                is ExercisesActions.OpenExerciseStartTimer -> openExerciseStartTimer(action.exerciseName)
+                else -> viewModel.submitAction(action)
+            }
+        })
 }
 
 @SuppressLint("RestrictedApi")
@@ -85,19 +83,6 @@ internal fun Exercises(
         initialValue = ModalBottomSheetValue.Hidden,
         confirmStateChange = { it != ModalBottomSheetValue.HalfExpanded },
     )
-
-    if (state.exerciseAvailabilityDialogState.isVisible) {
-        ShowExerciseAvailableDialog(onDismiss = {
-            actioner(ExercisesActions.HideExerciseIsNotAvailableDialog)
-        }, onShowAd = {
-            actioner(
-                ExercisesActions.RequestShowRewordAd(
-                    state.exerciseAvailabilityDialogState.exerciseName
-                )
-            )
-            actioner(ExercisesActions.HideExerciseIsNotAvailableDialog)
-        })
-    }
 
     if (state.isOnboardingDialogVisible) {
         ShowOnboardingDialog(onDismiss = {
@@ -120,6 +105,11 @@ internal fun Exercises(
                     modalSheetState.show()
                 }
             }
+            is ExercisesUiMassage.ShowExerciseIsUnavailable -> {
+                coroutineScope.launch {
+                    modalSheetState.show()
+                }
+            }
         }
 
         onMessageShown(uiMessage.id)
@@ -128,7 +118,21 @@ internal fun Exercises(
     ModalBottomSheetLayout(sheetState = modalSheetState,
         sheetShape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp),
         sheetContent = {
-            StatisticsBottomShitContent(state.statisticsState)
+            when (val content = state.bottomShitContent) {
+                is ExercisesViewState.BottomShitContent.Statistics -> {
+                    StatisticsBottomShitContent(state.statisticsState)
+                }
+                is ExercisesViewState.BottomShitContent.UnlockExercise -> {
+                    ShowExerciseIsNotAvailableBottomShit {
+                        actioner(
+                            ExercisesActions.RequestShowRewordAd(content.name)
+                        )
+                    }
+                }
+                null -> {
+                    StatisticsBottomShitContent(state.statisticsState)
+                }
+            }
         },
         content = {
             Column(modifier = Modifier.fillMaxSize()) {
@@ -195,9 +199,13 @@ internal fun Exercises(
                             shape = RoundedCornerShape(30.dp)
                         ) {
                             ExerciseItem(exercise, showStatisticsPrompt = {
-                                actioner(ExercisesActions.ShowStatisticsPrompt(exercise.name))
+                                actioner(ExercisesActions.ShowStaticsBottomShit(exercise.name))
                             }, showUnavailablePrompt = {
-                                actioner(ExercisesActions.ShowExerciseIsNotAvailableDialog(exercise.name))
+                                actioner(
+                                    ExercisesActions.ShowExerciseIsUnavailableBottomShit(
+                                        exercise.name
+                                    )
+                                )
                             })
                         }
 
@@ -217,32 +225,29 @@ internal fun Exercises(
 }
 
 @Composable
-private fun ShowExerciseAvailableDialog(onDismiss: () -> Unit, onShowAd: () -> Unit) {
-    AlertDialog(onDismissRequest = onDismiss,
-        title = { Text(stringResource(id = R.string.exercise_is_unavailable)) },
-        text = { Text(stringResource(id = R.string.exercise_is_unavailable_explanation)) },
-        buttons = {
-            Column(
-                modifier = Modifier.padding(all = 8.dp), verticalArrangement = Arrangement.Center
-            ) {
-                Button(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(50.dp)
-                        .padding(4.dp), onClick = onDismiss
-                ) {
-                    Text(stringResource(id = R.string.good))
-                }
-                Button(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(50.dp)
-                        .padding(4.dp), onClick = onShowAd
-                ) {
-                    Text(stringResource(id = R.string.open_by_ad))
-                }
-            }
-        })
+private fun ShowExerciseIsNotAvailableBottomShit(onShowAd: () -> Unit) {
+    Column {
+        Text(
+            text = "Exercise is not available",
+            style = h3,
+            modifier = Modifier.padding(top = 28.dp, start = 20.dp, end = 20.dp)
+        )
+        Text(
+            text = "Complete the previous exercise  successfully" +
+                    "at least five times to gain assess to this one. Or" +
+                    "get access by viewing ads",
+            style = body2,
+            modifier = Modifier.padding(top = 8.dp, start = 20.dp, end = 20.dp)
+        )
+        PrimaryLargeButton(
+            text = "Watch ads",
+            modifier = Modifier
+                .padding(top = 26.dp, bottom = 16.dp, start = 20.dp, end = 20.dp)
+                .fillMaxWidth()
+        ) {
+            onShowAd()
+        }
+    }
 }
 
 

@@ -32,21 +32,19 @@ class ExercisesViewModel @Inject constructor(
 
     private val pendingActions = MutableSharedFlow<ExercisesActions>()
 
-    private val exerciseAvailabilityDialogState = MutableStateFlow(
-        ExercisesViewState.ExerciseAvailabilityDialogState()
-    )
-
     private val statistics = MutableStateFlow<List<ExercisesViewState.StatisticState>>(emptyList())
 
     private val uiMessageManager: UiMessageManager<ExercisesUiMassage> = UiMessageManager()
 
+    private val bottomShitContent: MutableStateFlow<ExercisesViewState.BottomShitContent?>  = MutableStateFlow(null)
+
     val state: StateFlow<ExercisesViewState> = combine(
         observeExercisesInteractor(),
-        exerciseAvailabilityDialogState,
         observeIsFirstAppOpenInteractor(),
         uiMessageManager.message,
-        statistics
-    ) { exercises, exerciseAvailabilityDialogState, isFirstAppOpen, uiMessage, statistic ->
+        statistics,
+        bottomShitContent
+    ) { exercises, isFirstAppOpen, uiMessage, statistic, bottomShitContent ->
         val overAllProgress = try {
             (exercises.filter { it.isNextExerciseAvailable }.size.toFloat() / exercises.size.toFloat())
         } catch (e: Exception) {
@@ -55,11 +53,11 @@ class ExercisesViewModel @Inject constructor(
 
         ExercisesViewState(
             exercises,
-            exerciseAvailabilityDialogState,
             isFirstAppOpen,
             uiMessage,
             statistic,
-            overAllProgress
+            overAllProgress,
+            bottomShitContent
         )
     }.stateIn(
         scope = viewModelScope,
@@ -69,17 +67,18 @@ class ExercisesViewModel @Inject constructor(
 
     init {
         adManager.loadRewordAd()
+        adManager.loadInterstitialAd()
 
         viewModelScope.launch {
             pendingActions.collect { action ->
                 when (action) {
-                    is ExercisesActions.HideExerciseIsNotAvailableDialog -> {
-                        exerciseAvailabilityDialogState.emit(ExercisesViewState.ExerciseAvailabilityDialogState())
-                    }
-                    is ExercisesActions.ShowExerciseIsNotAvailableDialog -> {
-                        exerciseAvailabilityDialogState.emit(
-                            ExercisesViewState.ExerciseAvailabilityDialogState(
-                                isVisible = true, exerciseName = action.exerciseName
+                    is ExercisesActions.ShowExerciseIsUnavailableBottomShit -> {
+                        bottomShitContent.emit(ExercisesViewState.BottomShitContent.UnlockExercise(action.exerciseName))
+                        uiMessageManager.emitMessage(
+                            UiMessage(
+                                ExercisesUiMassage.ShowExerciseIsUnavailable(
+                                    action.exerciseName
+                                )
                             )
                         )
                     }
@@ -104,9 +103,9 @@ class ExercisesViewModel @Inject constructor(
                             }
                         }
                     }
-                    is ExercisesActions.ShowStatisticsPrompt -> {
+                    is ExercisesActions.ShowStaticsBottomShit -> {
+                        bottomShitContent.emit(ExercisesViewState.BottomShitContent.Statistics(action.exerciseName))
                         loadStatistics(observeStatisticsInteractor, action)
-
                         uiMessageManager.emitMessage(
                             UiMessage(
                                 ExercisesUiMassage.ShowStatistics(
@@ -135,7 +134,7 @@ class ExercisesViewModel @Inject constructor(
 
     private fun loadStatistics(
         observeStatisticsInteractor: ObserveStatisticsInteractor,
-        action: ExercisesActions.ShowStatisticsPrompt
+        action: ExercisesActions.ShowStaticsBottomShit
     ) {
         observeStatisticsInteractor(exerciseName = action.exerciseName).map(::mapStatisticsEntityToUiState)
             .onEach(statistics::emit)

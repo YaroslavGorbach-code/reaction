@@ -1,5 +1,6 @@
 package yaroslavgorbach.reaction.feature.exercise.geoSwitching.presentation
 
+import android.app.Activity
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -18,10 +19,7 @@ import yaroslavgorbach.reaction.feature.exercise.common.model.YesNoChoseVariatio
 import yaroslavgorbach.reaction.feature.exercise.geoSwitching.model.GeoSwitchingActions
 import yaroslavgorbach.reaction.feature.exercise.geoSwitching.model.GeoSwitchingUiMessage
 import yaroslavgorbach.reaction.feature.exercise.geoSwitching.model.GeoSwitchingViewState
-import yaroslavgorbach.reaction.utill.UiMessage
-import yaroslavgorbach.reaction.utill.UiMessageManager
-import yaroslavgorbach.reaction.utill.combine
-import yaroslavgorbach.reaction.utill.firstOr
+import yaroslavgorbach.reaction.utill.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -29,11 +27,13 @@ class GeoSwitchingViewModel @Inject constructor(
     observeGeoFiguresInteractor: ObserveFiguresInteractor,
     getExerciseInteractor: GetExerciseInteractor,
     private val updateExerciseInteractor: UpdateExerciseInteractor,
-    saveStatisticsInteractor: SaveStatisticsInteractor
+    saveStatisticsInteractor: SaveStatisticsInteractor,
+    addManager: AdManager
 ) : BaseExerciseViewModel(
     exerciseName = ExerciseName.GEO_SWITCHING,
     getExerciseInteractor,
-    saveStatisticsInteractor
+    saveStatisticsInteractor,
+    addManager
 ) {
 
     private val pendingActions = MutableSharedFlow<GeoSwitchingActions>()
@@ -78,15 +78,18 @@ class GeoSwitchingViewModel @Inject constructor(
             pendingActions.collect { action ->
                 when (action) {
                     is GeoSwitchingActions.Chose -> onChose(action.yesNoChose)
-                    is GeoSwitchingActions.FinishExercise -> finishExercise(state.value.finishExerciseState.isWin)
+                    is GeoSwitchingActions.FinishExercise -> finishExercise(
+                        state.value.finishExerciseState.isWin,
+                        action.activity
+                    )
                     else -> error("$action is not handled")
                 }
             }
         }
     }
 
-    override suspend fun finishExercise(isSuccess: Boolean) {
-        super.finishExercise(isSuccess)
+    override suspend fun finishExercise(isSuccess: Boolean, activity: Activity) {
+        super.finishExercise(isSuccess, activity)
         updateExercise()
     }
 

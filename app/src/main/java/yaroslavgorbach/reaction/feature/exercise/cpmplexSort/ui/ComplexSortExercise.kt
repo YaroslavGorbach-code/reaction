@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment.Companion.CenterEnd
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -34,6 +35,7 @@ import yaroslavgorbach.reaction.feature.exercise.cpmplexSort.model.ComplexSortUi
 import yaroslavgorbach.reaction.feature.exercise.cpmplexSort.model.ComplexSortViewState
 import yaroslavgorbach.reaction.feature.exercise.cpmplexSort.presentation.ComplexSortViewModel
 import yaroslavgorbach.reaction.utill.TimerCountDown
+import yaroslavgorbach.reaction.utill.findActivity
 
 @ExperimentalFoundationApi
 @ExperimentalMaterialApi
@@ -90,7 +92,7 @@ internal fun ComplexSort(
         Box(Modifier.fillMaxSize()) {
             when (state.timerState) {
                 TimerCountDown.TimerState.Finish -> {
-                    actioner(ComplexSortActions.FinishExercise)
+                    actioner(ComplexSortActions.FinishExercise(requireNotNull(LocalContext.current.findActivity())))
                 }
                 is TimerCountDown.TimerState.Tick -> {
                     ExerciseTopBar(

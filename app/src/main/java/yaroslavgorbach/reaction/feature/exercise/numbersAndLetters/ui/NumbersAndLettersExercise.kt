@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -38,6 +39,7 @@ import yaroslavgorbach.reaction.feature.exercise.numbersAndLetters.model.Numbers
 import yaroslavgorbach.reaction.feature.exercise.numbersAndLetters.model.NumbersAndLettersViewState
 import yaroslavgorbach.reaction.feature.exercise.numbersAndLetters.presentation.NumbersAndLettersViewModel
 import yaroslavgorbach.reaction.utill.TimerCountDown
+import yaroslavgorbach.reaction.utill.findActivity
 
 
 @ExperimentalMaterialApi
@@ -97,7 +99,7 @@ internal fun NumbersAndLettersExercise(
         Box(Modifier.fillMaxSize()) {
             when (state.timerState) {
                 TimerCountDown.TimerState.Finish -> {
-                    actioner(NumbersAndLettersActions.FinishExercise)
+                    actioner(NumbersAndLettersActions.FinishExercise(requireNotNull(LocalContext.current.findActivity())))
                 }
                 is TimerCountDown.TimerState.Tick -> {
                     ExerciseTopBar(

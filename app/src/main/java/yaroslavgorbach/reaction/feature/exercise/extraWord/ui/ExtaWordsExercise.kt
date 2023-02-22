@@ -14,6 +14,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -31,6 +32,7 @@ import yaroslavgorbach.reaction.feature.exercise.extraWord.model.ExtraWordUiMess
 import yaroslavgorbach.reaction.feature.exercise.extraWord.model.ExtraWordViewState
 import yaroslavgorbach.reaction.feature.exercise.extraWord.presentation.ExtraWordViewModel
 import yaroslavgorbach.reaction.utill.TimerCountDown
+import yaroslavgorbach.reaction.utill.findActivity
 
 @ExperimentalFoundationApi
 @ExperimentalMaterialApi
@@ -87,7 +89,7 @@ internal fun ExtraWords(
         Column {
             when (state.timerState) {
                 TimerCountDown.TimerState.Finish -> {
-                    actioner(ExtraWordActions.FinishExercise)
+                    actioner(ExtraWordActions.FinishExercise(requireNotNull(LocalContext.current.findActivity())))
                 }
                 is TimerCountDown.TimerState.Tick -> {
                     ExerciseTopBar(

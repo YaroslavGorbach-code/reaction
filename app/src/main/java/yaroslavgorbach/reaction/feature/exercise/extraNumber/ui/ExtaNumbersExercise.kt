@@ -14,6 +14,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -32,6 +33,7 @@ import yaroslavgorbach.reaction.feature.exercise.extraNumber.model.ExtraNumberVi
 import yaroslavgorbach.reaction.feature.exercise.extraNumber.presentation.ExtraNumberViewModel
 import yaroslavgorbach.reaction.feature.exercise.rotation.model.RotationUiMessage
 import yaroslavgorbach.reaction.utill.TimerCountDown
+import yaroslavgorbach.reaction.utill.findActivity
 
 @ExperimentalFoundationApi
 @ExperimentalMaterialApi
@@ -88,7 +90,7 @@ internal fun ExtraNumbers(
         Column {
             when (state.timerState) {
                 TimerCountDown.TimerState.Finish -> {
-                    actioner(ExtraNumberActions.FinishExercise)
+                    actioner(ExtraNumberActions.FinishExercise(requireNotNull(LocalContext.current.findActivity())))
                 }
                 is TimerCountDown.TimerState.Tick -> {
                     ExerciseTopBar(

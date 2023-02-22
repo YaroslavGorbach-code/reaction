@@ -1,5 +1,6 @@
 package yaroslavgorbach.reaction.feature.exercise.extraNumber.presentation
 
+import android.app.Activity
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -18,6 +19,7 @@ import yaroslavgorbach.reaction.feature.exercise.common.model.FinishExerciseStat
 import yaroslavgorbach.reaction.feature.exercise.extraNumber.model.ExtraNumberActions
 import yaroslavgorbach.reaction.feature.exercise.extraNumber.model.ExtraNumberUiMessage
 import yaroslavgorbach.reaction.feature.exercise.extraNumber.model.ExtraNumberViewState
+import yaroslavgorbach.reaction.utill.AdManager
 import yaroslavgorbach.reaction.utill.UiMessage
 import yaroslavgorbach.reaction.utill.UiMessageManager
 import yaroslavgorbach.reaction.utill.combine
@@ -28,13 +30,14 @@ class ExtraNumberViewModel @Inject constructor(
     observeExtraNumbersInteractor: ObserveExtraNumbersInteractor,
     private val updateExerciseInteractor: UpdateExerciseInteractor,
     getExerciseInteractor: GetExerciseInteractor,
-    saveStatisticsInteractor: SaveStatisticsInteractor
+    saveStatisticsInteractor: SaveStatisticsInteractor,
+    addManager: AdManager
 ) : BaseExerciseViewModel(
     exerciseName = ExerciseName.EXTRA_NUMBER,
     getExerciseInteractor = getExerciseInteractor,
-    saveStatisticsInteractor
+    saveStatisticsInteractor,
+    addManager
 ) {
-
     private val pendingActions = MutableSharedFlow<ExtraNumberActions>()
 
     private val numberPacks: MutableStateFlow<List<NumberPack>> = MutableStateFlow(emptyList())
@@ -79,15 +82,18 @@ class ExtraNumberViewModel @Inject constructor(
             pendingActions.collect { action ->
                 when (action) {
                     is ExtraNumberActions.NumberClick -> onNumberClick(action.number)
-                    is ExtraNumberActions.FinishExercise -> finishExercise(state.value.finishExerciseState.isWin)
+                    is ExtraNumberActions.FinishExercise -> finishExercise(
+                        state.value.finishExerciseState.isWin,
+                        action.activity
+                    )
                     else -> error("$action is not handled")
                 }
             }
         }
     }
 
-    override suspend fun finishExercise(isSuccess: Boolean) {
-        super.finishExercise(isSuccess)
+    override suspend fun finishExercise(isSuccess: Boolean, activity: Activity) {
+        super.finishExercise(isSuccess, activity)
         updateExercise()
     }
 

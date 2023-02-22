@@ -14,6 +14,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -31,6 +32,7 @@ import yaroslavgorbach.reaction.feature.exercise.faceControl.model.FaceControlUi
 import yaroslavgorbach.reaction.feature.exercise.faceControl.model.FaceControlViewState
 import yaroslavgorbach.reaction.feature.exercise.faceControl.presentation.FaceControlViewModel
 import yaroslavgorbach.reaction.utill.TimerCountDown
+import yaroslavgorbach.reaction.utill.findActivity
 
 @ExperimentalFoundationApi
 @ExperimentalMaterialApi
@@ -87,7 +89,7 @@ internal fun FaceControl(
         Column {
             when (state.timerState) {
                 TimerCountDown.TimerState.Finish -> {
-                    actioner(FaceControlActions.FinishExercise)
+                    actioner(FaceControlActions.FinishExercise(requireNotNull(LocalContext.current.findActivity())))
                 }
                 is TimerCountDown.TimerState.Tick -> {
                     ExerciseTopBar(

@@ -6,17 +6,12 @@ import yaroslavgorbach.reaction.utill.UiMessage
 
 data class ExercisesViewState(
     val exercises: List<Exercise> = emptyList(),
-    val exerciseAvailabilityDialogState: ExerciseAvailabilityDialogState = ExerciseAvailabilityDialogState(),
     val isOnboardingDialogVisible: Boolean = false,
     val message: UiMessage<ExercisesUiMassage>? = null,
     val statisticsState: List<StatisticState> = emptyList(),
-    val overAllProgress: Float = 0f
+    val overAllProgress: Float = 0f,
+    val bottomShitContent: BottomShitContent? = null
 ) {
-
-    data class ExerciseAvailabilityDialogState(
-        val isVisible: Boolean = false, val exerciseName: ExerciseName = ExerciseName.NO_NAME
-    )
-
     data class StatisticState(
         val period: String,
         val correctPercent: Float,
@@ -34,6 +29,11 @@ data class ExercisesViewState(
             val percentOfWins: Float
                 get() = (numberOfWins / numberOfRounds)
         }
+    }
+
+    sealed class BottomShitContent {
+        class Statistics(val name: ExerciseName): BottomShitContent()
+        class UnlockExercise(val name: ExerciseName): BottomShitContent()
     }
 
     companion object {

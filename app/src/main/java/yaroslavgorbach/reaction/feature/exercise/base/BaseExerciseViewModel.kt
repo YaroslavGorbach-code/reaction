@@ -1,5 +1,6 @@
 package yaroslavgorbach.reaction.feature.exercise.base
 
+import android.app.Activity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.delay
@@ -11,6 +12,7 @@ import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
 import yaroslavgorbach.reaction.data.statistics.model.ExerciseStatistics
 import yaroslavgorbach.reaction.domain.exercises.GetExerciseInteractor
 import yaroslavgorbach.reaction.domain.statistics.SaveStatisticsInteractor
+import yaroslavgorbach.reaction.utill.AdManager
 import yaroslavgorbach.reaction.utill.TimerCountDown
 import yaroslavgorbach.reaction.utill.UiMessageManager
 import java.util.*
@@ -18,7 +20,8 @@ import java.util.*
 abstract class BaseExerciseViewModel(
     val exerciseName: ExerciseName,
     getExerciseInteractor: GetExerciseInteractor,
-    val saveStatisticsInteractor: SaveStatisticsInteractor
+    val saveStatisticsInteractor: SaveStatisticsInteractor,
+    val addManager: AdManager
 ) : ViewModel() {
 
     abstract val uiMessageManager: UiMessageManager<*>
@@ -51,10 +54,11 @@ abstract class BaseExerciseViewModel(
         timerCountDown.start()
     }
 
-    protected open suspend fun finishExercise(isSuccess: Boolean) {
+    protected open suspend fun finishExercise(isSuccess: Boolean, activity: Activity) {
         isExerciseFinished.emit(true)
         averageTimeForAnswer.emit(answersAverageTime.sum() / if (answersAverageTime.size != 0) answersAverageTime.size else 1)
         saveStatistics(isSuccess)
+        addManager.showInterstitialAd(activity)
     }
 
     protected fun onAnswer() {

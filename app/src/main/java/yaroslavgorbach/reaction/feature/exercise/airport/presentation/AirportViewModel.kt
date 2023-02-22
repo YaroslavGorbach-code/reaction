@@ -1,5 +1,6 @@
 package yaroslavgorbach.reaction.feature.exercise.airport.presentation
 
+import android.app.Activity
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -18,10 +19,7 @@ import yaroslavgorbach.reaction.feature.exercise.airport.model.AirportUiMessage
 import yaroslavgorbach.reaction.feature.exercise.airport.model.AirportViewState
 import yaroslavgorbach.reaction.feature.exercise.base.BaseExerciseViewModel
 import yaroslavgorbach.reaction.feature.exercise.common.model.FinishExerciseState
-import yaroslavgorbach.reaction.utill.UiMessage
-import yaroslavgorbach.reaction.utill.UiMessageManager
-import yaroslavgorbach.reaction.utill.combine
-import yaroslavgorbach.reaction.utill.firstOr
+import yaroslavgorbach.reaction.utill.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -29,9 +27,13 @@ class AirportViewModel @Inject constructor(
     observePlainsInteractor: ObservePlainsInteractor,
     private val updateExerciseInteractor: UpdateExerciseInteractor,
     getExerciseInteractor: GetExerciseInteractor,
-    saveStatisticsInteractor: SaveStatisticsInteractor
+    saveStatisticsInteractor: SaveStatisticsInteractor,
+    addManager: AdManager
 ) : BaseExerciseViewModel(
-    exerciseName = ExerciseName.AIRPORT, getExerciseInteractor, saveStatisticsInteractor
+    exerciseName = ExerciseName.AIRPORT,
+    getExerciseInteractor,
+    saveStatisticsInteractor,
+    addManager
 ) {
 
     private val pendingActions = MutableSharedFlow<AirportActions>()
@@ -74,15 +76,18 @@ class AirportViewModel @Inject constructor(
             pendingActions.collect { action ->
                 when (action) {
                     is AirportActions.Chose -> onItemClick(action.direction)
-                    is AirportActions.FinishExercise -> finishExercise(state.value.finishExerciseState.isWin)
+                    is AirportActions.FinishExercise -> finishExercise(
+                        state.value.finishExerciseState.isWin,
+                        action.activity
+                    )
                     else -> error("$action is not handled")
                 }
             }
         }
     }
 
-    override suspend fun finishExercise(isSuccess: Boolean) {
-        super.finishExercise(isSuccess)
+    override suspend fun finishExercise(isSuccess: Boolean, activity: Activity) {
+        super.finishExercise(isSuccess, activity)
         updateExercise()
     }
 

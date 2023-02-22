@@ -11,6 +11,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -31,6 +32,7 @@ import yaroslavgorbach.reaction.feature.exercise.rotation.model.RotationUiMessag
 import yaroslavgorbach.reaction.feature.exercise.rotation.model.RotationViewState
 import yaroslavgorbach.reaction.feature.exercise.rotation.presentation.RotationViewModel
 import yaroslavgorbach.reaction.utill.TimerCountDown
+import yaroslavgorbach.reaction.utill.findActivity
 
 
 @ExperimentalMaterialApi
@@ -90,7 +92,7 @@ internal fun RotationExercise(
         Column {
             when (state.timerState) {
                 TimerCountDown.TimerState.Finish -> {
-                    actioner(RotationActions.FinishExercise)
+                    actioner(RotationActions.FinishExercise(requireNotNull(LocalContext.current.findActivity())))
                 }
                 is TimerCountDown.TimerState.Tick -> {
                     ExerciseTopBar(

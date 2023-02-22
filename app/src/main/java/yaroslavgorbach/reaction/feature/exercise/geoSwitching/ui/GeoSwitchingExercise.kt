@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -36,6 +37,7 @@ import yaroslavgorbach.reaction.feature.exercise.geoSwitching.model.GeoSwitching
 import yaroslavgorbach.reaction.feature.exercise.geoSwitching.model.GeoSwitchingViewState
 import yaroslavgorbach.reaction.feature.exercise.geoSwitching.presentation.GeoSwitchingViewModel
 import yaroslavgorbach.reaction.utill.TimerCountDown
+import yaroslavgorbach.reaction.utill.findActivity
 
 
 @ExperimentalMaterialApi
@@ -95,7 +97,7 @@ internal fun GeoSwitchingExercise(
         Box(Modifier.fillMaxSize()) {
             when (state.timerState) {
                 TimerCountDown.TimerState.Finish -> {
-                    actioner(GeoSwitchingActions.FinishExercise)
+                    actioner(GeoSwitchingActions.FinishExercise(requireNotNull(LocalContext.current.findActivity())))
                 }
                 is TimerCountDown.TimerState.Tick -> {
                     ExerciseTopBar(

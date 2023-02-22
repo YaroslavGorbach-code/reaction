@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment.Companion.CenterStart
 import androidx.compose.ui.Alignment.Companion.End
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -38,6 +39,7 @@ import yaroslavgorbach.reaction.feature.exercise.stroop.model.StroopUiMessage
 import yaroslavgorbach.reaction.feature.exercise.stroop.model.StroopViewState
 import yaroslavgorbach.reaction.feature.exercise.stroop.presentation.StroopViewModel
 import yaroslavgorbach.reaction.utill.TimerCountDown
+import yaroslavgorbach.reaction.utill.findActivity
 
 @ExperimentalMaterialApi
 @ExperimentalFoundationApi
@@ -96,7 +98,7 @@ internal fun StroopExercise(
         Box(Modifier.fillMaxSize()) {
             when (state.timerState) {
                 TimerCountDown.TimerState.Finish -> {
-                    actioner(StroopActions.FinishExercise)
+                    actioner(StroopActions.FinishExercise(requireNotNull(LocalContext.current.findActivity())))
                 }
                 is TimerCountDown.TimerState.Tick -> {
                     ExerciseTopBar(

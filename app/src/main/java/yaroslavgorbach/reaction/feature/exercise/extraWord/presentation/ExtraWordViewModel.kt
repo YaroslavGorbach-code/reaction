@@ -1,5 +1,6 @@
 package yaroslavgorbach.reaction.feature.exercise.extraWord.presentation
 
+import android.app.Activity
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -18,6 +19,7 @@ import yaroslavgorbach.reaction.feature.exercise.common.model.FinishExerciseStat
 import yaroslavgorbach.reaction.feature.exercise.extraWord.model.ExtraWordActions
 import yaroslavgorbach.reaction.feature.exercise.extraWord.model.ExtraWordUiMessage
 import yaroslavgorbach.reaction.feature.exercise.extraWord.model.ExtraWordViewState
+import yaroslavgorbach.reaction.utill.AdManager
 import yaroslavgorbach.reaction.utill.UiMessage
 import yaroslavgorbach.reaction.utill.UiMessageManager
 import yaroslavgorbach.reaction.utill.combine
@@ -28,11 +30,13 @@ class ExtraWordViewModel @Inject constructor(
     observeExtraWordsInteractor: ObserveExtraWordsInteractor,
     getExerciseInteractor: GetExerciseInteractor,
     private val updateExerciseInteractor: UpdateExerciseInteractor,
-    saveStatisticsInteractor: SaveStatisticsInteractor
+    saveStatisticsInteractor: SaveStatisticsInteractor,
+    addManager: AdManager
 ) : BaseExerciseViewModel(
     exerciseName = ExerciseName.EXTRA_WORD,
     getExerciseInteractor = getExerciseInteractor,
-    saveStatisticsInteractor
+    saveStatisticsInteractor,
+    addManager
 ) {
 
     private val pendingActions = MutableSharedFlow<ExtraWordActions>()
@@ -77,15 +81,18 @@ class ExtraWordViewModel @Inject constructor(
             pendingActions.collect { action ->
                 when (action) {
                     is ExtraWordActions.WordClick -> onWordClick(action.word)
-                    is ExtraWordActions.FinishExercise -> finishExercise(state.value.finishExerciseState.isWin)
+                    is ExtraWordActions.FinishExercise -> finishExercise(
+                        state.value.finishExerciseState.isWin,
+                        action.activity
+                    )
                     else -> error("$action is not handled")
                 }
             }
         }
     }
 
-    override suspend fun finishExercise(isSuccess: Boolean) {
-        super.finishExercise(isSuccess)
+    override suspend fun finishExercise(isSuccess: Boolean, activity: Activity) {
+        super.finishExercise(isSuccess, activity)
         updateExercise()
     }
 

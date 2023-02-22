@@ -1,5 +1,6 @@
 package yaroslavgorbach.reaction.feature.exercise.numbersAndLetters.presentation
 
+import android.app.Activity
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -18,10 +19,7 @@ import yaroslavgorbach.reaction.feature.exercise.common.model.YesNoChoseVariatio
 import yaroslavgorbach.reaction.feature.exercise.numbersAndLetters.model.NumbersAndLettersActions
 import yaroslavgorbach.reaction.feature.exercise.numbersAndLetters.model.NumbersAndLettersUiMessage
 import yaroslavgorbach.reaction.feature.exercise.numbersAndLetters.model.NumbersAndLettersViewState
-import yaroslavgorbach.reaction.utill.UiMessage
-import yaroslavgorbach.reaction.utill.UiMessageManager
-import yaroslavgorbach.reaction.utill.combine
-import yaroslavgorbach.reaction.utill.firstOr
+import yaroslavgorbach.reaction.utill.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -29,11 +27,13 @@ class NumbersAndLettersViewModel @Inject constructor(
     observeNumbersAndLettersInteractor: ObserveNumbersAndLettersInteractor,
     getExerciseInteractor: GetExerciseInteractor,
     private val updateExerciseInteractor: UpdateExerciseInteractor,
-    saveStatisticsInteractor: SaveStatisticsInteractor
+    saveStatisticsInteractor: SaveStatisticsInteractor,
+    addManager: AdManager
 ) : BaseExerciseViewModel(
     exerciseName = ExerciseName.NUMBERS_AND_LETTERS,
     getExerciseInteractor,
-    saveStatisticsInteractor
+    saveStatisticsInteractor,
+    addManager
 ) {
 
     private val pendingActions = MutableSharedFlow<NumbersAndLettersActions>()
@@ -78,15 +78,18 @@ class NumbersAndLettersViewModel @Inject constructor(
             pendingActions.collect { action ->
                 when (action) {
                     is NumbersAndLettersActions.Chose -> onChose(action.chose)
-                    is NumbersAndLettersActions.FinishExercise -> finishExercise(state.value.finishExerciseState.isWin)
+                    is NumbersAndLettersActions.FinishExercise -> finishExercise(
+                        state.value.finishExerciseState.isWin,
+                        action.activity
+                    )
                     else -> error("$action is not handled")
                 }
             }
         }
     }
 
-    override suspend fun finishExercise(isSuccess: Boolean) {
-        super.finishExercise(isSuccess)
+    override suspend fun finishExercise(isSuccess: Boolean, activity: Activity) {
+        super.finishExercise(isSuccess, activity)
         updateExercise()
     }
 

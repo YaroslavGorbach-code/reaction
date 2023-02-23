@@ -33,7 +33,7 @@ import yaroslavgorbach.reaction.feature.esercises.model.ExercisesActions
 import yaroslavgorbach.reaction.feature.esercises.model.ExercisesUiMassage
 import yaroslavgorbach.reaction.feature.esercises.model.ExercisesViewState
 import yaroslavgorbach.reaction.feature.esercises.presentation.ExercisesViewModel
-import yaroslavgorbach.reaction.feature.onboarding.ShowOnboardingDialog
+import yaroslavgorbach.reaction.feature.onboarding.ShowOnboarding
 import yaroslavgorbach.reaction.utill.findActivity
 import kotlin.math.absoluteValue
 
@@ -85,10 +85,10 @@ internal fun Exercises(
     )
 
     if (state.isOnboardingDialogVisible) {
-        ShowOnboardingDialog(onDismiss = {
+        ShowOnboarding {
             actioner(ExercisesActions.HideOnboardingDialog)
-        })
-    }
+        }
+    } else {
 
     state.message?.let { uiMessage ->
         when (uiMessage.message) {
@@ -140,7 +140,7 @@ internal fun Exercises(
                 Row(modifier = Modifier.padding(horizontal = 20.dp)) {
                     Text(
                         text = "Your\n" + "Exercises",
-                        style = AppTypography.h3,
+                        style = h3,
                         modifier = Modifier
                             .padding(top = 60.dp)
                             .weight(1f),
@@ -222,6 +222,7 @@ internal fun Exercises(
                 }
             }
         })
+    }
 }
 
 @Composable

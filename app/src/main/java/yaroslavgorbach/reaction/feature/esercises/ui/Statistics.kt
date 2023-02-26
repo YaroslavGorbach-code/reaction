@@ -1,6 +1,5 @@
 package yaroslavgorbach.reaction.feature.esercises.ui
 
-import android.util.Log
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -11,13 +10,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
+import yaroslavgorbach.reaction.R
 import yaroslavgorbach.reaction.feature.common.ui.pagerIndicator.PagerIndicator
 import yaroslavgorbach.reaction.feature.common.ui.theme.AppTypography
 import yaroslavgorbach.reaction.feature.common.ui.theme.EerieBlack
@@ -30,7 +30,6 @@ import yaroslavgorbach.reaction.feature.esercises.model.ExercisesViewState
 fun StatisticsBottomShitContent(state: List<ExercisesViewState.StatisticState>) {
     val graphsHeight = 220.dp
 
-    Log.v("dsaasdasd", state.toString())
     val pagerState = rememberPagerState()
     Column(
         modifier = Modifier
@@ -38,7 +37,7 @@ fun StatisticsBottomShitContent(state: List<ExercisesViewState.StatisticState>) 
             .wrapContentHeight()
     ) {
         Text(
-            text = "Statistics",
+            text = stringResource(id = R.string.statistics_dialog_title_text),
             style = AppTypography.h3,
             modifier = Modifier.padding(top = 20.dp, start = 20.dp)
         )
@@ -63,7 +62,7 @@ fun StatisticsBottomShitContent(state: List<ExercisesViewState.StatisticState>) 
                             .fillMaxWidth()
                     ) {
                         Text(
-                            text = "Correct",
+                            text = stringResource(id = R.string.statistics_dialog_corect_title_text),
                             modifier = Modifier.padding(start = 20.dp, top = 16.dp),
                             style = AppTypography.subtitle4.copy(
                                 platformStyle = PlatformTextStyle(
@@ -77,7 +76,7 @@ fun StatisticsBottomShitContent(state: List<ExercisesViewState.StatisticState>) 
                                 state.getOrNull(pagerState.currentPage)?.correctPercent?.times(
                                     100f
                                 )?.toInt()
-                            }% of correct answers",
+                            } " + stringResource(id = R.string.statistics_dialog_percent_of_correct_ansvers_text),
                             modifier = Modifier.padding(start = 20.dp, top = 8.dp),
                             style = AppTypography.body4
                         )
@@ -102,7 +101,7 @@ fun StatisticsBottomShitContent(state: List<ExercisesViewState.StatisticState>) 
                             .fillMaxWidth()
                     ) {
                         Text(
-                            text = "Average",
+                            text = stringResource(id = R.string.statistics_dialog_average_title_text),
                             modifier = Modifier.padding(start = 20.dp, top = 16.dp),
                             style = AppTypography.subtitle4.copy(
                                 platformStyle = PlatformTextStyle(
@@ -112,7 +111,10 @@ fun StatisticsBottomShitContent(state: List<ExercisesViewState.StatisticState>) 
                         )
 
                         Text(
-                            text = "Time to answer\n${state.getOrNull(pagerState.currentPage)?.averageTimeToAnswerSeconds}s",
+                            text = stringResource(
+                                id = R.string.statistics_dialog_average_time_to_answer_text,
+                                state.getOrNull(pagerState.currentPage)?.averageTimeToAnswerSeconds.toString()
+                            ),
                             modifier = Modifier.padding(start = 20.dp, top = 8.dp, bottom = 16.dp),
                             style = AppTypography.body4
                         )
@@ -130,7 +132,7 @@ fun StatisticsBottomShitContent(state: List<ExercisesViewState.StatisticState>) 
                 ) {
 
                     Text(
-                        text = "Weekly wins",
+                        text = stringResource(id = R.string.statistics_dialog_weekly_wins_title_tex),
                         modifier = Modifier.padding(start = 20.dp, top = 16.dp),
                         style = AppTypography.subtitle4.copy(
                             platformStyle = PlatformTextStyle(
@@ -153,7 +155,7 @@ fun StatisticsBottomShitContent(state: List<ExercisesViewState.StatisticState>) 
                                 modifier = Modifier
                                     .wrapContentWidth()
                                     .weight(1f),
-                                "Sun"
+                                stringResource(id = R.string.statistics_dialog_weekly_wins_sun_tex)
                             )
 
                             VerticalProgress(
@@ -162,7 +164,7 @@ fun StatisticsBottomShitContent(state: List<ExercisesViewState.StatisticState>) 
                                 modifier = Modifier
                                     .wrapContentWidth()
                                     .weight(1f),
-                                "Mon"
+                                stringResource(id = R.string.statistics_dialog_weekly_wins_mon_tex)
                             )
 
                             VerticalProgress(
@@ -171,7 +173,7 @@ fun StatisticsBottomShitContent(state: List<ExercisesViewState.StatisticState>) 
                                 modifier = Modifier
                                     .wrapContentWidth()
                                     .weight(1f),
-                                "Tue"
+                                stringResource(id = R.string.statistics_dialog_weekly_wins_tue_tex)
                             )
 
                             VerticalProgress(
@@ -180,7 +182,7 @@ fun StatisticsBottomShitContent(state: List<ExercisesViewState.StatisticState>) 
                                 modifier = Modifier
                                     .wrapContentWidth()
                                     .weight(1f),
-                                "Wed"
+                                stringResource(id = R.string.statistics_dialog_weekly_wins_wed_tex)
                             )
 
                             VerticalProgress(
@@ -189,7 +191,7 @@ fun StatisticsBottomShitContent(state: List<ExercisesViewState.StatisticState>) 
                                 modifier = Modifier
                                     .wrapContentWidth()
                                     .weight(1f),
-                                "Thu"
+                                stringResource(id = R.string.statistics_dialog_weekly_wins_thu_tex)
                             )
 
                             VerticalProgress(
@@ -198,7 +200,7 @@ fun StatisticsBottomShitContent(state: List<ExercisesViewState.StatisticState>) 
                                 modifier = Modifier
                                     .wrapContentWidth()
                                     .weight(1f),
-                                "Fri"
+                                stringResource(id = R.string.statistics_dialog_weekly_wins_fri_tex)
                             )
 
                             VerticalProgress(
@@ -207,7 +209,7 @@ fun StatisticsBottomShitContent(state: List<ExercisesViewState.StatisticState>) 
                                 modifier = Modifier
                                     .wrapContentWidth()
                                     .weight(1f),
-                                "Sat"
+                                stringResource(id = R.string.statistics_dialog_weekly_wins_sat_tex)
                             )
                         }
                     }

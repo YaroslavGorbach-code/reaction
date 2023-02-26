@@ -95,7 +95,7 @@ fun SecondaryMediumButton(modifier: Modifier = Modifier, text: String, onClick: 
         onClick = onClick,
         modifier = modifier
             .height(48.dp)
-            .fillMaxWidth(),
+            .wrapContentWidth(),
         colors = ButtonDefaults.buttonColors(backgroundColor = LightSilver),
         shape = MaterialTheme.shapes.medium
     ) {

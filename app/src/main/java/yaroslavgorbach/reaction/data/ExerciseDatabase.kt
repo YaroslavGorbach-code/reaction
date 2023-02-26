@@ -15,7 +15,7 @@ import yaroslavgorbach.reaction.data.statistics.model.ExerciseStatistics
 @TypeConverters(ExerciseNameConverter::class, ExerciseDataConverter::class)
 @Database(
     entities = [Exercise::class, ExerciseStatistics::class],
-    version = 1
+    version = 2
 )
 abstract class ExerciseDatabase : RoomDatabase() {
     companion object {

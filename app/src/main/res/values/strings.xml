@@ -15,23 +15,45 @@
     <string name="result_good">You finished %1$s of rounds correctly</string>
     <string name="result_bad">Not bad, but you need to complete at least %1$d rounds to finish this level
          and get more than %2$d percent correct answers.</string>
-    <string name="result_bad_subtitle">Shall we repeat?</string>
+    <string name="result_bad_subtitle">Shall we try again?</string>
+    <string name="your_exercise_title">Your\nExercises</string>
+    <string name="all_progress_title">Overall progress</string>
+    <string name="start_exercise_btn_text">Start Exercise</string>
+    <string name="exercise_is_not_avaliable_title_text">Exercise is not available</string>
+    <string name="exercise_is_not_avaliable_message_text">
+        Complete the previous exercise  successfully at least
+        five times to gain assess to this one. Or get access by viewing ads</string>
     <string name="empty" />
+    <string name="exercise_is_unavaliable_btn_text">Watch ads</string>
+    <string name="exercise_result_title_text">Result</string>
+    <string name="exercise_result_total_rounds_text">Total rounds: %1$s</string>
+    <string name="exercise_result_avarage_time_to_ansver">Average time on answer %1$s.%1$s</string>
+    <string name="exercise_result_try_again_btn_text">Try again</string>
+    <string name="exercise_result_finish_btn_text">Finish</string>
+    <string name="exercise_result_start_btn_text">Start</string>
+    <string name="onboarding_title_text">Welcome Welcome to our concentration and attention improvement application!</string>
+    <string name="onboarding_message_text">We\'re excited that you\'ve chosen
+        to take this step towards enhancing your mental abilities.
+        Our application is designed to provide you with a range
+        of exercises and techniques to improve your concentration
+        and focus, and we\'re confident that with regular use,
+        you\'ll see a significant improvement in your cognitive abilities.
+    </string>
     <string name="good">Ok</string>
     <string name="exercise_is_unavailable">Exercise is not available</string>
     <string name="exercise_is_unavailable_explanation">Complete the previous exercise successfully at
         least five times to gain access to this one.</string>
-    <string name="onboarding_text">
-        In this digital world, we are easily distracted.
-        Information is everywhere and we feel the need to
-        deal with increasing and multiple forms of information.
-        It drags on our time and our attention.
-        The inability to concentrate on the task at hand
-        is one of the maladies of our time — everyone wants to
-        know how to focus better, how to concentrate.
-        This application was design to help you improve
-        your concentration skill by doing  simple exercises
-</string>
-    <string name="about_app">About the application</string>
-    <string name="open_by_ad">Access by viewing ad</string>
+    <string name="statistics_dialog_title_text">Statistics</string>
+    <string name="statistics_dialog_corect_title_text">Correct</string>
+    <string name="statistics_dialog_average_title_text">Average</string>
+    <string name="statistics_dialog_percent_of_correct_ansvers_text">% of correct answers</string>
+    <string name="statistics_dialog_average_time_to_answer_text">Time to answer\n%1$s</string>
+    <string name="statistics_dialog_weekly_wins_title_tex">Weekly wins</string>
+    <string name="statistics_dialog_weekly_wins_sun_tex">Sun</string>
+    <string name="statistics_dialog_weekly_wins_mon_tex">Mon</string>
+    <string name="statistics_dialog_weekly_wins_tue_tex">Tue</string>
+    <string name="statistics_dialog_weekly_wins_wed_tex">Wed</string>
+    <string name="statistics_dialog_weekly_wins_thu_tex">Thu</string>
+    <string name="statistics_dialog_weekly_wins_fri_tex">Fri</string>
+    <string name="statistics_dialog_weekly_wins_sat_tex">Sat</string>
 </resources>

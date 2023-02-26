@@ -40,7 +40,7 @@ class AdManager @Inject constructor(
     fun loadRewordAd() {
         val adRequest: AdRequest = AdRequest.Builder().build()
 
-        RewardedAd.load(app, TEST_REWARD_AD_ID,
+        RewardedAd.load(app, REWARD_AD_ID,
             adRequest, object : RewardedAdLoadCallback() {
                 override fun onAdFailedToLoad(loadAdError: LoadAdError) {
                     rewordAd = null
@@ -56,7 +56,7 @@ class AdManager @Inject constructor(
     fun loadInterstitialAd() {
         val adRequest: AdRequest = AdRequest.Builder().build()
 
-        InterstitialAd.load(app, TEST_INTERSTITIAL_AD_ID,
+        InterstitialAd.load(app, INTERSTITIAL_AD_ID,
             adRequest, object : InterstitialAdLoadCallback() {
                 override fun onAdFailedToLoad(loadAdError: LoadAdError) {
                     interstitialAd = null

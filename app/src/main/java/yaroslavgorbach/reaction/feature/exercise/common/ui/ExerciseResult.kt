@@ -33,7 +33,7 @@ fun ExerciseResult(
     Box(Modifier.fillMaxSize()) {
         Column {
             Text(
-                text = "Result",
+                text = stringResource(id = R.string.exercise_result_title_text),
                 style = AppTypography.h1.copy(platformStyle = PlatformTextStyle(includeFontPadding = false)),
                 modifier = Modifier.padding(top = 34.dp, start = 20.dp),
                 color = EerieBlack,
@@ -47,17 +47,25 @@ fun ExerciseResult(
             )
 
             Text(
-                text = "Total rounds: ${finishExerciseState.summaryPoints}",
+                text = stringResource(
+                    id = R.string.exercise_result_total_rounds_text,
+                    finishExerciseState.summaryPoints
+                ),
                 style = AppTypography.h4,
                 modifier = Modifier.padding(top = 40.dp, start = 20.dp),
                 color = EerieBlack
             )
 
-            val seconds: Long = TimeUnit.MILLISECONDS.toSeconds(finishExerciseState.averageTimeForAnswer) % 60
+            val seconds: Long =
+                TimeUnit.MILLISECONDS.toSeconds(finishExerciseState.averageTimeForAnswer) % 60
             val milliseconds: Long = finishExerciseState.averageTimeForAnswer % 1000
 
             Text(
-                text = "Average time on answer: $seconds.$milliseconds",
+                text = stringResource(
+                    id = R.string.exercise_result_avarage_time_to_ansver,
+                    seconds,
+                    milliseconds
+                ),
                 style = AppTypography.h4,
                 modifier = Modifier.padding(top = 4.dp, start = 20.dp),
                 color = EerieBlack
@@ -87,18 +95,22 @@ fun ExerciseResult(
                 modifier = Modifier
                     .fillMaxWidth()
                     .align(CenterHorizontally)
-                    .padding(top = 32.dp, end = 20.dp, start = 20.dp), text = if (finishExerciseState.isWin) {
+                    .padding(top = 32.dp, end = 20.dp, start = 20.dp),
+                text = if (finishExerciseState.isWin) {
                     stringResource(id = R.string.result_good_title)
                 } else {
                     stringResource(id = R.string.result_bad_title)
-                }, style = AppTypography.h5, textAlign = TextAlign.Center
+                },
+                style = AppTypography.h5,
+                textAlign = TextAlign.Center
             )
 
             Text(
                 modifier = Modifier
                     .fillMaxWidth()
                     .align(CenterHorizontally)
-                    .padding(top = 8.dp, end = 20.dp, start = 20.dp), text = if (finishExerciseState.isWin) {
+                    .padding(top = 8.dp, end = 20.dp, start = 20.dp),
+                text = if (finishExerciseState.isWin) {
                     stringResource(id = R.string.result_good, finishExerciseState.progressString)
                 } else {
                     stringResource(
@@ -106,7 +118,9 @@ fun ExerciseResult(
                         finishExerciseState.winRule.minRounds,
                         finishExerciseState.winRule.minCorrectPresent
                     )
-                }, style = AppTypography.subtitle3, textAlign = TextAlign.Center
+                },
+                style = AppTypography.subtitle3,
+                textAlign = TextAlign.Center
             )
 
             if (finishExerciseState.isWin.not()) {
@@ -127,13 +141,17 @@ fun ExerciseResult(
                 .padding(bottom = 10.dp, start = 20.dp, end = 20.dp)
                 .align(Alignment.BottomCenter)
         ) {
-            PrimaryLargeButton(modifier = Modifier.fillMaxWidth(), text = "Try again") { onRepeatExercise() }
+            PrimaryLargeButton(
+                modifier = Modifier.fillMaxWidth(),
+                text = stringResource(id = R.string.exercise_result_try_again_btn_text)
+            ) { onRepeatExercise() }
 
             OutlineLargeButton(
                 modifier = Modifier
                     .padding(top = 16.dp)
                     .height(48.dp)
-                    .fillMaxWidth(), text = "Finish"
+                    .fillMaxWidth(),
+                text = stringResource(id = R.string.exercise_result_finish_btn_text)
             ) { onBackClick() }
         }
     }

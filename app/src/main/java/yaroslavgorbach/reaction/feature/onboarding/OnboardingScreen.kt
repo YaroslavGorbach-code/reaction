@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import yaroslavgorbach.reaction.R
@@ -31,7 +32,7 @@ fun ShowOnboarding(onStart: () -> Unit) {
                 .padding(top = 68.dp, start = 24.dp, end = 24.dp),
             textAlign = TextAlign.Center,
             style = h4,
-            text = "Welcome to our concentration and " + "attention improvement application!"
+            text = stringResource(id = R.string.onboarding_title_text)
         )
 
         Text(
@@ -40,21 +41,11 @@ fun ShowOnboarding(onStart: () -> Unit) {
                 .weight(1f),
             textAlign = TextAlign.Justify,
             style = body1,
-            text = "We're excited that you've chosen" +
-                    " to take this step towards enhancing " +
-                    "your mental abilities. Our" +
-                    " application is designed to" +
-                    " provide you with a range of" +
-                    " exercises and techniques to " +
-                    "improve your concentration and " +
-                    "focus, and we're confident that" +
-                    " with regular use, you'll see" +
-                    " a significant improvement " +
-                    "in your cognitive abilities."
+            text = stringResource(id = R.string.onboarding_message_text)
         )
 
         PrimaryLargeButton(
-            text = "Start",
+            text = stringResource(id = R.string.exercise_result_start_btn_text),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 16.dp, start = 20.dp, end = 20.dp)

@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -127,6 +128,9 @@ internal fun Exercises(
                         actioner(
                             ExercisesActions.RequestShowRewordAd(content.name)
                         )
+                        coroutineScope.launch {
+                            modalSheetState.hide()
+                        }
                     }
                 }
                 null -> {
@@ -139,7 +143,7 @@ internal fun Exercises(
 
                 Row(modifier = Modifier.padding(horizontal = 20.dp)) {
                     Text(
-                        text = "Your\n" + "Exercises",
+                        text = stringResource(id = R.string.your_exercise_title),
                         style = h3,
                         modifier = Modifier
                             .padding(top = 60.dp)
@@ -165,7 +169,7 @@ internal fun Exercises(
                 )
 
                 Text(
-                    text = "Overall progress",
+                    text = stringResource(id = R.string.all_progress_title),
                     modifier = Modifier.padding(start = 20.dp, top = 5.dp),
                     style = AppTypography.body3
                 )
@@ -213,7 +217,8 @@ internal fun Exercises(
                             SecondaryMediumButton(
                                 modifier = Modifier
                                     .align(Alignment.BottomCenter)
-                                    .width(163.dp), text = "Start Exercise"
+                                    .wrapContentWidth(),
+                                text = stringResource(id = R.string.start_exercise_btn_text)
                             ) {
                                 actioner(ExercisesActions.OpenExerciseStartTimer(exerciseName = exercise.name))
                             }
@@ -229,19 +234,17 @@ internal fun Exercises(
 private fun ShowExerciseIsNotAvailableBottomShit(onShowAd: () -> Unit) {
     Column {
         Text(
-            text = "Exercise is not available",
+            text = stringResource(id = R.string.exercise_is_not_avaliable_title_text),
             style = h3,
             modifier = Modifier.padding(top = 28.dp, start = 20.dp, end = 20.dp)
         )
         Text(
-            text = "Complete the previous exercise  successfully" +
-                    "at least five times to gain assess to this one. Or" +
-                    "get access by viewing ads",
+            text = stringResource(id = R.string.exercise_is_not_avaliable_message_text),
             style = body2,
             modifier = Modifier.padding(top = 8.dp, start = 20.dp, end = 20.dp)
         )
         PrimaryLargeButton(
-            text = "Watch ads",
+            text = stringResource(id = R.string.exercise_is_unavaliable_btn_text),
             modifier = Modifier
                 .padding(top = 26.dp, bottom = 16.dp, start = 20.dp, end = 20.dp)
                 .fillMaxWidth()
@@ -250,7 +253,6 @@ private fun ShowExerciseIsNotAvailableBottomShit(onShowAd: () -> Unit) {
         }
     }
 }
-
 
 @ExperimentalMaterialApi
 @Composable

@@ -5,10 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Icon
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,7 +17,10 @@ import androidx.compose.ui.unit.dp
 import yaroslavgorbach.reaction.R
 import yaroslavgorbach.reaction.data.exercises.local.model.Exercise
 import yaroslavgorbach.reaction.data.exercises.local.model.Exercise.Companion.NEED_WINS_TO_OPEN_NEXT_EXERCISE
-import yaroslavgorbach.reaction.feature.common.ui.theme.*
+import yaroslavgorbach.reaction.feature.common.ui.theme.AppTypography
+import yaroslavgorbach.reaction.feature.common.ui.theme.ReactionTheme
+import yaroslavgorbach.reaction.feature.common.ui.theme.White30
+import yaroslavgorbach.reaction.feature.common.ui.theme.textSecondary
 
 @ExperimentalMaterialApi
 @Composable
@@ -30,7 +30,7 @@ fun ExerciseItem(exercise: Exercise, showUnavailablePrompt: () -> Unit, showStat
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
-                .background(EerieBlack)
+                .background(MaterialTheme.colors.primary)
         ) {
 
             if (exercise.isNextExerciseAvailable.not()) {
@@ -48,7 +48,7 @@ fun ExerciseItem(exercise: Exercise, showUnavailablePrompt: () -> Unit, showStat
                         .wrapContentHeight()
                 ) {
                     Icon(
-                        tint = LightSilver,
+                        tint = MaterialTheme.colors.secondary,
                         painter = painterResource(id = R.drawable.ic_analitics),
                         contentDescription = null,
                         modifier = Modifier
@@ -60,7 +60,7 @@ fun ExerciseItem(exercise: Exercise, showUnavailablePrompt: () -> Unit, showStat
             }
 
             Icon(
-                tint = White,
+                tint = Color.White,
                 painter = painterResource(id = exercise.iconRes),
                 contentDescription = null,
                 modifier = Modifier
@@ -72,14 +72,14 @@ fun ExerciseItem(exercise: Exercise, showUnavailablePrompt: () -> Unit, showStat
 
             Text(
                 modifier = Modifier.padding(top = 20.dp, start = 20.dp, end = 20.dp),
-                color = White,
+                color = MaterialTheme.colors.textSecondary(),
                 text = stringResource(id = exercise.name.res),
                 style = AppTypography.h3
             )
 
             Text(
                 modifier = Modifier.padding(bottom = 24.dp, start = 20.dp, end = 20.dp),
-                color = White,
+                color = MaterialTheme.colors.textSecondary(),
                 text = stringResource(id = exercise.descriptionRes),
                 style = AppTypography.subtitle4
             )
@@ -91,7 +91,7 @@ fun ExerciseItem(exercise: Exercise, showUnavailablePrompt: () -> Unit, showStat
                 .background(color = Color.Black.copy(alpha = 0.8f))) {
 
                 Icon(
-                    tint = White,
+                    tint = MaterialTheme.colors.background,
                     painter = painterResource(id = R.drawable.ic_lock),
                     contentDescription = null,
                     modifier = Modifier.align(Alignment.Center)
@@ -110,7 +110,7 @@ fun ProgressIndicator(modifier: Modifier, gaps: Int, filledGaps: Int) {
                     modifier = Modifier
                         .height(4.dp)
                         .fillMaxWidth()
-                        .background(color = White, shape = RoundedCornerShape(1.dp))
+                        .background(color = Color.White, shape = RoundedCornerShape(1.dp))
                         .weight(1f)
                 )
             } else {

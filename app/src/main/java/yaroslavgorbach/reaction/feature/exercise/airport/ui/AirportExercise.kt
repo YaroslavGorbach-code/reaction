@@ -1,7 +1,6 @@
 package yaroslavgorbach.reaction.feature.exercise.airport.ui
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.ExperimentalMaterialApi
@@ -24,9 +23,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import yaroslavgorbach.reaction.R
 import yaroslavgorbach.reaction.data.exercise.airport.model.Direction
 import yaroslavgorbach.reaction.data.exercises.local.model.ExerciseName
-import yaroslavgorbach.reaction.feature.common.ui.theme.EerieBlack
 import yaroslavgorbach.reaction.feature.common.ui.theme.ReactionTheme
-import yaroslavgorbach.reaction.feature.common.ui.theme.White
 import yaroslavgorbach.reaction.feature.exercise.airport.model.AirportActions
 import yaroslavgorbach.reaction.feature.exercise.airport.model.AirportUiMessage
 import yaroslavgorbach.reaction.feature.exercise.airport.model.AirportViewState
@@ -165,7 +162,7 @@ private fun BoxScope.BottomButtons(onClick: (Direction) -> Unit) {
             .padding(bottom = 20.dp)
     ) {
         Icon(
-            tint = EerieBlack,
+            tint = MaterialTheme.colors.primary,
             imageVector = Icons.Default.North,
             contentDescription = null,
             modifier = Modifier
@@ -176,7 +173,7 @@ private fun BoxScope.BottomButtons(onClick: (Direction) -> Unit) {
         )
 
         Icon(
-            tint = EerieBlack,
+            tint = MaterialTheme.colors.primary,
             imageVector = Icons.Default.South,
             contentDescription = null,
             modifier = Modifier
@@ -187,7 +184,7 @@ private fun BoxScope.BottomButtons(onClick: (Direction) -> Unit) {
         )
 
         Icon(
-            tint = EerieBlack,
+            tint = MaterialTheme.colors.primary,
             imageVector = Icons.Default.West,
             contentDescription = null,
             modifier = Modifier
@@ -198,7 +195,7 @@ private fun BoxScope.BottomButtons(onClick: (Direction) -> Unit) {
         )
 
         Icon(
-            tint = EerieBlack,
+            tint = MaterialTheme.colors.primary,
             imageVector = Icons.Default.East,
             contentDescription = null,
             modifier = Modifier

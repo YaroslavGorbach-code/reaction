@@ -1,6 +1,8 @@
 package yaroslavgorbach.reaction.feature.exercise.common.ui
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -17,7 +19,6 @@ import yaroslavgorbach.reaction.feature.common.ui.CircularProgressIndicatorWithC
 import yaroslavgorbach.reaction.feature.common.ui.buttons.OutlineLargeButton
 import yaroslavgorbach.reaction.feature.common.ui.buttons.PrimaryLargeButton
 import yaroslavgorbach.reaction.feature.common.ui.theme.AppTypography
-import yaroslavgorbach.reaction.feature.common.ui.theme.EerieBlack
 import yaroslavgorbach.reaction.feature.common.ui.theme.ReactionTheme
 import yaroslavgorbach.reaction.feature.exercise.common.model.FinishExerciseState
 import java.util.concurrent.TimeUnit
@@ -36,14 +37,12 @@ fun ExerciseResult(
                 text = stringResource(id = R.string.exercise_result_title_text),
                 style = AppTypography.h1.copy(platformStyle = PlatformTextStyle(includeFontPadding = false)),
                 modifier = Modifier.padding(top = 34.dp, start = 20.dp),
-                color = EerieBlack,
             )
 
             Text(
                 text = stringResource(id = finishExerciseState.name.res),
                 style = AppTypography.body3,
                 modifier = Modifier.padding(start = 20.dp),
-                color = EerieBlack
             )
 
             Text(
@@ -53,7 +52,6 @@ fun ExerciseResult(
                 ),
                 style = AppTypography.h4,
                 modifier = Modifier.padding(top = 40.dp, start = 20.dp),
-                color = EerieBlack
             )
 
             val seconds: Long =
@@ -68,7 +66,6 @@ fun ExerciseResult(
                 ),
                 style = AppTypography.h4,
                 modifier = Modifier.padding(top = 4.dp, start = 20.dp),
-                color = EerieBlack
             )
         }
 

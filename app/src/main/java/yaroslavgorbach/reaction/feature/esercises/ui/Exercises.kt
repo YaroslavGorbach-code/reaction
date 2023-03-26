@@ -148,7 +148,7 @@ internal fun Exercises(
                         modifier = Modifier
                             .padding(top = 60.dp)
                             .weight(1f),
-                        color = EerieBlack
+                        color = MaterialTheme.colors.textPrimary()
                     )
 
                     Image(
@@ -163,6 +163,7 @@ internal fun Exercises(
 
                 LinearProgressIndicator(
                     progress = state.overAllProgress,
+                    backgroundColor = MaterialTheme.colors.overAllProgressColor(),
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(top = 21.dp, start = 20.dp, end = 135.dp)
@@ -171,7 +172,8 @@ internal fun Exercises(
                 Text(
                     text = stringResource(id = R.string.all_progress_title),
                     modifier = Modifier.padding(start = 20.dp, top = 5.dp),
-                    style = AppTypography.body3
+                    style = AppTypography.body3,
+                    color = MaterialTheme.colors.textPrimary()
                 )
 
                 HorizontalPager(
@@ -218,7 +220,7 @@ internal fun Exercises(
                                 modifier = Modifier
                                     .align(Alignment.BottomCenter)
                                     .wrapContentWidth(),
-                                text = stringResource(id = R.string.start_exercise_btn_text)
+                                text = stringResource(id = R.string.start_exercise_btn_text),
                             ) {
                                 actioner(ExercisesActions.OpenExerciseStartTimer(exerciseName = exercise.name))
                             }

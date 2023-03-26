@@ -10,9 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import yaroslavgorbach.reaction.feature.common.ui.theme.AppTypography.Companion.popinsSemiBold
-import yaroslavgorbach.reaction.feature.common.ui.theme.EerieBlack
-import yaroslavgorbach.reaction.feature.common.ui.theme.LightSilver
-import yaroslavgorbach.reaction.feature.common.ui.theme.White
+import yaroslavgorbach.reaction.feature.common.ui.theme.textPrimary
 
 @Composable
 fun PrimaryLargeButton(modifier: Modifier = Modifier, text: String, onClick: () -> Unit) {
@@ -20,14 +18,14 @@ fun PrimaryLargeButton(modifier: Modifier = Modifier, text: String, onClick: () 
         onClick = onClick,
         modifier = modifier
             .height(52.dp),
-        colors = ButtonDefaults.buttonColors(backgroundColor = EerieBlack),
+        colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary),
         shape = MaterialTheme.shapes.large
     ) {
         Text(
             text = text,
             fontSize = 16.sp,
             fontFamily = popinsSemiBold,
-            color = White
+            color = MaterialTheme.colors.background
         )
     }
 }
@@ -39,14 +37,14 @@ fun PrimaryMediumButton(text: String, onClick: () -> Unit) {
         modifier = Modifier
             .height(48.dp)
             .fillMaxWidth(),
-        colors = ButtonDefaults.buttonColors(backgroundColor = EerieBlack),
+        colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary),
         shape = MaterialTheme.shapes.medium
     ) {
         Text(
             text = text,
             fontSize = 14.sp,
             fontFamily = popinsSemiBold,
-            color = White
+            color = MaterialTheme.colors.background
         )
     }
 }
@@ -58,14 +56,14 @@ fun PrimarySmallButton(modifier: Modifier, text: String, onClick: () -> Unit) {
         modifier = modifier
             .height(40.dp)
             .fillMaxWidth(),
-        colors = ButtonDefaults.buttonColors(backgroundColor = EerieBlack),
+        colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary),
         shape = MaterialTheme.shapes.small
     ) {
         Text(
             text = text,
             fontSize = 14.sp,
             fontFamily = popinsSemiBold,
-            color = White
+            color = MaterialTheme.colors.background
         )
     }
 }
@@ -77,14 +75,14 @@ fun SecondaryLargeButton(text: String, onClick: () -> Unit) {
         modifier = Modifier
             .height(52.dp)
             .fillMaxWidth(),
-        colors = ButtonDefaults.buttonColors(backgroundColor = LightSilver),
+        colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.secondary),
         shape = MaterialTheme.shapes.large
     ) {
         Text(
             text = text,
             fontSize = 16.sp,
             fontFamily = popinsSemiBold,
-            color = EerieBlack
+            color = MaterialTheme.colors.primary
         )
     }
 }
@@ -96,14 +94,14 @@ fun SecondaryMediumButton(modifier: Modifier = Modifier, text: String, onClick: 
         modifier = modifier
             .height(48.dp)
             .wrapContentWidth(),
-        colors = ButtonDefaults.buttonColors(backgroundColor = LightSilver),
+        colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.secondary),
         shape = MaterialTheme.shapes.medium
     ) {
         Text(
             text = text,
             fontSize = 14.sp,
             fontFamily = popinsSemiBold,
-            color = EerieBlack
+            color = MaterialTheme.colors.textPrimary(),
         )
     }
 }
@@ -115,14 +113,14 @@ fun SecondarySmallButton(text: String, onClick: () -> Unit) {
         modifier = Modifier
             .height(40.dp)
             .fillMaxWidth(),
-        colors = ButtonDefaults.outlinedButtonColors(backgroundColor = LightSilver),
+        colors = ButtonDefaults.outlinedButtonColors(backgroundColor = MaterialTheme.colors.secondary),
         shape = MaterialTheme.shapes.small
     ) {
         Text(
             text = text,
             fontSize = 14.sp,
             fontFamily = popinsSemiBold,
-            color = EerieBlack
+            color = MaterialTheme.colors.primary
         )
     }
 }
@@ -134,14 +132,14 @@ fun OutlineMediumButton(text: String, onClick: () -> Unit) {
         modifier = Modifier
             .height(48.dp)
             .fillMaxWidth(),
-        border = BorderStroke(width = 1.dp, color = EerieBlack),
+        border = BorderStroke(width = 1.dp, color = MaterialTheme.colors.primary),
         shape = MaterialTheme.shapes.medium
     ) {
         Text(
             text = text,
             fontSize = 14.sp,
             fontFamily = popinsSemiBold,
-            color = EerieBlack
+            color = MaterialTheme.colors.primary
         )
     }
 }
@@ -149,7 +147,7 @@ fun OutlineMediumButton(text: String, onClick: () -> Unit) {
 @Composable
 fun OutlineLargeButton(modifier: Modifier = Modifier, text: String, onClick: () -> Unit) {
     OutlinedButton(
-        border = BorderStroke(width = 1.dp, color = EerieBlack),
+        border = BorderStroke(width = 1.dp, color = MaterialTheme.colors.primary),
         onClick = onClick,
         modifier = modifier
             .height(48.dp)
@@ -160,7 +158,7 @@ fun OutlineLargeButton(modifier: Modifier = Modifier, text: String, onClick: () 
             text = text,
             fontSize = 14.sp,
             fontFamily = popinsSemiBold,
-            color = EerieBlack
+            color = MaterialTheme.colors.primary
         )
     }
 }

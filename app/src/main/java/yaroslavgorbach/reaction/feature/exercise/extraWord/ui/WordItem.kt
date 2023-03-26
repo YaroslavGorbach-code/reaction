@@ -12,20 +12,23 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import yaroslavgorbach.reaction.data.exercise.extraWord.model.Word
+import yaroslavgorbach.reaction.feature.common.ui.theme.AppTypography
 import yaroslavgorbach.reaction.feature.common.ui.theme.ReactionTheme
-import yaroslavgorbach.reaction.feature.common.ui.theme.White
+import yaroslavgorbach.reaction.feature.common.ui.theme.exerciseCardBg
+import yaroslavgorbach.reaction.feature.common.ui.theme.textPrimary
 
 @Composable
 fun WordItem(word: Word, onWordClick: () -> Unit) {
     Box(modifier = Modifier
         .padding(4.dp)
         .background(
-            color = MaterialTheme.colors.primary,
+            color = MaterialTheme.colors.exerciseCardBg(),
             shape = MaterialTheme.shapes.medium
         )
         .clickable { onWordClick() }
@@ -33,12 +36,16 @@ fun WordItem(word: Word, onWordClick: () -> Unit) {
 
     ) {
         Text(
-            fontSize = 14.sp,
-            color = White,
+            fontSize = 16.sp,
+            color = MaterialTheme.colors.textPrimary(),
             text = word.word,
             textAlign = TextAlign.Center,
             modifier = Modifier.align(Alignment.Center),
-            style = MaterialTheme.typography.caption
+            style = AppTypography.subtitle3.copy(
+                platformStyle = PlatformTextStyle(
+                    includeFontPadding = false
+                )
+            )
         )
     }
 }

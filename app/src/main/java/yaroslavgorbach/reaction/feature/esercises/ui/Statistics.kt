@@ -2,14 +2,18 @@ package yaroslavgorbach.reaction.feature.esercises.ui
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.LinearProgressIndicator
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.style.TextAlign
@@ -19,10 +23,7 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import yaroslavgorbach.reaction.R
 import yaroslavgorbach.reaction.feature.common.ui.pagerIndicator.PagerIndicator
-import yaroslavgorbach.reaction.feature.common.ui.theme.AppTypography
-import yaroslavgorbach.reaction.feature.common.ui.theme.EerieBlack
-import yaroslavgorbach.reaction.feature.common.ui.theme.StatisticCardsBg
-import yaroslavgorbach.reaction.feature.common.ui.theme.White
+import yaroslavgorbach.reaction.feature.common.ui.theme.*
 import yaroslavgorbach.reaction.feature.esercises.model.ExercisesViewState
 
 @OptIn(ExperimentalPagerApi::class)
@@ -56,7 +57,7 @@ fun StatisticsBottomShitContent(state: List<ExercisesViewState.StatisticState>) 
                     Column(
                         modifier = Modifier
                             .background(
-                                color = StatisticCardsBg,
+                                color = MaterialTheme.colors.statisticsCardBg(),
                                 shape = RoundedCornerShape(12)
                             )
                             .fillMaxWidth()
@@ -82,7 +83,8 @@ fun StatisticsBottomShitContent(state: List<ExercisesViewState.StatisticState>) 
                         )
 
                         LinearProgressIndicator(
-                            backgroundColor = White,
+                            backgroundColor = White30,
+                            color = if (isSystemInDarkTheme()) White else MaterialTheme.colors.primary,
                             progress = state.getOrNull(pagerState.currentPage)?.correctPercent
                                 ?: 0.0f,
                             modifier = Modifier
@@ -96,7 +98,7 @@ fun StatisticsBottomShitContent(state: List<ExercisesViewState.StatisticState>) 
                     Column(
                         modifier = Modifier
                             .background(
-                                color = StatisticCardsBg, shape = RoundedCornerShape(12)
+                                color = MaterialTheme.colors.statisticsCardBg(), shape = RoundedCornerShape(12)
                             )
                             .fillMaxWidth()
                     ) {
@@ -128,7 +130,7 @@ fun StatisticsBottomShitContent(state: List<ExercisesViewState.StatisticState>) 
                 Column(
                     modifier = Modifier
                         .height(graphsHeight)
-                        .background(color = StatisticCardsBg, shape = RoundedCornerShape(12))
+                        .background(color = MaterialTheme.colors.statisticsCardBg(), shape = RoundedCornerShape(12))
                 ) {
 
                     Text(
@@ -239,7 +241,10 @@ fun VerticalProgress(
 
         Column(
             modifier = Modifier
-                .background(color = White, shape = RoundedCornerShape(12.dp))
+                .background(
+                    color = if (isSystemInDarkTheme()) White30 else White,
+                    shape = RoundedCornerShape(12.dp)
+                )
                 .width(14.dp)
                 .height(138.dp)
         ) {
@@ -252,7 +257,10 @@ fun VerticalProgress(
                 modifier = Modifier
                     .weight(if ((mProgress.value) == 0f) 0.0001f else mProgress.value)
                     .fillMaxWidth()
-                    .background(color = EerieBlack, shape = RoundedCornerShape(12.dp))
+                    .background(
+                        color = if (isSystemInDarkTheme()) White else MaterialTheme.colors.primary,
+                        shape = RoundedCornerShape(12.dp)
+                    )
             )
         }
         Text(
@@ -260,7 +268,7 @@ fun VerticalProgress(
             style = AppTypography.subtitle7,
             modifier = Modifier
                 .padding(top = 3.dp)
-                .align(Alignment.CenterHorizontally),
+                .align(CenterHorizontally),
             textAlign = TextAlign.Center
         )
     }

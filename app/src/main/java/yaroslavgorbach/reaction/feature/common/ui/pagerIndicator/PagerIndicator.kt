@@ -3,12 +3,12 @@ package yaroslavgorbach.reaction.feature.common.ui.pagerIndicator
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
@@ -24,8 +24,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.PagerState
-import yaroslavgorbach.reaction.feature.common.ui.theme.EerieBlack
-import yaroslavgorbach.reaction.feature.common.ui.theme.LightSilver
+
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
@@ -36,8 +35,8 @@ fun PagerIndicator(
     indicatorSize: Dp = 10.dp,
     indicatorShape: RoundedCornerShape = CircleShape,
     space: Dp = 8.dp,
-    activeColor: Color = EerieBlack,
-    inActiveColor: Color = LightSilver,
+    activeColor: Color = MaterialTheme.colors.primary,
+    inActiveColor: Color = MaterialTheme.colors.secondary,
     onClick: ((Int) -> Unit)? = null
 ) {
 

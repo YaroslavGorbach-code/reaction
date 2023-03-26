@@ -6,20 +6,18 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import yaroslavgorbach.reaction.data.exercise.extraNumber.local.model.Number
-import yaroslavgorbach.reaction.feature.common.ui.theme.ReactionTheme
-import yaroslavgorbach.reaction.feature.common.ui.theme.White
+import yaroslavgorbach.reaction.feature.common.ui.theme.*
 
 @Composable
 fun NumberItem(number: Number, onNumberClick: () -> Unit) {
@@ -27,18 +25,21 @@ fun NumberItem(number: Number, onNumberClick: () -> Unit) {
             .padding(4.dp)
             .clickable { onNumberClick() }
             .background(
-                color = MaterialTheme.colors.primary,
+                color = MaterialTheme.colors.exerciseCardBg(),
                 shape = MaterialTheme.shapes.medium
-            )
-            .size(60.dp)) {
+            ).size(60.dp)) {
 
             Text(
-                fontSize = 14.sp,
-                color = White,
+                fontSize = 18.sp,
+                color = MaterialTheme.colors.textPrimary(),
                 text = number.number.toString(),
                 textAlign = TextAlign.Center,
                 modifier = Modifier.align(Alignment.Center),
-                style = MaterialTheme.typography.caption
+                style = AppTypography.subtitle3.copy(
+                    platformStyle = PlatformTextStyle(
+                        includeFontPadding = false
+                    )
+                )
             )
         }
 }

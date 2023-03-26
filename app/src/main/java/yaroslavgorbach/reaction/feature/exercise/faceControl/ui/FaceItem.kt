@@ -16,17 +16,20 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import yaroslavgorbach.reaction.data.exercise.faceControl.model.Face
 import yaroslavgorbach.reaction.feature.common.ui.theme.ReactionTheme
+import yaroslavgorbach.reaction.feature.common.ui.theme.exerciseCardBg
+import yaroslavgorbach.reaction.feature.common.ui.theme.textPrimary
+import yaroslavgorbach.reaction.feature.common.ui.theme.textSecondary
 
 @Composable
 fun FaceItem(face: Face, onFaceClick: () -> Unit) {
     Image(
         imageVector = face.icon,
         contentDescription = "",
-        colorFilter = ColorFilter.tint(Color.White),
+        colorFilter = ColorFilter.tint(MaterialTheme.colors.textPrimary()),
         modifier = Modifier
             .padding(4.dp)
             .background(
-                color = MaterialTheme.colors.primary,
+                color = MaterialTheme.colors.exerciseCardBg(),
                 shape = MaterialTheme.shapes.medium
             )
             .clickable { onFaceClick() }

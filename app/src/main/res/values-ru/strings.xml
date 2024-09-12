@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Концентрация внимания</string>
+
+    <string name="exercises">Упражнения</string>
+    <string name="motivation_text">Практикуйтесь ежедневно и результат не заставит себя долго ждать</string>
+    <string name="start">Начать</string>
+    <string name="result">Результат</string>
+    <string name="correct">Правильных ответов:</string>
+    <string name="number_of_rounds">Всего раундов:</string>
+    <string name="incorrect">Не правильных ответов:</string>
+    <string name="to_menu">На главную</string>
+    <string name="one_more_time">Ещё раз</string>
+    <string name="result_good">Вы выполнили %1$s правильно</string>
+    <string name="result_bad">Не плохо, но для прохождения данного уровня необходимо выполнить минимум %1$d раундов
+        и получить больше %2$d процентов правильных ответов.</string>
+    <string name="empty" />
+    <string name="good">Хорошо</string>
+    <string name="exercise_is_unavailable">Упражнение не доступно</string>
+    <string name="exercise_is_unavailable_explanation">Выполните предыдущее упражнение успешно не менее пяти раз, чтобы получить доступ к этому</string>
+    <string name="exercise_is_unavaliable_btn_text">Смотреть рекламу</string>
+    <string name="exercise_result_title_text">Результат</string>
+    <string name="exercise_result_total_rounds_text">Всего раундов: %1$s</string>
+    <string name="exercise_result_avarage_time_to_ansver">Среднее время на ответ %1$s.%1$s</string>
+    <string name="exercise_result_try_again_btn_text">Попробовать сново</string>
+    <string name="exercise_result_finish_btn_text">Закончить</string>
+    <string name="exercise_result_start_btn_text">Начать</string>
+    <string name="onboarding_title_text">Welcome to our concentration and attention improvement application!</string>
+    <string name="onboarding_message_text">Мы рады, что вы решили сделать шаг к улучшению своих умственных способностей.
+        Наше приложение разработано для предоставления вам широкого спектра упражнений и техник для улучшения
+        концентрации и фокусировки внимания, и мы уверены, что с регулярным использованием вы
+        заметите значительное улучшение своих когнитивных способностей очень скро.
+    </string>
+    <string name="result_bad_subtitle">Попробуем сново?</string>
+    <string name="your_exercise_title">Ваши\nУпражнения</string>
+    <string name="all_progress_title">Общий прогресс</string>
+    <string name="start_exercise_btn_text">Начать упражнение</string>
+    <string name="exercise_is_not_avaliable_title_text">Упражнение недоступно</string>
+    <string name="result_good_title">Отличный результат!</string>
+    <string name="result_bad_title">Результат недостаточен</string>
+    <string name="statistics_dialog_title_text">Статистика</string>
+    <string name="statistics_dialog_corect_title_text">Результат</string>
+    <string name="statistics_dialog_average_title_text">Среднее</string>
+    <string name="statistics_dialog_percent_of_correct_ansvers_text">% правильных ответов</string>
+    <string name="statistics_dialog_average_time_to_answer_text">Время на ответ\n%1$s</string>
+    <string name="statistics_dialog_weekly_wins_title_tex"> </string>
+    <string name="statistics_dialog_weekly_wins_sun_tex">Вс</string>
+    <string name="statistics_dialog_weekly_wins_mon_tex">Пн</string>
+    <string name="statistics_dialog_weekly_wins_tue_tex">Вт</string>
+    <string name="statistics_dialog_weekly_wins_wed_tex">Ср</string>
+    <string name="statistics_dialog_weekly_wins_thu_tex">Чт</string>
+    <string name="statistics_dialog_weekly_wins_fri_tex">Пт</string>
+    <string name="statistics_dialog_weekly_wins_sat_tex">Сб</string>
+    <string name="exercise_is_not_avaliable_message_text">Чтобы получить доступ к этому упражнению,
+        выполните предыдущее упражнение успешно хотя бы пять раз, либо получите доступ просмотрев рекламу.</string>
+</resources>
